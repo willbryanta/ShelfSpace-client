@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 
 function Navbar(props) {
-	const {user} = props
+	const {user, signOut} = props
 	return (
 		<nav>
 			{user ? (
@@ -25,7 +25,13 @@ function Navbar(props) {
 						<Link to="/Users/:userId">Profile</Link>
 					</li>
 					<li>
-						<a href="/" onClick={(e) => e.preventDefault()}>
+						<a
+							href="/"
+							onClick={(e) => {
+								e.preventDefault()
+								signOut()
+							}}
+						>
 							Sign Out
 						</a>
 					</li>
