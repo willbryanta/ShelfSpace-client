@@ -12,7 +12,7 @@ function App() {
 	const handleSetUser = (user) => setUser(user)
 	return (
 		<>
-			<Navbar user={user} />
+			<Navbar user={user} signOut={authService.signOut} />
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
