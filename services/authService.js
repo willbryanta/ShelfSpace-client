@@ -3,7 +3,7 @@ const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
 const signUp = async (input) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/Auth/Signup`, {
+		const res = await fetch(`${BACKEND_URL}/auth/signup`, {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify(input),
@@ -22,7 +22,7 @@ const signUp = async (input) => {
 
 const signIn = async (input) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/Auth/Signin`, {
+		const res = await fetch(`${BACKEND_URL}/auth/signin`, {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify(input),
