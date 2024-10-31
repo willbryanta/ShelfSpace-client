@@ -12,7 +12,7 @@ const signUp = async (input) => {
 		if (output.err) {
 			throw new Error(output.err)
 		}
-		localStorage.setItem('JWT', output.token)
+		localStorage.setItem(TOKEN_KEY, output.token)
 		return output
 	} catch (err) {
 		console.log(err)
@@ -53,7 +53,7 @@ const getUser = () => {
 }
 
 const signOut = () => {
-	localStorage.removeItem('JWT')
+	localStorage.removeItem(TOKEN_KEY)
 }
 
 export {signUp, signIn, getUser, signOut}
