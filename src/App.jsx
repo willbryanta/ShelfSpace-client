@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom'
 import {useState} from 'react'
-import authService from './services/authService'
+import * as authService from './services/authService'
 import Navbar from './components/Navbar/Navbar'
 import Signup from './components/Signup/Signup'
 import Signin from './components/Signin/Signin'
