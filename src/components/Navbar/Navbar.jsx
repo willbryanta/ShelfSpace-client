@@ -1,15 +1,36 @@
-import { Link } from "react-router-dom"
+import {Link} from 'react-router-dom'
 
-function Navbar() {
+function Navbar(props) {
+	const {user} = props
 	return (
 		<nav>
-			<Link to="/library">Library</Link>
-			<Link to="/Users/Signup">Sign Up</Link>
-			<Link to="/Users/Signin">Sign In</Link>
-			<Link to="/Users/:userId">Profile</Link>
-			<a href="/" onClick={(e) => e.preventDefault()}>
-				Sign Out
-			</a>
+			{user ? (
+				<ul>
+					<li>
+						<Link to="/library">Library</Link>
+					</li>
+					<li>
+						<Link to="/Users/Signup">Sign Up</Link>
+					</li>
+					<li>
+						<Link to="/Users/Signin">Sign In</Link>
+					</li>
+				</ul>
+			) : (
+				<ul>
+					<li>
+						<Link to="/library">Library</Link>
+					</li>
+					<li>
+						<Link to="/Users/:userId">Profile</Link>
+					</li>
+					<li>
+						<a href="/" onClick={(e) => e.preventDefault()}>
+							Sign Out
+						</a>
+					</li>
+				</ul>
+			)}
 		</nav>
 	)
 }
