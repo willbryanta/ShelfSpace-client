@@ -29,12 +29,12 @@ const SignUpForm = (props) => {
 	const onFormSubmit = async (event) => {
 		event.preventDefault()
 		try {
-			const user = await authService.signUp({
+			const responseData = await authService.signUp({
 				username: formData.username,
 				password: formData.password,
 			})
 
-			handleSetUser(user)
+			handleSetUser(responseData.user)
 			navigate('/')
 		} catch (error) {
 			console.log(error)
