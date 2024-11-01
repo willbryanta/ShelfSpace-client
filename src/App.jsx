@@ -2,7 +2,7 @@ import {Route, Routes} from 'react-router-dom'
 import {useState} from 'react'
 import * as authService from './services/authService'
 import Navbar from '../components/Navbar/Navbar'
-import Signup from '../components/Signup/Signup'
+import SignUpForm from '../components/SignUpForm/SignUpForm'
 import Signin from '../components/Signin/Signin'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
 import Profile from '../components/Profile/Profile'
@@ -17,7 +17,7 @@ function App() {
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
 					path="/Users/Signup"
-					element={<Signup handleSetUser={handleSetUser} />}
+					element={<SignUpForm handleSetUser={handleSetUser} />}
 				/>
 				<Route
 					path="/Users/Signin"
