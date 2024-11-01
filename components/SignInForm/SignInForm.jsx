@@ -57,7 +57,7 @@ const SignInForm = (props) => {
 						onChange={onFormInputChange}
 					/>
 				</div>
-				<button type="submit" disabled={isFormInvalid()}>
+				<button type="submit" disabled={isFormInvalid}>
 					Sign in
 				</button>
 			</form>
