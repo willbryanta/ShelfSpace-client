@@ -49,7 +49,7 @@ const SignUpForm = (props) => {
 					id="username"
 					name="username"
 					value={formData.username}
-					onChange={onFormInputChange}
+					onChange={(event) => onFormInputChange(event)}
 				/>
 			</div>
 			<div>
