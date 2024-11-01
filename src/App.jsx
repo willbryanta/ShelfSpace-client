@@ -3,7 +3,7 @@ import {useState} from 'react'
 import * as authService from './services/authService'
 import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
-import Signin from '../components/Signin/Signin'
+import SignInForm from '../components/SignInForm/SignInForm'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
 import Profile from '../components/Profile/Profile'
 
@@ -21,7 +21,7 @@ function App() {
 				/>
 				<Route
 					path="/Users/Signin"
-					element={<Signin handleSetUser={handleSetUser} />}
+					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
 				<Route path="/Users/:userId" element={<Profile />} />
 			</Routes>
