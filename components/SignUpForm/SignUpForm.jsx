@@ -42,38 +42,41 @@ const SignUpForm = (props) => {
 	}
 
 	return (
-		<form onSubmit={onFormSubmit}>
-			<div>
-				<label htmlFor="username">Username</label>
-				<input
-					id="username"
-					name="username"
-					value={formData.username}
-					onChange={onFormInputChange}
-				/>
-			</div>
-			<div>
-				<label htmlFor="password"></label>
-				<input
-					id="password"
-					name="password"
-					value={formData.password}
-					onChange={onFormInputChange}
-				/>
-			</div>
-			<div>
-				<label htmlFor="confirmPassword"></label>
-				<input
-					id="confirmPassword"
-					name="confirmPassword"
-					value={formData.confirmPassword}
-					onChange={onFormInputChange}
-				/>
-			</div>
-			<button type="submit" disabled={isFormInvalid()}>
-				Sign Up
-			</button>
-		</form>
+		<main>
+			<h1>Sign up Page</h1>
+			<form onSubmit={onFormSubmit}>
+				<div>
+					<label htmlFor="username">Username</label>
+					<input
+						id="username"
+						name="username"
+						value={formData.username}
+						onChange={onFormInputChange}
+					/>
+				</div>
+				<div>
+					<label htmlFor="password">Password</label>
+					<input
+						id="password"
+						name="password"
+						value={formData.password}
+						onChange={onFormInputChange}
+					/>
+				</div>
+				<div>
+					<label htmlFor="confirmPassword">Confirm Password</label>
+					<input
+						id="confirmPassword"
+						name="confirmPassword"
+						value={formData.confirmPassword}
+						onChange={onFormInputChange}
+					/>
+				</div>
+				<button type="submit" disabled={isFormInvalid()}>
+					Sign Up
+				</button>
+			</form>
+		</main>
 	)
 }
 
