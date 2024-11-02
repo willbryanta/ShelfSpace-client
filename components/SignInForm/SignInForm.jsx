@@ -11,7 +11,7 @@ const SignInForm = (props) => {
 		password: '',
 	})
 
-	const onFormInputChange = (even) => {
+	const onFormInputChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = event.target.value
 
@@ -51,6 +51,7 @@ const SignInForm = (props) => {
 				<div>
 					<label htmlFor="password">Password</label>
 					<input
+						type="password"
 						id="password"
 						name="password"
 						value={formData.password}
