@@ -22,8 +22,8 @@ const SignInForm = (props) => {
 	}
 
 	const isFormInvalid = () => {
-		const {username, password, confirmPassword} = formData
-		return !(username && password && password === confirmPassword)
+		const {username, password} = formData
+		return !(username && password )
 	}
 
 	return (
@@ -45,7 +45,7 @@ const SignInForm = (props) => {
 						id="username"
 						name="username"
 						value={formData.username}
-						onChange={{onFormInputChange}}
+						onChange={onFormInputChange}
 					/>
 				</div>
 				<div>
