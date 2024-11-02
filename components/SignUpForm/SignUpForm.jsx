@@ -57,6 +57,7 @@ const SignUpForm = (props) => {
 				<div>
 					<label htmlFor="password">Password</label>
 					<input
+						type="password"
 						id="password"
 						name="password"
 						value={formData.password}
@@ -66,6 +67,7 @@ const SignUpForm = (props) => {
 				<div>
 					<label htmlFor="confirmPassword">Confirm Password</label>
 					<input
+						type="password"
 						id="confirmPassword"
 						name="confirmPassword"
 						value={formData.confirmPassword}
