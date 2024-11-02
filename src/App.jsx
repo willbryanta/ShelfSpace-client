@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
 import SignInForm from '../components/SignInForm/SignInForm'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
-import Profile from '../components/Profile/Profile'
+import ProfilePage from '../components/ProfilePage/ProfilePage'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
@@ -23,7 +23,10 @@ function App() {
 					path="/users/signin"
 					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
-				<Route path="/users/:userId" element={<Profile />} />
+				<Route
+					path="/users/:userId"
+					element={<ProfilePage handleSetUser={handleSetUser} user={user} />}
+				/>
 			</Routes>
 		</>
 	)

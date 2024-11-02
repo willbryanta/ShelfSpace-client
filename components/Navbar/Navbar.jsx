@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Navbar(props) {
-	const { user, signOut } = props
+	const {user, signOut} = props
 	const navigate = useNavigate()
 	return (
 		<nav>
@@ -23,7 +23,7 @@ function Navbar(props) {
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-						<Link to="/users/:userId">Profile</Link>
+						<Link to="/users/:userId">{user.username}</Link>
 					</li>
 					<li>
 						<a
