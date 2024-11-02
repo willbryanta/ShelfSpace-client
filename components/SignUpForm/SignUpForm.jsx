@@ -16,7 +16,7 @@ const SignUpForm = (props) => {
 		const inputValue = event.target.value
 
 		setFormData({
-			...FormData,
+			...formData,
 			[inputName]: inputValue,
 		})
 	}
