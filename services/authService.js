@@ -31,11 +31,9 @@ const signIn = async (input) => {
 		if (output.err) {
 			throw new Error(output.err)
 		}
-		if (output.token) {
-			localStorage.setItem(TOKEN_KEY, output.token)
-			const user = JSON.parse(atob(output.token.split('.')[1]))
-			return user
-		}
+		localStorage.setItem(TOKEN_KEY, output.token)
+		const user = JSON.parse(atob(output.token.split('.')[1]))
+		return user
 	} catch (err) {
 		console.log(err)
 		throw err
@@ -43,12 +41,8 @@ const signIn = async (input) => {
 }
 
 const getUser = () => {
-	const token = localStorage.getItem(TOKEN_KEY)
-
-	if (!token) {
-		return null
-	}
-	const user = JSON.parse(atob(token.split('.')[1]))
+	let token = localStorage.getItem(TOKEN_KEY)
+	const user = token ? JSON.parse(atob(token.split('.')[1])) : null
 	return user
 }
 

@@ -1,19 +1,20 @@
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Navbar(props) {
-	const {user, signOut} = props
+	const { user, signOut } = props
+	const navigate = useNavigate()
 	return (
 		<nav>
-			{user ? (
+			{!user ? (
 				<ul>
 					<li>
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-						<Link to="/Users/Signup">Sign Up</Link>
+						<Link to="/users/signup">Sign Up</Link>
 					</li>
 					<li>
-						<Link to="/Users/Signin">Sign In</Link>
+						<Link to="/users/signin">Sign In</Link>
 					</li>
 				</ul>
 			) : (
@@ -22,7 +23,7 @@ function Navbar(props) {
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-						<Link to="/Users/:userId">Profile</Link>
+						<Link to="/users/:userId">Profile</Link>
 					</li>
 					<li>
 						<a
@@ -30,6 +31,7 @@ function Navbar(props) {
 							onClick={(e) => {
 								e.preventDefault()
 								signOut()
+								navigate('/users/signup')
 							}}
 						>
 							Sign Out

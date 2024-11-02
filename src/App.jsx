@@ -16,14 +16,14 @@ function App() {
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
-					path="/Users/Signup"
+					path="/users/signup"
 					element={<SignUpForm handleSetUser={handleSetUser} />}
 				/>
 				<Route
-					path="/Users/Signin"
+					path="/users/signin"
 					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
-				<Route path="/Users/:userId" element={<Profile />} />
+				<Route path="/users/:userId" element={<Profile />} />
 			</Routes>
 		</>
 	)
