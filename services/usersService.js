@@ -31,6 +31,21 @@ const createList = async (userId, ListFormData) => {
 	}
 }
 
+const indexList = async (userId) => {
+    try {
+        const res = await fetch(`${BACKEND_URL}/${userId}/lists`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        return res.json
+
+    } catch (error) {
+        console.log('Error getting all the lists', error)
+        return{error: `Error getting all the lists`}
+    }
+}
+
 const showList = async (userId, listId) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}`, {
@@ -40,8 +55,8 @@ const showList = async (userId, listId) => {
 		})
 		return res.json()
 	} catch (error) {
-		console.error('Error getting list:', error)
-		return {error: 'Error getting list '}
+		console.error('Error getting that list:', error)
+		return {error: 'Error getting that list '}
 	}
 }
 
@@ -77,4 +92,4 @@ const deleteList = async (userId, listId) => {
 	}
 }
 
-export {getProfile, createList, showList, updateList, deleteList}
+export {getProfile, createList, indexList, showList, updateList, deleteList}
