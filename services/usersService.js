@@ -38,7 +38,7 @@ const indexList = async (userId) => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        return res.json
+        return res.json()
 
     } catch (error) {
         console.log('Error getting all the lists', error)
