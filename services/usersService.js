@@ -24,7 +24,7 @@ const updateUser = async (userId, profileData) => {
 			},
 			body: JSON.stringify(profileData),
 		})
-		return res.json()
+		return await res.json()
 	} catch (error) {
 		console.log(error, 'Error updating your profile')
 		return {error: 'Error updating your profile'}
