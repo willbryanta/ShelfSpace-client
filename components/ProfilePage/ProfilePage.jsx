@@ -1,11 +1,12 @@
-import * as userService from '../../services/usersService'
+import * as usersService from '../../services/usersService'
 import ListDisplay from '../ListDisplay/ListDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import UserSettings from '../UserSettings/UserSettings'
-async function ProfilePage(props) {
-	const {handleSetUser, user} = props
-	const {getProfile, updateUser} = userService
-	const profile = await getProfile(user)
+function ProfilePage(props) {
+	const {user, handleSetUser} = props
+	const {getProfile, updateUser} = usersService
+	const profile = await getProfile(user._id, user)
+	//Investigate how to await within React components as per Brian's istructions
 	return (
 		<>
 			{profile.lists.map((list) => {

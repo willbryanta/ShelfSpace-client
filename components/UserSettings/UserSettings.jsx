@@ -24,7 +24,6 @@ function UserSettings(props) {
 		return !(
 			username &&
 			oldPassword &&
-			password &&
 			password === confirmPassword
 		)
 	}
