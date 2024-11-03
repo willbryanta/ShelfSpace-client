@@ -16,7 +16,7 @@ const getProfile = async () => {
 
 const updateUser = async (userId, profileData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${userId}`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
