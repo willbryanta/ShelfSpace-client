@@ -95,4 +95,4 @@ const deleteList = async (userId, listId) => {
 	}
 }
 
-export {getProfile,updateUser, createList, showList, updateList, deleteList}
+export {getProfile, updateUser, createList, showList, updateList, deleteList}
