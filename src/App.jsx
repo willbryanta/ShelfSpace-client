@@ -12,7 +12,7 @@ function App() {
 	const handleSetUser = (user) => setUser(user)
 	return (
 		<>
-			<Navbar user={user} signOut={authService.signOut} />
+			<Navbar user={user} authService={authService} handleSetUser={handleSetUser} />
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
@@ -24,8 +24,14 @@ function App() {
 					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
 				<Route
-					path="/users/:userId"
-					element={<ProfilePage handleSetUser={handleSetUser} user={user} />}
+					path="/users/profile"
+					element={
+						<ProfilePage
+							authService={authService}
+							handleSetUser={handleSetUser}
+							user={user}
+						/>
+					}
 				/>
 			</Routes>
 		</>

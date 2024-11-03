@@ -1,31 +1,30 @@
 import {useState} from 'react'
 
 function UserSettings(props) {
-	const {user, updateUser, handleSetUser} = props
+	const {user, updateUser, handleSetUser, authService} = props
+	const {validatePassword} = authService
 	const [formData, setFormData] = useState({
 		username: user.username,
-		oldPassword: '',
+		currentPassword: '',
 		password: '',
 		confirmPassword: '',
 	})
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		const userPayload = await updateUser(formData)
-		handleSetUser(userPayload)
-		setFormData({
-			username: user.username,
-			oldPassword: '',
-			password: '',
-			confirmPassword: '',
-		})
+		if (await validatePassword({user, password: formData.currentPassword})) {
+			const userPayload = await updateUser(user, formData)
+			handleSetUser(userPayload)
+			setFormData({
+				username: user.username,
+				currentPassword: '',
+				password: '',
+				confirmPassword: '',
+			})
+		}
 	}
 	const isFormInvalid = () => {
-		const {username, password, confirmPassword, oldPassword} = formData
-		return !(
-			username &&
-			oldPassword &&
-			password === confirmPassword
-		)
+		const {username, password, confirmPassword, currentPassword} = formData
+		return !(username && currentPassword && password === confirmPassword)
 	}
 	const handleInputChange = (event) => {
 		const inputName = event.target.name
@@ -49,11 +48,11 @@ function UserSettings(props) {
 						/>
 					</label>
 					<label>
-						Old Password:
+						Current Password:
 						<input
 							type="password"
-							name="oldPassword"
-							value={formData.username}
+							name="currentPassword"
+							value={formData.currentPassword}
 							onChange={handleInputChange}
 						/>
 					</label>
@@ -62,7 +61,7 @@ function UserSettings(props) {
 						<input
 							type="password"
 							name="password"
-							value={formData.username}
+							value={formData.password}
 							onChange={handleInputChange}
 						/>
 					</label>
@@ -71,7 +70,7 @@ function UserSettings(props) {
 						<input
 							type="password"
 							name="confirmPassword"
-							value={formData.username}
+							value={formData.confirmPassword}
 							onChange={handleInputChange}
 						/>
 					</label>

@@ -1,7 +1,8 @@
 import {Link, useNavigate} from 'react-router-dom'
 
 function Navbar(props) {
-	const {user, signOut} = props
+	const { user, authService, handleSetUser } = props
+	const {signOut} = authService
 	const navigate = useNavigate()
 	return (
 		<nav>
@@ -23,7 +24,7 @@ function Navbar(props) {
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-						<Link to="/users/:userId">{user.username}</Link>
+						<Link to="/users/profile">{user.username}</Link>
 					</li>
 					<li>
 						<a
@@ -31,6 +32,7 @@ function Navbar(props) {
 							onClick={(e) => {
 								e.preventDefault()
 								signOut()
+								handleSetUser(null)
 								navigate('/users/signup')
 							}}
 						>

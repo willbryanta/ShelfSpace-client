@@ -1,9 +1,9 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
-const getProfile = async (userId, user) => {
+const getProfile = async (user) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/users/${userId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
@@ -16,15 +16,16 @@ const getProfile = async (userId, user) => {
 	}
 }
 
-const updateUser = async (userId, profileData) => {
+const updateUser = async (user, profileData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/users/${userId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(profileData),
+			user
 		})
 		return await res.json()
 	} catch (error) {
