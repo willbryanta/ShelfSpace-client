@@ -14,6 +14,23 @@ const getProfile = async () => {
 	}
 }
 
+const updateUser = async (userId, profileData) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/${userId}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(profileData),
+		})
+		return res.json()
+	} catch (error) {
+		console.log(error, 'Error updating your profile')
+		return {error: 'Error updating your profile'}
+	}
+}
+
 const createList = async (userId, ListFormData) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/${userId}/lists`, {
@@ -26,25 +43,11 @@ const createList = async (userId, ListFormData) => {
 		})
 		return res.json()
 	} catch (error) {
-		console.error('Error creating list:', error)
+		console.log('Error creating list:', error)
 		return {error: 'Error creating list'}
 	}
 }
 
-const indexList = async (userId) => {
-    try {
-        const res = await fetch(`${BACKEND_URL}/${userId}/lists`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        return res.json()
-
-    } catch (error) {
-        console.log('Error getting all the lists', error)
-        return{error: `Error getting all the lists`}
-    }
-}
 
 const showList = async (userId, listId) => {
 	try {
@@ -55,7 +58,7 @@ const showList = async (userId, listId) => {
 		})
 		return res.json()
 	} catch (error) {
-		console.error('Error getting that list:', error)
+		console.log('Error getting that list:', error)
 		return {error: 'Error getting that list '}
 	}
 }
@@ -72,7 +75,7 @@ const updateList = async (userId, listId, ListFormData) => {
 		})
 		return res.json()
 	} catch (error) {
-		console.error('Error updating list:', error)
+		console.log('Error updating list:', error)
 		return {error: `Error updating list `}
 	}
 }
@@ -87,9 +90,9 @@ const deleteList = async (userId, listId) => {
 		})
 		return res.json()
 	} catch (error) {
-		console.error('Error deleting list:', error)
+		console.log('Error deleting list:', error)
 		return {error: `Error deleting list`}
 	}
 }
 
-export {getProfile, createList, indexList, showList, updateList, deleteList}
+export {getProfile,updateUser, createList, showList, updateList, deleteList}
