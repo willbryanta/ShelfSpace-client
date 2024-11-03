@@ -40,14 +40,32 @@ const signIn = async (input) => {
 	}
 }
 
-const getUser = () => {
-	let token = localStorage.getItem(TOKEN_KEY)
-	const user = token ? JSON.parse(atob(token.split('.')[1])) : null
-	return user
-}
-
 const signOut = () => {
 	localStorage.removeItem(TOKEN_KEY)
 }
 
-export {signUp, signIn, getUser, signOut}
+const getUser = () => {
+	const token = localStorage.getItem(TOKEN_KEY)
+	const user = token ? JSON.parse(atob(token.split('.')[1])) : null
+	return user
+}
+
+const validatePassword = async (input) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/auth/password/${input.user._id}`, {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(input),
+		})
+		const output = await res.json()
+		if (output.err) {
+			throw new Error(output.err)
+		}
+		return output
+	} catch (err) {
+		console.log(err)
+		throw err
+	}
+}
+
+export {signUp, signIn, signOut, getUser, validatePassword}
