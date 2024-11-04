@@ -51,7 +51,6 @@ const createList = async (userId, ListFormData) => {
 	}
 }
 
-
 const showList = async (userId, listId) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}`, {
@@ -98,4 +97,19 @@ const deleteList = async (userId, listId) => {
 	}
 }
 
-export {getProfile, updateUser, createList, showList, updateList, deleteList}
+const deleteListItem = async (userId, listId, ItemId) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}/items/${ItemId}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+            
+        })
+        return res.json()
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export {getProfile, updateUser, createList, showList, updateList, deleteList, deleteListItem}
