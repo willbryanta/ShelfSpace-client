@@ -53,9 +53,11 @@ const getUser = () => {
 const validatePassword = async (input) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/auth/password/${input.user._id}`, {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify(input),
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				password: `${input.password}`,
+			},
 		})
 		const output = await res.json()
 		if (output.err) {

@@ -1,19 +1,18 @@
 import {Route, Routes} from 'react-router-dom'
 import {useState} from 'react'
 import * as authService from '../services/authService'
-import * as usersService from '../services/usersService'
 import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
 import SignInForm from '../components/SignInForm/SignInForm'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
-import Profile from '../components/Profile/Profile'
+import ProfilePage from '../components/ProfilePage/ProfilePage'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const handleSetUser = (user) => setUser(user)
 	return (
 		<>
-			<Navbar user={user} signOut={authService.signOut} />
+			<Navbar user={user} authService={authService} handleSetUser={handleSetUser} />
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
@@ -24,7 +23,16 @@ function App() {
 					path="/users/signin"
 					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
-				<Route path="/users/:userId" element={<Profile />} />
+				<Route
+					path="/users/profile"
+					element={
+						<ProfilePage
+							authService={authService}
+							handleSetUser={handleSetUser}
+							user={user}
+						/>
+					}
+				/>
 			</Routes>
 		</>
 	)
