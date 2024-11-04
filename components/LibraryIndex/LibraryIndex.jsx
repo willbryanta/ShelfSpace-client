@@ -7,7 +7,10 @@ function LibraryIndex(props) {
 			<li>Description: {libraryItem.description}</li>
 			<li>Publication Date: {libraryItem.publicatioDate}</li>
 			<li>Author: {libraryItem.author}</li>
-			<li>Reviews: {libraryItem.reviews}</li>
+			<li>
+				Reviews: <li>Description: {libraryItem.review.description}</li>
+				<li>Rating: {libraryItem.review.rating}</li>
+			</li>
 		</ul>
 	))
 
