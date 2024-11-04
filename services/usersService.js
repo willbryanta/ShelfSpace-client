@@ -7,7 +7,7 @@ const getProfile = async () => {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
 			},
 		})
-		return res.json()
+		return await res.json()
 	} catch (error) {
 		console.log('Error getting your profile', error)
 		return {error: 'Error getting your profile!'}
@@ -47,7 +47,6 @@ const createList = async (userId, ListFormData) => {
 		return {error: 'Error creating list'}
 	}
 }
-
 
 const showList = async (userId, listId) => {
 	try {
@@ -95,4 +94,19 @@ const deleteList = async (userId, listId) => {
 	}
 }
 
-export {getProfile, updateUser, createList, showList, updateList, deleteList}
+const deleteListItem = async (userId, listId, ItemId) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}/items/${ItemId}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+            
+        })
+        return res.json()
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export {getProfile, updateUser, createList, showList, updateList, deleteList, deleteListItem}
