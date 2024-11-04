@@ -19,3 +19,5 @@ const createReview = async (input) => {
 		throw error
 	}
 }
+
+export default createReview
