@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
-// Create a review
+// Create a LibraryItem
 const createLibraryItem = async (libraryItem) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library`, {
