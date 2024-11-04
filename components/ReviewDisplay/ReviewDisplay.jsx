@@ -8,7 +8,7 @@ function ReviewDisplay(props) {
 	}
 	return (
 		<>
-			<h2>{title}</h2>
+			<h4>{title}</h4>
 			{renderRating(rating)}
 			<p>{description}</p>
 			<p>Author: {author.username}</p>

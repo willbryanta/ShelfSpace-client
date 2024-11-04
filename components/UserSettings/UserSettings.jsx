@@ -36,9 +36,10 @@ function UserSettings(props) {
 	}
 	return (
 		<>
+			<h3>User Settings</h3>
 			<div className="update-user">
 				<form onSubmit={handleSubmit}>
-					<h2>Update Username and Password:</h2>
+					<h4>Update Username and Password:</h4>
 					<label>
 						Username:
 						<input

@@ -7,7 +7,7 @@ const getProfile = async (user) => {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
-			user
+			user,
 		})
 		return await res.json()
 	} catch (error) {
@@ -25,7 +25,7 @@ const updateUser = async (user, profileData) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(profileData),
-			user
+			user,
 		})
 		return await res.json()
 	} catch (error) {
@@ -82,12 +82,13 @@ const updateList = async (userId, listId, ListFormData) => {
 	}
 }
 
-const deleteList = async (userId, listId) => {
+const deleteList = async (user, listId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+				user,
 			},
 		})
 		return await res.json()
@@ -99,17 +100,27 @@ const deleteList = async (userId, listId) => {
 
 const deleteListItem = async (userId, listId, ItemId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}/items/${ItemId}`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-            }
-            
-        })
-        return res.json()
+		const res = await fetch(
+			`${BACKEND_URL}/${userId}/lists/${listId}/items/${ItemId}`,
+			{
+				method: 'DELETE',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			}
+		)
+		return res.json()
 	} catch (error) {
 		console.log(error)
 	}
 }
 
-export {getProfile, updateUser, createList, showList, updateList, deleteList, deleteListItem}
+export {
+	getProfile,
+	updateUser,
+	createList,
+	showList,
+	updateList,
+	deleteList,
+	deleteListItem,
+}
