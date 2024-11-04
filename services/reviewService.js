@@ -2,7 +2,7 @@ const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
 // Create a review
-const createReview = async (input) => {
+const createReview = async (review) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/reviews`, {
 			method: 'POST',
@@ -10,7 +10,7 @@ const createReview = async (input) => {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
 				'Content-type': 'application/json',
 			},
-			body: JSON.stringify(input),
+			body: JSON.stringify(review),
 		})
 		const data = await res.json()
 		if (data.err) {
@@ -25,7 +25,7 @@ const createReview = async (input) => {
 
 const deleteReview = async (reviewId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${reviewId}`, {
+		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -39,7 +39,7 @@ const deleteReview = async (reviewId) => {
 
 const updateReview = async (reviewId, reviewFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${reviewId}`, {
+		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`,
