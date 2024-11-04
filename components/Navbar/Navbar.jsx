@@ -1,7 +1,8 @@
+import './Navbar.css'
 import {Link, useNavigate} from 'react-router-dom'
 
 function Navbar(props) {
-	const { user, authService, handleSetUser } = props
+	const {user, authService, handleSetUser} = props
 	const {signOut} = authService
 	const navigate = useNavigate()
 	return (
