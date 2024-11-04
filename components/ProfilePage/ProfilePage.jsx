@@ -3,15 +3,16 @@ import * as usersService from '../../services/usersService'
 import ListIndexDisplay from '../ListIndexDisplay/ListIndexDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import UserSettings from '../UserSettings/UserSettings'
+import { Link } from 'react-router-dom'
 function ProfilePage(props) {
 	const {user, handleSetUser, authService} = props
 	const {getProfile, updateUser} = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
-		const profile = await getProfile(user)
-		setLists(profile.lists)
-		setReviews(profile.ownedReviews)
+		const profileData = await getProfile(user)
+		setLists(profileData.user.lists)
+		setReviews(profileData.reviews)
 	}
 	useEffect(() => {
 		generateProfile()
@@ -22,16 +23,16 @@ function ProfilePage(props) {
 			{lists.map((list) => {
 				return (
 					<li key={list._id}>
-						<ListIndexDisplay key={list._id} list={list} />
+						<ListIndexDisplay key={list._id} list={list} user={user} />
 					</li>
 				)
 			})}
 			<ul>
-				{reviews.map((item) => {
+				{reviews.map((review) => {
 					return (
-						<li key={item.review._id}>
-							<p>{item.filmTitle} Review:</p>
-							<ReviewDisplay review={item.review} />
+						<li key={review._id}>
+							<p><Link to={`/library/${review.libraryItem._id}`}>{review.libraryItem.name} </Link>Review:</p>
+							<ReviewDisplay review={review} />
 						</li>
 					)
 				})}
