@@ -20,4 +20,18 @@ const createReview = async (input) => {
 	}
 }
 
+const deleteReview = async (reviewId) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/${reviewId}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		})
+		return res.json()
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 export default createReview
