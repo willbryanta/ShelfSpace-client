@@ -10,28 +10,32 @@ function ProfilePage(props) {
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
 		const profile = await getProfile(user)
-		console.log("🚀 ~ generateProfile ~ profile:", profile)
 		setLists(profile.lists)
-		console.log("🚀 ~ ProfilePage ~ lists:", lists)
 		setReviews(profile.ownedReviews)
-		console.log("🚀 ~ ProfilePage ~ reviews:", reviews)
 	}
 	useEffect(() => {
 		generateProfile()
 	}, [])
 	return (
 		<>
+			<ul></ul>
 			{lists.map((list) => {
-				return <ListIndexDisplay key={list._id} list={list} />
-			})}
-			{reviews.map((item) => {
 				return (
-					<>
-						<p>{item.filmTitle} Review:</p>{' '}
-						<ReviewDisplay key={item.review._id} review={item} />
-					</>
+					<li key={list._id}>
+						<ListIndexDisplay key={list._id} list={list} />
+					</li>
 				)
 			})}
+			<ul>
+				{reviews.map((item) => {
+					return (
+						<li key={item.review._id}>
+							<p>{item.filmTitle} Review:</p>
+							<ReviewDisplay review={item.review} />
+						</li>
+					)
+				})}
+			</ul>
 			<UserSettings
 				handleSetUser={handleSetUser}
 				updateUser={updateUser}
