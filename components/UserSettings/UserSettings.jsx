@@ -13,7 +13,7 @@ function UserSettings(props) {
 		event.preventDefault()
 		if (await validatePassword({user, password: formData.currentPassword})) {
 			const userPayload = await updateUser(user, formData)
-			handleSetUser(userPayload)
+			handleSetUser(userPayload.targetUser)
 			setFormData({
 				username: user.username,
 				currentPassword: '',

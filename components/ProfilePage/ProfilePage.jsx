@@ -1,6 +1,6 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import * as usersService from '../../services/usersService'
-import ListDisplay from '../ListDisplay/ListDisplay'
+import ListIndexDisplay from '../ListIndexDisplay/ListIndexDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import UserSettings from '../UserSettings/UserSettings'
 function ProfilePage(props) {
@@ -8,18 +8,29 @@ function ProfilePage(props) {
 	const {getProfile, updateUser} = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
-	async () => {
+	const generateProfile = async () => {
 		const profile = await getProfile(user)
+		console.log("🚀 ~ generateProfile ~ profile:", profile)
 		setLists(profile.lists)
+		console.log("🚀 ~ ProfilePage ~ lists:", lists)
 		setReviews(profile.ownedReviews)
+		console.log("🚀 ~ ProfilePage ~ reviews:", reviews)
 	}
+	useEffect(() => {
+		generateProfile()
+	}, [])
 	return (
 		<>
 			{lists.map((list) => {
-				return <ListDisplay key={list._id} list={list} />
+				return <ListIndexDisplay key={list._id} list={list} />
 			})}
-			{reviews.map((review) => {
-				return <ReviewDisplay key={review._id} review={review} />
+			{reviews.map((item) => {
+				return (
+					<>
+						<p>{item.filmTitle} Review:</p>{' '}
+						<ReviewDisplay key={item.review._id} review={item} />
+					</>
+				)
 			})}
 			<UserSettings
 				handleSetUser={handleSetUser}
