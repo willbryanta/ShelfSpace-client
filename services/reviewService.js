@@ -6,7 +6,10 @@ const createReview = async (input) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/reviews`, {
 			method: 'POST',
-			headers: {'Content-type': 'application/json'},
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				'Content-type': 'application/json',
+			},
 			body: JSON.stringify(input),
 		})
 		const data = await res.json()
