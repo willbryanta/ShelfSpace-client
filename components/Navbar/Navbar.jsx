@@ -1,7 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import './Navbar.css'
 
 function Navbar(props) {
-	const { user, signOut } = props
+	const {user, signOut} = props
 	const navigate = useNavigate()
 	return (
 		<nav>
