@@ -15,7 +15,7 @@ function LibraryItem(props) {
 			}
 		}
 		fetchLibraryItem()
-	}, [])
+	}, [libraryItemId])
 
 	return (
 		<div>
@@ -28,11 +28,11 @@ function LibraryItem(props) {
 					Reviews:
 					{
 						<ul>
-							{libraryItem.reviews.map((review) => {
-								;<li key={review._id}>
+							{libraryItem.reviews.map((review) => (
+								<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
 								</li>
-							})}
+							))}
 						</ul>
 					}
 				</li>
