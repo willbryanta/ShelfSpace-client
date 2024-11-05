@@ -92,35 +92,5 @@ const deleteList = async (user, listId) => {
 	}
 }
 
-<<<<<<< HEAD
-const deleteListItem = async (user, listId, itemId) => {
-	try {
-		console.log('🚀 ~ deleteListItem ~ itemId:', itemId)
-		console.log('🚀 ~ deleteListItem ~ listId:', listId)
-		const res = await fetch(
-			`${BACKEND_URL}/users/${user._id}/lists/${listId}/items/${itemId}`,
-			{
-				method: 'DELETE',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-				},
-				user,
-			}
-		)
-		return res.json()
-	} catch (error) {
-		console.log(error)
-	}
-}
-
-export {
-	getProfile,
-	createList,
-	showList,
-	updateList,
-	deleteList,
-	deleteListItem,
-}
-=======
 export {getProfile, createList, showList, updateList, deleteList}
 >>>>>>> 27beb84d19fe7112bca14f560247f2ef90913e35
