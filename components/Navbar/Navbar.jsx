@@ -25,7 +25,7 @@ function Navbar(props) {
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-						<Link to="/users/profile">{user.username}</Link>
+							<Link to={`/users/${user._id}`}> {user.username}</Link>
 					</li>
 					<li>
 						<a

@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useParams} from 'react-router-dom'
 import {useState} from 'react'
 import * as authService from '../services/authService'
 import Navbar from '../components/Navbar/Navbar'
@@ -6,13 +6,19 @@ import SignUpForm from '../components/SignUpForm/SignUpForm'
 import SignInForm from '../components/SignInForm/SignInForm'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
 import ProfilePage from '../components/ProfilePage/ProfilePage'
+import ListShow from '../components/ListShow/ListShow'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const handleSetUser = (user) => setUser(user)
+	const {userId, ListId} = useParams()
 	return (
 		<>
-			<Navbar user={user} authService={authService} handleSetUser={handleSetUser} />
+			<Navbar
+				user={user}
+				authService={authService}
+				handleSetUser={handleSetUser}
+			/>
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
@@ -24,7 +30,7 @@ function App() {
 					element={<SignInForm handleSetUser={handleSetUser} />}
 				/>
 				<Route
-					path="/users/profile"
+					path="/users/:userId"
 					element={
 						<ProfilePage
 							authService={authService}
@@ -32,6 +38,10 @@ function App() {
 							user={user}
 						/>
 					}
+				/>
+				<Route
+					path="/users/:userId/lists/:listId"
+					element={<ListShow user={user} />}
 				/>
 			</Routes>
 		</>

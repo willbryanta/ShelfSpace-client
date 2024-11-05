@@ -34,14 +34,15 @@ const updateUser = async (user, profileData) => {
 	}
 }
 
-const createList = async (userId, ListFormData) => {
+const createList = async (user, ListFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}/lists`, {
+		const res = await fetch(`${BACKEND_URL}/${user._id}/lists`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
+			user,
 			body: JSON.stringify(ListFormData),
 		})
 		return await res.json()
@@ -51,12 +52,13 @@ const createList = async (userId, ListFormData) => {
 	}
 }
 
-const showList = async (userId, listId) => {
+const showList = async (user, listId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}`, {
+		const res = await fetch(`${BACKEND_URL}/${user._id}/lists/${listId}`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
+			user
 		})
 		return await res.json()
 	} catch (error) {
@@ -65,15 +67,16 @@ const showList = async (userId, listId) => {
 	}
 }
 
-const updateList = async (userId, listId, ListFormData) => {
+const updateList = async (user, listId, ListFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${userId}/lists/${listId}`, {
+		const res = await fetch(`${BACKEND_URL}/${user._id}/lists/${listId}`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(ListFormData),
+			user
 		})
 		return await res.json()
 	} catch (error) {
@@ -98,15 +101,16 @@ const deleteList = async (user, listId) => {
 	}
 }
 
-const deleteListItem = async (userId, listId, ItemId) => {
+const deleteListItem = async (user, listId, ItemId) => {
 	try {
 		const res = await fetch(
-			`${BACKEND_URL}/${userId}/lists/${listId}/items/${ItemId}`,
+			`${BACKEND_URL}/${user._id}/lists/${listId}/items/${ItemId}`,
 			{
 				method: 'DELETE',
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 				},
+				user
 			}
 		)
 		return res.json()

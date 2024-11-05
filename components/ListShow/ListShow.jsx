@@ -19,7 +19,7 @@ const ListShow = (props) => {
 	}, [listId, user._id])
 
 	const handleDeleteListItem = async (itemId) => {
-		const deletedListItem = await usersService.deleteListItem(itemId)
+		const deletedListItem = await usersService.deleteListItem(user,itemId)
 		setList({
 			...list,
 			items: list.items.filter((item) => item._id !== deletedListItem._id),
