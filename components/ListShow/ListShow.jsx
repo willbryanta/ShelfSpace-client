@@ -12,7 +12,7 @@ const ListShow = (props) => {
 	useEffect(() => {
 		const fetchList = async () => {
 			const userId = user._id
-			const fetchedList = await usersService.showList(userId, listId)
+			const fetchedList = await usersService.showList(user, listId)
 			setList(fetchedList)
 		}
 		fetchList()
