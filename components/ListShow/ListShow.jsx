@@ -48,7 +48,7 @@ const ListShow = (props) => {
 			updatedList: editFormData
 		)
 		setList({
-			listName: updatedList.listName,
+			updatedList
 		})
 		setIsEditing(false)
 		setEditFormData(null)
