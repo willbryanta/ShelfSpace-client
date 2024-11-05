@@ -45,7 +45,7 @@ const ListShow = (props) => {
 		const updatedList = await usersService.updateList(
 			user,
 			list._id,
-			editFormData.listName
+			updatedList: editFormData
 		)
 		setList({
 			...list,
