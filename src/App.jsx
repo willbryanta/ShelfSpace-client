@@ -1,4 +1,4 @@
-import {Route, Routes, useParams} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import {useState} from 'react'
 import * as authService from '../services/authService'
 import Navbar from '../components/Navbar/Navbar'
@@ -11,7 +11,6 @@ import ListShow from '../components/ListShow/ListShow'
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const handleSetUser = (user) => setUser(user)
-	const {userId, ListId} = useParams()
 	return (
 		<>
 			<Navbar

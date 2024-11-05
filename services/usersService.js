@@ -92,6 +92,7 @@ const deleteList = async (user, listId) => {
 	}
 }
 
+<<<<<<< HEAD
 const deleteListItem = async (user, listId, itemId) => {
 	try {
 		console.log('🚀 ~ deleteListItem ~ itemId:', itemId)
@@ -120,3 +121,6 @@ export {
 	deleteList,
 	deleteListItem,
 }
+=======
+export {getProfile, createList, showList, updateList, deleteList}
+>>>>>>> 27beb84d19fe7112bca14f560247f2ef90913e35
