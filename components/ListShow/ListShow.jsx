@@ -5,14 +5,13 @@ import * as usersService from '../../services/usersService'
 const ListShow = (props) => {
 	const {user} = props
 	const {listId} = useParams()
-	const [list, setList] = useState({listName:'', items:[]})
+	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
 
 	useEffect(() => {
 		const fetchList = async () => {
 			const fetchedList = await usersService.showList(user, listId)
 			setList(fetchedList)
-			
 		}
 
 		fetchList()
@@ -44,13 +43,8 @@ const ListShow = (props) => {
 			list._id,
 			packagedListData
 		)
-		
 
-		
-		
-		setList({
-			updatedListResponse,
-		})
+		setList(updatedListResponse)
 
 		setIsEditing(false)
 	}
@@ -75,7 +69,7 @@ const ListShow = (props) => {
 			</h1>
 			<ul>
 				{list.items.map((item) => (
-					<li key={item._id }>
+					<li key={item._id}>
 						<h2>
 							{item.name} ({item.publicationDate}){' '}
 						</h2>
