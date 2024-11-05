@@ -29,11 +29,11 @@ function LibraryItem(props) {
 					{
 						<ul>
 							{libraryItem.reviews.map((review) => {
-								<li key={review._id}>
+								;<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
 								</li>
 							})}
-							;
+							
 						</ul>
 					}
 				</li>
