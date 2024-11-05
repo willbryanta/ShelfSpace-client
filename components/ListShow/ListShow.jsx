@@ -2,6 +2,7 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
+import Select from 'react-select'
 
 const ListShow = (props) => {
 	const {user} = props
@@ -94,6 +95,13 @@ const ListShow = (props) => {
 		setShowDropdown((currentState) => !currentState)
 	}
 
+	const movieOptions = availableMovies.map((movie) => {
+		return {
+			value: movie._id, 
+			label: movie.name
+		}
+	})
+
 	return (
 		<div>
 			<h1>
@@ -134,18 +142,15 @@ const ListShow = (props) => {
 
 			{showDropdown && (
 				<div>
-					<select
+					<Select
 						value={selectedMovie}
 						onChange={(event) => setSelectedMovie(event.target.value)}
+						options={movieOptions}
+						defaultValue={movieOptions[0]}
 						disabled={false}
 					>
-						<option value="" disabled selected>Select a Movie</option>
-						{availableMovies.map((movie) => (
-							<option key={movie._id} value={movie._id}>
-								{movie.name}
-							</option>
-						))}
-					</select>
+						
+					</Select>
 					<button
 						type="button"
 						onClick={handleAddItem}
