@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom'
 import {useEffect, useState} from 'react'
-import {getLibraryItem} from '../../services/libraryItemService'
+import * as libraryItemService from '../../services/libraryItemService'
 
 function LibraryIndex() {
 	const [libraryItems, setLibraryItems] = useState([])
 
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
-			const items = await getLibraryItem()
+			const items = await libraryItemService.getLibraryItem()
 			setLibraryItems(items)
 		}
 		fetchLibraryItems()
