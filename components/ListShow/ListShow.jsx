@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
+import * as libraryItemService from '../../services/libraryItemService'
 
 const ListShow = (props) => {
 	const {user} = props
@@ -8,6 +9,9 @@ const ListShow = (props) => {
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
+	const [availableMovies, setAvailableMovies] = useState([])
+	const [selectedMovie, setSelectedMovie] = useState('')
+	const [showDropdown, setShowDropdown] = useState(false)
 
 	const fetchList = async () => {
 		const fetchedList = await usersService.showList(user, listId)
@@ -16,7 +20,23 @@ const ListShow = (props) => {
 
 	useEffect(() => {
 		fetchList()
-	}, [])
+	}, [listId])
+
+	const fetchMovies = async () => {
+		const movies = await libraryItemService.getLibraryItem()
+		filterMovies(movies)
+	}
+
+	const filterMovies = (movies) => {
+		const filteredMovies = movies.filter(
+			(movie) => !list.items.some((item) => item._id === movie._id)
+		)
+		setAvailableMovies(filteredMovies)
+	}
+
+	useEffect(() => {
+		fetchMovies()
+	}, [list])
 
 	const handleDeleteListItem = async (itemId) => {
 		setList({
@@ -46,7 +66,6 @@ const ListShow = (props) => {
 		)
 
 		setList(updatedListResponse)
-
 		setIsEditing(false)
 		setUnsavedChanges(false)
 	}
@@ -55,6 +74,24 @@ const ListShow = (props) => {
 		fetchList()
 		setIsEditing(false)
 		setUnsavedChanges(false)
+	}
+
+	const handleAddItem = () => {
+		const movieToAdd = availableMovies.find(
+			(movie) => movie._id === selectedMovie
+		)
+		if (movieToAdd) {
+			setList({
+				...list,
+				items: [...list.items, movieToAdd],
+			})
+			setShowDropdown(false)
+			setUnsavedChanges(true)
+		}
+	}
+
+	const toggleDropdownVisibility = () => {
+		setShowDropdown((currentState) => !currentState)
 	}
 
 	return (
@@ -78,29 +115,62 @@ const ListShow = (props) => {
 				{list.items.map((item) => (
 					<li key={item._id}>
 						<h2>
-							{item.name} ({item.publicationDate}){' '}
+							{item.name} ({item.publicationDate})
 						</h2>
 						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
-				<button type="button"> + </button>
 			</ul>
+
+			{!selectedMovie && availableMovies.length > 0 && (
+				<div>No movie selected. Click "+" to add a movie!</div>
+			)}
+
+			{availableMovies.length > 0 && !selectedMovie && (
+				<button type="button" onClick={toggleDropdownVisibility}>
+					+
+				</button>
+			)}
+
+			{showDropdown && (
+				<div>
+					<select
+						value={selectedMovie}
+						onChange={(event) => setSelectedMovie(event.target.value)}
+						disabled={false}
+					>
+						<option value="" disabled selected>Select a Movie</option>
+						{availableMovies.map((movie) => (
+							<option key={movie._id} value={movie._id}>
+								{movie.name}
+							</option>
+						))}
+					</select>
+					<button
+						type="button"
+						onClick={handleAddItem}
+						disabled={!selectedMovie}
+					>
+						Add Movie
+					</button>
+				</div>
+			)}
+
+			{availableMovies.length === 0 && <div>You have seen all the movies!</div>}
 
 			<button
 				type="button"
 				onClick={handleSaveClick}
 				disabled={!unsavedChanges}
 			>
-				{' '}
-				Save{' '}
+				Save
 			</button>
 			<button
 				type="button"
 				onClick={handleCancelClick}
 				disabled={!isEditing && !unsavedChanges}
 			>
-				{' '}
-				Cancel{' '}
+				Cancel
 			</button>
 		</div>
 	)
