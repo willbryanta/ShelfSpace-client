@@ -36,12 +36,15 @@ const createList = async (user, ListFormData) => {
 
 const showList = async (user, listId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			},
-			user
-		})
+		const res = await fetch(
+			`${BACKEND_URL}/users/${user._id}/lists/${listId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+				},
+				user,
+			}
+		)
 		return await res.json()
 	} catch (error) {
 		console.log('Error getting that list:', error)
@@ -51,15 +54,18 @@ const showList = async (user, listId) => {
 
 const updateList = async (user, listId, ListFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(ListFormData),
-			user
-		})
+		const res = await fetch(
+			`${BACKEND_URL}/users/${user._id}/lists/${listId}`,
+			{
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(ListFormData),
+				user,
+			}
+		)
 		return await res.json()
 	} catch (error) {
 		console.log('Error updating list:', error)
@@ -69,13 +75,16 @@ const updateList = async (user, listId, ListFormData) => {
 
 const deleteList = async (user, listId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-				user,
-			},
-		})
+		const res = await fetch(
+			`${BACKEND_URL}/users/${user._id}/lists/${listId}`,
+			{
+				method: 'DELETE',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+					user,
+				},
+			}
+		)
 		return await res.json()
 	} catch (error) {
 		console.log('Error deleting list:', error)
@@ -85,8 +94,8 @@ const deleteList = async (user, listId) => {
 
 const deleteListItem = async (user, listId, itemId) => {
 	try {
-		console.log("🚀 ~ deleteListItem ~ itemId:", itemId)
-		console.log("🚀 ~ deleteListItem ~ listId:", listId)
+		console.log('🚀 ~ deleteListItem ~ itemId:', itemId)
+		console.log('🚀 ~ deleteListItem ~ listId:', listId)
 		const res = await fetch(
 			`${BACKEND_URL}/users/${user._id}/lists/${listId}/items/${itemId}`,
 			{
@@ -94,7 +103,7 @@ const deleteListItem = async (user, listId, itemId) => {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				},
-				user
+				user,
 			}
 		)
 		return res.json()
