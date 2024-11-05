@@ -85,27 +85,26 @@ const ListShow = (props) => {
 
 	return (
 		<div>
-			<h1>
-				{isEditing ? (
-					<form onSubmit={(event) => event.preventDefault()}>
-						<input
-							type="text"
-							name="listName"
-							value={list.listName}
-							onChange={handleTextFieldChange}
-						/>
-					</form>
-				) : (
-					list.listName
-				)}
-			</h1>
+			{isEditing ? (
+				<form onSubmit={(event) => event.preventDefault()}>
+					<input
+						type="text"
+						name="listName"
+						value={list.listName}
+						onChange={handleTextFieldChange}
+					/>
+				</form>
+			) : (
+				<h1>{list.listName}</h1>
+			)}
+
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 			<ul>
 				{list.items.map((item) => (
 					<li key={item._id}>
-						<h2>
+						<p>
 							{item.name} ({item.publicationDate})
-						</h2>
+						</p>
 						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
@@ -126,7 +125,11 @@ const ListShow = (props) => {
 					</select>
 				)}
 				{!isAdding && availableMovies.length > 0 && (
-					<button type="button" onClick={setIsAdding(true)}>
+					<button
+						type="button"
+						disabled={isAdding}
+						onClick={() => setIsAdding(true)}
+					>
 						+
 					</button>
 				)}
