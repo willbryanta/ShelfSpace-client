@@ -1,28 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
-const getLibraryItem = async () => {
-	try {
-		const res = await fetch(`${BACKEND_URL}/library`, {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-			},
-		})
-
-		if (!res.ok) {
-			const errorData = await res.json()
-			throw new Error(errorData.err)
-		}
-
-		const data = await res.json()
-		return data
-	} catch (error) {
-		console.error(error)
-		throw error
-	}
-}
-
 const createLibraryItem = async (libraryItem) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library`, {
@@ -44,17 +22,23 @@ const createLibraryItem = async (libraryItem) => {
 	}
 }
 
-const deleteLibraryItem = async (libraryItemId) => {
+const getLibraryItem = async () => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
-			method: 'DELETE',
+		const res = await fetch(`${BACKEND_URL}/library`, {
+			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
-		return res.json()
+		if (!res.ok) {
+			const errorData = await res.json()
+			throw new Error(errorData.err)
+		}
+		const data = await res.json()
+		return data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
+		throw error
 	}
 }
 
@@ -67,6 +51,20 @@ const updateLibraryItem = async (libraryItemId, libraryItemFormData) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(libraryItemFormData),
+		})
+		return res.json()
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+const deleteLibraryItem = async (libraryItemId) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			},
 		})
 		return res.json()
 	} catch (error) {
