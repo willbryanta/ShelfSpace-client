@@ -54,7 +54,7 @@ const createList = async (user, ListFormData) => {
 
 const showList = async (user, listId) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${user._id}/lists/${listId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
@@ -69,7 +69,7 @@ const showList = async (user, listId) => {
 
 const updateList = async (user, listId, ListFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${user._id}/lists/${listId}`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists/${listId}`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
@@ -108,7 +108,7 @@ const deleteListItem = async (user, listId, ItemId) => {
 			{
 				method: 'DELETE',
 				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`,
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				},
 				user
 			}

@@ -5,73 +5,69 @@ import * as usersService from '../../services/usersService'
 const ListShow = (props) => {
 	const {user} = props
 	const {listId} = useParams()
-	const [list, setList] = useState(null)
+	const [list, setList] = useState({listName:'', items:[]})
 	const [isEditing, setIsEditing] = useState(false)
-	const [editFormData, setEditFormData] = useState(null)
 
 	useEffect(() => {
 		const fetchList = async () => {
-			const userId = user._id
 			const fetchedList = await usersService.showList(user, listId)
 			setList(fetchedList)
+			
 		}
+
 		fetchList()
-	}, [listId, user._id])
+		console.log(list)
+	}, [])
 
 	const handleDeleteListItem = async (itemId) => {
-		const deletedListItem = await usersService.deleteListItem(user,itemId)
+		const deletedListItem = await usersService.deleteListItem(user, itemId)
 		setList({
 			...list,
 			items: list.items.filter((item) => item._id !== deletedListItem._id),
 		})
 	}
 
-	const handleEditClick = () => {
-		setEditFormData({listName: list.listName})
-		setIsEditing(true)
-	}
-
-	const handleEditChange = (event) => {
+	const handleTextFieldChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = event.target.value
-		setEditFormData({
-			...editFormData,
+		setList({
+			...list,
 			[inputName]: inputValue,
 		})
 	}
 
-	const handleEditSubmit = async (event) => {
+	const handleSaveClick = async (event) => {
 		event.preventDefault()
-		const updatedList = await usersService.updateList(
+		const packagedListData = {updatedList: list}
+		const updatedListResponse = await usersService.updateList(
 			user,
 			list._id,
-			updatedList: editFormData
+			packagedListData
 		)
-		setList({
-			updatedList
-		})
-		setIsEditing(false)
-		setEditFormData(updatedList)
-	}
+		
 
-	if (!list) return <p>Can't find your list. Please try again later</p>
+		
+		
+		setList({
+			updatedListResponse,
+		})
+
+		setIsEditing(false)
+	}
 
 	return (
 		<div>
 			<h1>
 				{isEditing ? (
-					<form onSubmit={handleEditSubmit}>
-						<label htmlFor="listName">Title</label>
+					<form onSubmit={(event) => event.preventDefault()}>
+						<label htmlFor="listName">Title:</label>
 						<input
+							id="listName"
 							type="text"
 							name="listName"
-							value={editFormData.listName}
-							onChange={handleEditChange}
+							value={list.listName}
+							onChange={handleTextFieldChange}
 						/>
-						<button type="submit">Save</button>
-						<button type="button" onClick={() => setIsEditing(false)}>
-							Cancel
-						</button>
 					</form>
 				) : (
 					list.listName
@@ -79,16 +75,26 @@ const ListShow = (props) => {
 			</h1>
 			<ul>
 				{list.items.map((item) => (
-					<li key={item._id}>
-						<h2>{item.name}</h2>
-
-						<h4>Publication Date: {item.publicationDate}</h4>
-
+					<li key={item._id }>
+						<h2>
+							{item.name} ({item.publicationDate}){' '}
+						</h2>
 						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
+				<button type="button"> + </button>
 			</ul>
-			{!isEditing && <button onClick={handleEditClick}>Edit List Name</button>}
+
+			{!isEditing && (
+				<button onClick={() => setIsEditing(true)}>Edit List Name</button>
+			)}
+
+			{isEditing && (
+				<button type="button" onClick={handleSaveClick} disabled={!isEditing}>
+					{' '}
+					Save{' '}
+				</button>
+			)}
 		</div>
 	)
 }
