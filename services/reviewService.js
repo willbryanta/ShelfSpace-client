@@ -6,7 +6,7 @@ const createReview = async (review) => {
 		const res = await fetch(`${BACKEND_URL}/reviews`, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(review),
@@ -27,7 +27,7 @@ const getReview = async (review) => {
 		const res = await fetch(`${BACKEND_URL}/reviews`, {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(review),
@@ -48,7 +48,7 @@ const updateReview = async (reviewId, reviewFormData) => {
 		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'PUT',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(reviewFormData),
@@ -64,7 +64,7 @@ const deleteReview = async (reviewId) => {
 		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'DELETE',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
 		return res.json()
