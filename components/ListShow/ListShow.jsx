@@ -43,7 +43,7 @@ const ListShow = (props) => {
 	const handleEditSubmit = async (event) => {
 		event.preventDefault()
 		const updatedList = await usersService.updateList(
-			user._id,
+			user,
 			list._id,
 			editFormData.listName
 		)
