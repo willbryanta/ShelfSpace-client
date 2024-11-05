@@ -15,7 +15,7 @@ function LibraryItem(props) {
 			}
 		}
 		fetchLibraryItem()
-	}, [libraryItemId])
+	}, [])
 
 	return (
 		<div>
