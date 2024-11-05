@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 
-const ListShow = (props) => {
+const ListDisplay = (props) => {
 	const {user} = props
 	const {listId} = useParams()
 	const [list, setList] = useState({listName: '', items: []})
@@ -106,4 +106,4 @@ const ListShow = (props) => {
 	)
 }
 
-export default ListShow
+export default ListDisplay

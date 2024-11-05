@@ -2,7 +2,7 @@ import {useEffect, useState, useParams} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
-function LibraryItem(props) {
+function LibraryItemDisplay(props) {
 	const {user} = props
 	const {libraryItemId} = useParams()
 	const [libraryItem, setLibraryItem] = useState(null)
@@ -41,4 +41,4 @@ function LibraryItem(props) {
 	)
 }
 
-export default LibraryItem
+export default LibraryItemDisplay

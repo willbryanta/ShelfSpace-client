@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 
-function LibraryIndex() {
+function LibraryIndexDisplay() {
 	const [libraryItems, setLibraryItems] = useState([])
 
 	useEffect(() => {
@@ -30,4 +30,4 @@ function LibraryIndex() {
 	)
 }
 
-export default LibraryIndex
+export default LibraryIndexDisplay
