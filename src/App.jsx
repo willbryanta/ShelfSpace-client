@@ -12,7 +12,11 @@ function App() {
 	const handleSetUser = (user) => setUser(user)
 	return (
 		<>
-			<Navbar user={user} authService={authService} handleSetUser={handleSetUser} />
+			<Navbar
+				user={user}
+				authService={authService}
+				handleSetUser={handleSetUser}
+			/>
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
 				<Route
