@@ -6,7 +6,7 @@ const getLibraryItem = async () => {
 		const res = await fetch(`${BACKEND_URL}/library`, {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
 
@@ -28,7 +28,7 @@ const createLibraryItem = async (libraryItem) => {
 		const res = await fetch(`${BACKEND_URL}/library`, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(libraryItem),
@@ -49,7 +49,7 @@ const deleteLibraryItem = async (libraryItemId) => {
 		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
 			method: 'DELETE',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
 		return res.json()
@@ -63,7 +63,7 @@ const updateLibraryItem = async (libraryItemId, libraryItemFormData) => {
 		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
 			method: 'PUT',
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(libraryItemFormData),

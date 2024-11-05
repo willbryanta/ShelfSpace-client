@@ -7,6 +7,7 @@ const ListShow = (props) => {
 	const {listId} = useParams()
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
+	const [unsavedChanges, setUnsavedChanges] = useState(false)
 
 	const fetchList = async () => {
 		const fetchedList = await usersService.showList(user, listId)
@@ -22,6 +23,7 @@ const ListShow = (props) => {
 			...list,
 			items: list.items.filter((item) => item._id !== itemId),
 		})
+		setUnsavedChanges(true)
 	}
 
 	const handleTextFieldChange = (event) => {
@@ -31,6 +33,7 @@ const ListShow = (props) => {
 			...list,
 			[inputName]: inputValue,
 		})
+		setUnsavedChanges(true)
 	}
 
 	const handleSaveClick = async (event) => {
@@ -45,11 +48,13 @@ const ListShow = (props) => {
 		setList(updatedListResponse)
 
 		setIsEditing(false)
+		setUnsavedChanges(false)
 	}
 
 	const handleCancelClick = () => {
 		fetchList()
 		setIsEditing(false)
+		setUnsavedChanges(false)
 	}
 
 	return (
@@ -81,11 +86,19 @@ const ListShow = (props) => {
 				<button type="button"> + </button>
 			</ul>
 
-			<button type="button" onClick={handleSaveClick}>
+			<button
+				type="button"
+				onClick={handleSaveClick}
+				disabled={!unsavedChanges}
+			>
 				{' '}
 				Save{' '}
 			</button>
-			<button type="button" onClick={handleCancelClick} disabled={!isEditing}>
+			<button
+				type="button"
+				onClick={handleCancelClick}
+				disabled={!isEditing && !unsavedChanges}
+			>
 				{' '}
 				Cancel{' '}
 			</button>

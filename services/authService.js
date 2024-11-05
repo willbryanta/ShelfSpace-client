@@ -50,16 +50,23 @@ const getUser = () => {
 	return user
 }
 
-const validatePassword = async (input) => {
+const updateUser = async (input) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/auth/password/${input.user._id}`, {
-			method: 'GET',
+		const res = await fetch(`${BACKEND_URL}/auth/${input.user._id}`, {
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
-				password: `${input.password}`,
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
+			user: input.user,
+			body: JSON.stringify({
+				username: input.formData.username,
+				currentPassword: input.formData.currentPassword,
+				password: input.formData.password,
+			}),
 		})
 		const output = await res.json()
+		localStorage.setItem(TOKEN_KEY, output.token)
 		if (output.err) {
 			throw new Error(output.err)
 		}
@@ -70,4 +77,4 @@ const validatePassword = async (input) => {
 	}
 }
 
-export {signUp, signIn, signOut, getUser, validatePassword}
+export {signUp, signIn, signOut, getUser, updateUser}
