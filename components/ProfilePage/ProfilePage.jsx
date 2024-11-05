@@ -7,7 +7,7 @@ import UserSettings from '../UserSettings/UserSettings'
 function ProfilePage(props) {
 	const {user, handleSetUser, authService} = props
 	const navigate = useNavigate()
-	const {getProfile, updateUser, deleteList} = usersService
+	const {getProfile, deleteList} = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
@@ -62,7 +62,6 @@ function ProfilePage(props) {
 			</ul>
 			<UserSettings
 				handleSetUser={handleSetUser}
-				updateUser={updateUser}
 				user={user}
 				authService={authService}
 			/>
