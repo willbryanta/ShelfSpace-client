@@ -33,7 +33,6 @@ function LibraryItem(props) {
 									<ReviewDisplay review={review} user={user} />
 								</li>
 							})}
-							
 						</ul>
 					}
 				</li>
