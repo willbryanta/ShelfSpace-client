@@ -1,16 +1,25 @@
-function LibraryIndex(props) {
-	const {libraryItems} = props
+import {Link} from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import {getLibraryItem} from '../../services/libraryItemService'
 
-	const allLibraryItems = libraryItems.map((libraryItem, index) => (
-		<ul key={index}>
-			<li>Name: {libraryItem.name}</li>
-			<li>Description: {libraryItem.description}</li>
-			<li>Publication Date: {libraryItem.publicatioDate}</li>
-			<li>Author: {libraryItem.author}</li>
+function LibraryIndex() {
+	const [libraryItems, setLibraryItems] = useState([])
+
+	useEffect(() => {
+		const fetchLibraryItems = async () => {
+			const items = await getLibraryItem()
+			setLibraryItems(items)
+		}
+		fetchLibraryItems()
+	}, [])
+
+	const allLibraryItems = libraryItems.map((libraryItem) => (
+		<ul key={libraryItem._id}>
 			<li>
-				Reviews: <li>Description: {libraryItem.review.description}</li>
-				<li>Rating: {libraryItem.review.rating}</li>
+				<Link to={`library/${libraryItem._id}`}>Name: {libraryItem.name}</Link>
 			</li>
+			<li>Description: {libraryItem.description}</li>
+			<li>Publication Date: {libraryItem.publicationDate}</li>
 		</ul>
 	))
 
