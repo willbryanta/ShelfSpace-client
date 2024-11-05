@@ -33,7 +33,7 @@ const SignUpForm = (props) => {
 				username: formData.username,
 				password: formData.password,
 			})
-
+			//Error handling
 			handleSetUser(responseData.user)
 			navigate('/')
 		} catch (error) {

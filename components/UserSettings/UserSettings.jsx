@@ -12,6 +12,7 @@ function UserSettings(props) {
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 		const userPayload = await updateUser({user, formData})
+		//Error handling
 		handleSetUser(userPayload.user)
 		setFormData({
 			username: userPayload.user.username,

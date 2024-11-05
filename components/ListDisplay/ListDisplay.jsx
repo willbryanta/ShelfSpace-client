@@ -14,6 +14,7 @@ const ListDisplay = (props) => {
 
 	const fetchList = async () => {
 		const fetchedList = await usersService.showList(user, listId)
+		//Error handling
 		setList(fetchedList)
 	}
 
@@ -23,6 +24,7 @@ const ListDisplay = (props) => {
 
 	const fetchMovies = async () => {
 		const movies = await libraryItemService.getLibraryItem()
+		//Error handling
 		filterMovies(movies)
 	}
 
@@ -63,6 +65,7 @@ const ListDisplay = (props) => {
 			list._id,
 			packagedListData
 		)
+		//Error handling
 
 		setList(updatedListResponse)
 		setIsEditing(false)

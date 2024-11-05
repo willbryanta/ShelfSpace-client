@@ -12,6 +12,7 @@ function ProfilePage(props) {
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
 		const profileData = await getProfile(user)
+		//Error handling
 		setLists(profileData.user.lists)
 		setReviews(profileData.reviews)
 	}

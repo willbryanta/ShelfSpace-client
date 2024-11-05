@@ -35,6 +35,7 @@ const SignInForm = (props) => {
 
 					const {username, password} = formData
 					const userPayload = await authService.signIn({username, password})
+					//Error handling
 					handleSetUser(userPayload)
 					navigate('/')
 				}}

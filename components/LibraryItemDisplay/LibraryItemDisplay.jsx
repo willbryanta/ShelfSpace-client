@@ -11,6 +11,7 @@ function LibraryItemDisplay(props) {
 		const fetchLibraryItem = async () => {
 			if (libraryItemId) {
 				const item = await libraryItemService.getLibraryItem(libraryItemId)
+				//Error handling
 				setLibraryItem(item)
 			}
 		}
