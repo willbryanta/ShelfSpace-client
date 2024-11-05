@@ -1,5 +1,5 @@
 import {useEffect, useState, useParams} from 'react'
-import {getLibraryItem} from '../../services/libraryItemService'
+import * as libraryItemService from '../../services/libraryItemService'
 
 function LibraryItem() {
 	const {libraryItemId} = useParams()
@@ -8,7 +8,7 @@ function LibraryItem() {
 	useEffect(() => {
 		const fetchLibraryItem = async () => {
 			if (libraryItemId) {
-				const item = await getLibraryItem(libraryItemId)
+				const item = await libraryItemService.getLibraryItem(libraryItemId)
 				setLibraryItem(item)
 			}
 		}
