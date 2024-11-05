@@ -1,7 +1,9 @@
 import {useEffect, useState, useParams} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
+import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
-function LibraryItem() {
+function LibraryItem(props) {
+	const {user} = props
 	const {libraryItemId} = useParams()
 	const [libraryItem, setLibraryItem] = useState(null)
 
@@ -22,7 +24,19 @@ function LibraryItem() {
 				<li>Description: {libraryItem.description}</li>
 				<li>Publication Date: {libraryItem.publicationDate}</li>
 				<li>Author: {libraryItem.author}</li>
-				<li>Reviews: {libraryItem.reviews}</li>
+				<li>
+					Reviews:
+					{
+						<ul>
+							{libraryItem.reviews.map((review) => {
+								<li key={review._id}>
+									<ReviewDisplay review={review} user={user} />
+								</li>
+							})}
+							;
+						</ul>
+					}
+				</li>
 			</ul>
 		</div>
 	)
