@@ -8,21 +8,19 @@ const ListShow = (props) => {
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
 
-	useEffect(() => {
-		const fetchList = async () => {
-			const fetchedList = await usersService.showList(user, listId)
-			setList(fetchedList)
-		}
+	const fetchList = async () => {
+		const fetchedList = await usersService.showList(user, listId)
+		setList(fetchedList)
+	}
 
+	useEffect(() => {
 		fetchList()
-		console.log(list)
 	}, [])
 
 	const handleDeleteListItem = async (itemId) => {
-		const deletedListItem = await usersService.deleteListItem(user, itemId)
 		setList({
 			...list,
-			items: list.items.filter((item) => item._id !== deletedListItem._id),
+			items: list.items.filter((item) => item._id !== itemId),
 		})
 	}
 
@@ -49,14 +47,17 @@ const ListShow = (props) => {
 		setIsEditing(false)
 	}
 
+	const handleCancelClick = () => {
+		fetchList()
+		setIsEditing(false)
+	}
+
 	return (
 		<div>
 			<h1>
 				{isEditing ? (
 					<form onSubmit={(event) => event.preventDefault()}>
-						<label htmlFor="listName">Title:</label>
 						<input
-							id="listName"
 							type="text"
 							name="listName"
 							value={list.listName}
@@ -67,6 +68,7 @@ const ListShow = (props) => {
 					list.listName
 				)}
 			</h1>
+			<button onClick={() => setIsEditing(true)}>Edit</button>
 			<ul>
 				{list.items.map((item) => (
 					<li key={item._id}>
@@ -79,16 +81,14 @@ const ListShow = (props) => {
 				<button type="button"> + </button>
 			</ul>
 
-			{!isEditing && (
-				<button onClick={() => setIsEditing(true)}>Edit List Name</button>
-			)}
-
-			{isEditing && (
-				<button type="button" onClick={handleSaveClick} disabled={!isEditing}>
-					{' '}
-					Save{' '}
-				</button>
-			)}
+			<button type="button" onClick={handleSaveClick}>
+				{' '}
+				Save{' '}
+			</button>
+			<button type="button" onClick={handleCancelClick} disabled={!isEditing}>
+				{' '}
+				Cancel{' '}
+			</button>
 		</div>
 	)
 }

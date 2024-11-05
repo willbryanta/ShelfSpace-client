@@ -101,10 +101,12 @@ const deleteList = async (user, listId) => {
 	}
 }
 
-const deleteListItem = async (user, listId, ItemId) => {
+const deleteListItem = async (user, listId, itemId) => {
 	try {
+		console.log("🚀 ~ deleteListItem ~ itemId:", itemId)
+		console.log("🚀 ~ deleteListItem ~ listId:", listId)
 		const res = await fetch(
-			`${BACKEND_URL}/${user._id}/lists/${listId}/items/${ItemId}`,
+			`${BACKEND_URL}/users/${user._id}/lists/${listId}/items/${itemId}`,
 			{
 				method: 'DELETE',
 				headers: {
