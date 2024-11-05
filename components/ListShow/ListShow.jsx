@@ -2,7 +2,6 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
-import Select from 'react-select'
 
 const ListShow = (props) => {
 	const {user} = props
@@ -11,8 +10,7 @@ const ListShow = (props) => {
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
-	const [selectedMovie, setSelectedMovie] = useState('')
-	const [showDropdown, setShowDropdown] = useState(false)
+	const [isAdding, setIsAdding] = useState(false)
 
 	const fetchList = async () => {
 		const fetchedList = await usersService.showList(user, listId)
@@ -21,7 +19,7 @@ const ListShow = (props) => {
 
 	useEffect(() => {
 		fetchList()
-	}, [listId])
+	}, [])
 
 	const fetchMovies = async () => {
 		const movies = await libraryItemService.getLibraryItem()
@@ -77,30 +75,13 @@ const ListShow = (props) => {
 		setUnsavedChanges(false)
 	}
 
-	const handleAddItem = () => {
-		const movieToAdd = availableMovies.find(
-			(movie) => movie._id === selectedMovie
-		)
-		if (movieToAdd) {
-			setList({
-				...list,
-				items: [...list.items, movieToAdd],
-			})
-			setShowDropdown(false)
-			setUnsavedChanges(true)
-		}
+	const handleAddMovie = (event) => {
+		const updatedItems = [...list.items]
+		updatedItems.push(JSON.parse(event.target.value))
+		setList({...list, items: updatedItems})
+		setUnsavedChanges(true)
+		setIsAdding(false)
 	}
-
-	const toggleDropdownVisibility = () => {
-		setShowDropdown((currentState) => !currentState)
-	}
-
-	const movieOptions = availableMovies.map((movie) => {
-		return {
-			value: movie._id, 
-			label: movie.name
-		}
-	})
 
 	return (
 		<div>
@@ -129,40 +110,27 @@ const ListShow = (props) => {
 					</li>
 				))}
 			</ul>
-
-			{!selectedMovie && availableMovies.length > 0 && (
-				<div>No movie selected. Click "+" to add a movie!</div>
-			)}
-
-			{availableMovies.length > 0 && !selectedMovie && (
-				<button type="button" onClick={toggleDropdownVisibility}>
-					+
-				</button>
-			)}
-
-			{showDropdown && (
-				<div>
-					<Select
-						value={selectedMovie}
-						onChange={(event) => setSelectedMovie(event.target.value)}
-						options={movieOptions}
-						defaultValue={movieOptions[0]}
-						disabled={false}
-					>
-						
-					</Select>
-					<button
-						type="button"
-						onClick={handleAddItem}
-						disabled={!selectedMovie}
-					>
-						Add Movie
+			<div>
+				{isAdding && availableMovies.length > 0 && (
+					<select defaultValue={{}} onChange={(event) => handleAddMovie(event)}>
+						<option key="default" value={{}} disabled>
+							Select a movie
+						</option>
+						{availableMovies.map((movie) => {
+							return (
+								<option key={movie._id} value={JSON.stringify(movie)}>
+									{movie.name}
+								</option>
+							)
+						})}
+					</select>
+				)}
+				{!isAdding && availableMovies.length > 0 && (
+					<button type="button" onClick={setIsAdding(true)}>
+						+
 					</button>
-				</div>
-			)}
-
-			{availableMovies.length === 0 && <div>You have seen all the movies!</div>}
-
+				)}
+			</div>
 			<button
 				type="button"
 				onClick={handleSaveClick}
