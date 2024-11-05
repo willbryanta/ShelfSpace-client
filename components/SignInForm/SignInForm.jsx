@@ -23,7 +23,7 @@ const SignInForm = (props) => {
 
 	const isFormInvalid = () => {
 		const {username, password} = formData
-		return !(username && password )
+		return !(username && password)
 	}
 
 	return (
