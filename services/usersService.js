@@ -16,24 +16,6 @@ const getProfile = async (user) => {
 	}
 }
 
-const updateUser = async (user, profileData) => {
-	try {
-		const res = await fetch(`${BACKEND_URL}/users/${user._id}`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(profileData),
-			user,
-		})
-		return await res.json()
-	} catch (error) {
-		console.log(error, 'Error updating your profile')
-		return {error: 'Error updating your profile'}
-	}
-}
-
 const createList = async (user, ListFormData) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/${user._id}/lists`, {
@@ -123,7 +105,6 @@ const deleteListItem = async (user, listId, itemId) => {
 
 export {
 	getProfile,
-	updateUser,
 	createList,
 	showList,
 	updateList,
