@@ -14,7 +14,7 @@ function UserSettings(props) {
 		const userPayload = await updateUser({user, formData})
 		handleSetUser(userPayload.user)
 		setFormData({
-			username: user.username,
+			username: userPayload.user.username,
 			currentPassword: '',
 			password: '',
 			confirmPassword: '',
