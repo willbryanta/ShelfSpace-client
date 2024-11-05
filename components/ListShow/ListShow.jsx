@@ -51,7 +51,7 @@ const ListShow = (props) => {
 			updatedList
 		})
 		setIsEditing(false)
-		setEditFormData(null)
+		setEditFormData(updatedList)
 	}
 
 	if (!list) return <p>Can't find your list. Please try again later</p>
