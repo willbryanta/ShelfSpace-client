@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
+import * as libraryItemService from '../../services/libraryItemService'
 
 const ListDisplay = (props) => {
 	const {user} = props
@@ -8,6 +9,8 @@ const ListDisplay = (props) => {
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
+	const [availableMovies, setAvailableMovies] = useState([])
+	const [isAdding, setIsAdding] = useState(false)
 
 	const fetchList = async () => {
 		const fetchedList = await usersService.showList(user, listId)
@@ -17,6 +20,22 @@ const ListDisplay = (props) => {
 	useEffect(() => {
 		fetchList()
 	}, [])
+
+	const fetchMovies = async () => {
+		const movies = await libraryItemService.getLibraryItem()
+		filterMovies(movies)
+	}
+
+	const filterMovies = (movies) => {
+		const filteredMovies = movies.filter(
+			(movie) => !list.items.some((item) => item._id === movie._id)
+		)
+		setAvailableMovies(filteredMovies)
+	}
+
+	useEffect(() => {
+		fetchMovies()
+	}, [list])
 
 	const handleDeleteListItem = async (itemId) => {
 		setList({
@@ -46,7 +65,6 @@ const ListDisplay = (props) => {
 		)
 
 		setList(updatedListResponse)
-
 		setIsEditing(false)
 		setUnsavedChanges(false)
 	}
@@ -57,50 +75,78 @@ const ListDisplay = (props) => {
 		setUnsavedChanges(false)
 	}
 
+	const handleAddMovie = (event) => {
+		const updatedItems = [...list.items]
+		updatedItems.push(JSON.parse(event.target.value))
+		setList({...list, items: updatedItems})
+		setUnsavedChanges(true)
+		setIsAdding(false)
+	}
+
 	return (
 		<div>
-			<h1>
-				{isEditing ? (
-					<form onSubmit={(event) => event.preventDefault()}>
-						<input
-							type="text"
-							name="listName"
-							value={list.listName}
-							onChange={handleTextFieldChange}
-						/>
-					</form>
-				) : (
-					list.listName
-				)}
-			</h1>
+			{isEditing ? (
+				<form onSubmit={(event) => event.preventDefault()}>
+					<input
+						type="text"
+						name="listName"
+						value={list.listName}
+						onChange={handleTextFieldChange}
+					/>
+				</form>
+			) : (
+				<h1>{list.listName}</h1>
+			)}
+
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 			<ul>
 				{list.items.map((item) => (
 					<li key={item._id}>
-						<h2>
-							{item.name} ({item.publicationDate}){' '}
-						</h2>
+						<p>
+							{item.name} ({item.publicationDate})
+						</p>
 						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
-				<button type="button"> + </button>
 			</ul>
-
+			<div>
+				{isAdding && availableMovies.length > 0 && (
+					<select defaultValue={{}} onChange={(event) => handleAddMovie(event)}>
+						<option key="default" value={{}} disabled>
+							Select a movie
+						</option>
+						{availableMovies.map((movie) => {
+							return (
+								<option key={movie._id} value={JSON.stringify(movie)}>
+									{movie.name}
+								</option>
+							)
+						})}
+					</select>
+				)}
+				{!isAdding && availableMovies.length > 0 && (
+					<button
+						type="button"
+						disabled={isAdding}
+						onClick={() => setIsAdding(true)}
+					>
+						+
+					</button>
+				)}
+			</div>
 			<button
 				type="button"
 				onClick={handleSaveClick}
 				disabled={!unsavedChanges}
 			>
-				{' '}
-				Save{' '}
+				Save
 			</button>
 			<button
 				type="button"
 				onClick={handleCancelClick}
 				disabled={!isEditing && !unsavedChanges}
 			>
-				{' '}
-				Cancel{' '}
+				Cancel
 			</button>
 		</div>
 	)
