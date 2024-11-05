@@ -13,7 +13,7 @@ function LibraryItem() {
 			}
 		}
 		fetchLibraryItem()
-	}, [libraryItemId])
+	}, [])
 
 	return (
 		<div>
