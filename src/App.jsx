@@ -31,7 +31,8 @@ function App() {
 				error={error}
 			/>
 			<Routes>
-				<Route path="/library" element={<LibraryIndexDisplay />} />
+				<Route path="/library/:libraryItemId" element={<LibraryItem />} />
+				<Route path="/library" element={<LibraryIndex />} />
 				<Route
 					path="/users/signup"
 					element={

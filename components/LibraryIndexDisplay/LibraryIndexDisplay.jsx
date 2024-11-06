@@ -25,7 +25,7 @@ function LibraryIndexDisplay(props) {
 	const allLibraryItems = libraryItems.map((libraryItem) => (
 		<ul key={libraryItem._id}>
 			<li>
-				<Link to={`library/${libraryItem._id}`}>
+				<Link to={`/library/${libraryItem._id}`}>
 					<strong>Name:</strong> {libraryItem.name}
 				</Link>
 			</li>

@@ -42,6 +42,26 @@ const getLibraryItem = async () => {
 	}
 }
 
+const getLibraryItemById = async (libraryItemId) => {
+	try {
+		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+			},
+		})
+		if (!res.ok) {
+			const errorData = await res.json()
+			throw new Error(errorData.err)
+		}
+		const data = await res.json()
+		return data
+	} catch (error) {
+		console.error(error)
+		throw error
+	}
+}
+
 const updateLibraryItem = async (libraryItemId, libraryItemFormData) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
@@ -72,4 +92,10 @@ const deleteLibraryItem = async (libraryItemId) => {
 	}
 }
 
-export {createLibraryItem, getLibraryItem, deleteLibraryItem, updateLibraryItem}
+export {
+	createLibraryItem,
+	getLibraryItem,
+	getLibraryItemById,
+	deleteLibraryItem,
+	updateLibraryItem,
+}
