@@ -107,7 +107,7 @@ const ListShow = (props) => {
 			<div>
 				{isAdding && availableMovies.length > 0 && (
 					<select defaultValue={{}} onChange={handleAddMovie}>
-						<option value="" disabled>
+						<option key="default" value={{}} disabled>
 							Select a movie
 						</option>
 						{availableMovies.map((movie) => (
