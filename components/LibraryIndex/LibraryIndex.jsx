@@ -8,6 +8,7 @@ function LibraryIndex() {
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
 			const items = await libraryItemService.getLibraryItem()
+			console.log(items)
 			setLibraryItems(items)
 		}
 		fetchLibraryItems()
@@ -16,7 +17,7 @@ function LibraryIndex() {
 	const allLibraryItems = libraryItems.map((libraryItem) => (
 		<ul key={libraryItem._id}>
 			<li>
-				<Link to={`library/${libraryItem._id}`}>Name: {libraryItem.name}</Link>
+				<Link to={`/library/${libraryItem._id}`}>Name: {libraryItem.name}</Link>
 			</li>
 			<li>Description: {libraryItem.description}</li>
 			<li>Publication Date: {libraryItem.publicationDate}</li>
