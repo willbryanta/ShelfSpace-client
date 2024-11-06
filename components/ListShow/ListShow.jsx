@@ -2,7 +2,14 @@ import {useParams, useNavigate} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
+import {format} from 'date-fns'
 import './ListShow.css'
+
+const formatDate = (date) => {
+	return format(new Date(date), 'yyyy')
+}
+//* this is a helper function that helps to format the date 
+//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object 
 
 const ListShow = (props) => {
 	const {user} = props
@@ -112,14 +119,22 @@ const ListShow = (props) => {
 			)}
 
 			<ul>
-				{list.items.map((item) => (
-					<li key={item._id}>
-						<p>
-							{item.name} ({item.publicationDate})
-						</p>
-						<button className="delete-button" onClick={() => handleDeleteListItem(item._id)}>X</button>
-					</li>
-				))}
+				{list.items.map((item) => {
+					const formattedDate = formatDate(item.publicationDate)
+					return (
+						<li key={item._id}>
+							<p>
+								<strong>{item.name}</strong>({formattedDate})
+							</p>
+							<button
+								className="delete-button"
+								onClick={() => handleDeleteListItem(item._id)}
+							>
+								X
+							</button>
+						</li>
+					)
+				})}
 			</ul>
 
 			<div className="add-movie-container">
