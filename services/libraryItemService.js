@@ -26,26 +26,35 @@ const createLibraryItem = async (libraryItem) => {
 const getLibraryItem = async () => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library`, {
-			method: 'GET',
+			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+				'Content-type': 'application/json',
 			},
+			body: JSON.stringify(libraryItem),
 		})
+
 		if (!res.ok) {
 			const errorData = await res.json()
 			throw new Error(errorData.err)
 		}
+
 		const data = await res.json()
+		if (data.err) {
+			throw new Error(data.err)
+		}
 		return data
 	} catch (error) {
-		console.error(error)
+		console.log(error)
 		throw error
 	}
 }
 
+
 const getLibraryItemById = async (libraryItemId) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
+
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
