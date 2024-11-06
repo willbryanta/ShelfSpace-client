@@ -60,12 +60,7 @@ const ListShow = (props) => {
 			const newListData = {
 				newList: {listName: list.listName, items: list.items},
 			}
-			//! newListData is capturing correctly
-
 			const newListResponse = await usersService.createList(user, newListData)
-			console.log("🚀 ~ handleSaveClick ~ newListResponse:", newListResponse)
-			//! newListResponse working as intended
-
 			setList(newListResponse)
 			setIsEditing(false)
 			setUnsavedChanges(false)
