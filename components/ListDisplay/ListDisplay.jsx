@@ -21,23 +21,25 @@ const ListDisplay = (props) => {
 	}
 	//* this is a helper function that helps to format the date
 	//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object
-	
+
 	const fetchList = async () => {
 		if (!isNew) {
-			const fetchedList = await usersService.showList(user, listId)
-			if (fetchedList.error) {
-				return handleError(fetchedList.error)
+			try {
+				const fetchedList = await usersService.showList(user, listId)
+				setList(fetchedList)
+			} catch (error) {
+				handleError(error.message)
 			}
-			setList(fetchedList)
 		}
 	}
 
 	const fetchMovies = async () => {
-		const movies = await libraryItemService.getLibraryItem()
-		if (movies.error) {
-			return handleError(movies.error)
+		try {
+			const movies = await libraryItemService.getLibraryItem()
+			filterMovies(movies)
+		} catch (error) {
+			handleError(error.message)
 		}
-		filterMovies(movies)
 	}
 
 	const filterMovies = (movies) => {
@@ -70,28 +72,32 @@ const ListDisplay = (props) => {
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
 		if (isNew) {
-			const newListData = {
-				newList: {listName: list.listName, items: list.items},
+			try {
+				const newListData = {
+					newList: {listName: list.listName, items: list.items},
+				}
+				const newListResponse = await usersService.createList(user, newListData)
+				setList(newListResponse)
+				setIsEditing(false)
+				setUnsavedChanges(false)
+				navigate(`/users/${user._id}/lists/${newListResponse._id}`)
+			} catch (error) {
+				handleError(error.message)
 			}
-			const newListResponse = await usersService.createList(user, newListData)
-			setList(newListResponse)
-			setIsEditing(false)
-			setUnsavedChanges(false)
-			navigate(`/users/${user._id}/lists/${newListResponse._id}`)
 		} else {
-			const packagedListData = {updatedList: list}
-			const updatedListResponse = await usersService.updateList(
-				user,
-				list._id,
-				packagedListData
-			)
-			if (updatedListResponse.error) {
-				return handleError(updatedListResponse.error)
+			try {
+				const packagedListData = {updatedList: list}
+				const updatedListResponse = await usersService.updateList(
+					user,
+					list._id,
+					packagedListData
+				)
+				setList(updatedListResponse)
+				setIsEditing(false)
+				setUnsavedChanges(false)
+			} catch (error) {
+				handleError(error.message)
 			}
-
-			setList(updatedListResponse)
-			setIsEditing(false)
-			setUnsavedChanges(false)
 		}
 	}
 

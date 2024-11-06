@@ -32,13 +32,17 @@ const SignInForm = (props) => {
 			<form
 				onSubmit={async (event) => {
 					event.preventDefault()
-					const {username, password} = formData
-					const userPayload = await authService.signIn({username, password})
-					if (userPayload.error) {
-						return handleError(userPayload.error)
+					try {
+						const {username, password} = formData
+						const userPayload = await authService.signIn({username, password})
+						if (userPayload.error) {
+							return handleError(userPayload.error)
+						}
+						handleSetUser(userPayload)
+						navigate('/')
+					} catch (error) {
+						handleError(error.message)
 					}
-					handleSetUser(userPayload)
-					navigate('/')
 				}}
 			>
 				<div>

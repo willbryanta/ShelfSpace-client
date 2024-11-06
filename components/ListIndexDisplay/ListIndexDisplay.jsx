@@ -4,11 +4,12 @@ function ListIndexDisplay(props) {
 	const {user, list, deleteList, setLists, handleError} = props
 	const {listName, _id} = list
 	const handleDelete = async () => {
-		const updatedUser = await deleteList(user, _id)
-		if (updatedUser.error) {
-			return handleError(updatedUser.error)
+		try {
+			const updatedUser = await deleteList(user, _id)
+			setLists(updatedUser.lists)
+		} catch (error) {
+			handleError(error.message)
 		}
-		setLists(updatedUser.lists)
 	}
 	return (
 		<>

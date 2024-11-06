@@ -10,17 +10,15 @@ function LibraryItemDisplay(props) {
 
 	useEffect(() => {
 		const fetchLibraryItem = async () => {
-			if (libraryItemId) {
+			try {
 				const item = await libraryItemService.getLibraryItemById(libraryItemId)
-				if (item.error) {
-					return handleError(item.error)
-				}
 				setLibraryItem(item)
+			} catch (error) {
+				handleError(error.message)
 			}
 		}
 		fetchLibraryItem()
-	}, [libraryItemId])
-
+	}, [])
 
 	return (
 		<div>
@@ -33,7 +31,7 @@ function LibraryItemDisplay(props) {
 					Reviews:
 					{
 						<ul>
-							{libraryItem.reviews.map((review) => (
+							{libraryItem?.reviews?.map((review) => (
 								<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
 								</li>

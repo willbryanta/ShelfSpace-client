@@ -1,28 +1,18 @@
 import {DialogActions, DialogContent, DialogContentText} from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 const ErrorModal = (props) => {
-	const {errorModalOpen, setErrorModalOpen, error} = props
-	const {message} = error
-	const errorString = JSON.stringify(error)
+	const {errorModalOpen, setErrorModalOpen, message} = props
 
 	return (
 		<Dialog onClose={() => setErrorModalOpen(false)} open={errorModalOpen}>
-			<DialogTitle>Oh dip!</DialogTitle>
+			<DialogTitle>Uh oh!</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
-					Something went wrong... {message}. If you want the techy bits you can
-					have a look below:
+					Something went wrong. You can find the exact error message below: <br />
+					{message}
 				</DialogContentText>
-				<Accordion>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>Error:</AccordionSummary>
-					<AccordionDetails>{errorString}</AccordionDetails>
-				</Accordion>
 			</DialogContent>
 			<DialogActions>
 				<button onClick={() => setErrorModalOpen(false)}>Ok</button>

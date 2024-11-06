@@ -13,10 +13,10 @@ import ErrorModal from '../components/ErrorModal/ErrorModal'
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
-	const [error, setError] = useState({})
+	const [message, setMessage] = useState({})
 	const handleSetUser = (user) => setUser(user)
-	const handleError = (error) => {
-		setError(error)
+	const handleError = (message) => {
+		setMessage(message)
 		setErrorModalOpen(true)
 	}
 	return (
@@ -29,7 +29,7 @@ function App() {
 			<ErrorModal
 				errorModalOpen={errorModalOpen}
 				setErrorModalOpen={setErrorModalOpen}
-				error={error}
+				message={message}
 			/>
 			<Routes>
 				<Route path="/library/:libraryItemId" element={<LibraryItemDisplay />} />

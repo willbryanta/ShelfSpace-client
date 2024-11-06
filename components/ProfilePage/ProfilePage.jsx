@@ -11,10 +11,13 @@ function ProfilePage(props) {
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
-		const profileData = await getProfile(user)
-		//Error handling
-		setLists(profileData.user.lists)
-		setReviews(profileData.reviews)
+		try {
+			const profileData = await getProfile(user)
+			setLists(profileData.user.lists)
+			setReviews(profileData.reviews)
+		} catch (error) {
+			handleError(error.message)
+		}
 	}
 	useEffect(() => {
 		generateProfile()

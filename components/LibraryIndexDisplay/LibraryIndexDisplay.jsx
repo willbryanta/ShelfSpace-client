@@ -13,16 +13,18 @@ function LibraryIndexDisplay(props) {
 
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
-			const items = await libraryItemService.getLibraryItem()
-			if (items.error) {
-				return handleError(items.error)
+			try {
+				const items = await libraryItemService.getLibraryItem()
+				setLibraryItems(items)
+			} catch (error) {
+				handleError(error.message)
 			}
-			setLibraryItems(items)
+
 		}
 		fetchLibraryItems()
 	}, [])
 
-	const allLibraryItems = libraryItems.map((libraryItem) => (
+	const allLibraryItems = libraryItems?.map((libraryItem) => (
 		<ul key={libraryItem._id}>
 			<li>
 				<Link to={`/library/${libraryItem._id}`}>

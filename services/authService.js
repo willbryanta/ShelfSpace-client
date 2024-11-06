@@ -9,14 +9,13 @@ const signUp = async (input) => {
 			body: JSON.stringify(input),
 		})
 		const output = await res.json()
-		if (output.err) {
-			throw new Error(output.err)
+		if (output.error) {
+			throw new Error(output.error)
 		}
 		localStorage.setItem(TOKEN_KEY, output.token)
 		return output
-	} catch (err) {
-		console.log(err)
-		throw err
+	} catch (error) {
+		return {error}
 	}
 }
 
@@ -66,13 +65,12 @@ const updateUser = async (input) => {
 		})
 		const output = await res.json()
 		localStorage.setItem(TOKEN_KEY, output.token)
-		if (output.err) {
-			throw new Error(output.err)
+		if (output.error) {
+			throw new Error(output.error)
 		}
 		return output
-	} catch (err) {
-		console.log(err)
-		throw err
+	} catch (error) {
+		return {error}
 	}
 }
 

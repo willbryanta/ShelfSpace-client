@@ -9,10 +9,12 @@ const getProfile = async (user) => {
 			},
 			user,
 		})
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return await res.json()
 	} catch (error) {
-		console.log('Error getting your profile', error)
-		return {error: 'Error getting your profile!'}
+		return {error}
 	}
 }
 
@@ -27,11 +29,12 @@ const createList = async (user, listFormData) => {
 			user,
 			body: JSON.stringify(listFormData),
 		})
-
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return await res.json()
 	} catch (error) {
-		console.log('Error creating list:', error)
-		return {error: 'Error creating list'}
+		return {error}
 	}
 }
 
@@ -46,10 +49,12 @@ const showList = async (user, listId) => {
 				user,
 			}
 		)
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return await res.json()
 	} catch (error) {
-		console.log('Error getting that list:', error)
-		return {error: 'Error getting that list '}
+		return {error}
 	}
 }
 
@@ -67,10 +72,12 @@ const updateList = async (user, listId, ListFormData) => {
 				user,
 			}
 		)
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return await res.json()
 	} catch (error) {
-		console.log('Error updating list:', error)
-		return {error: `Error updating list `}
+		return {error}
 	}
 }
 
@@ -86,10 +93,12 @@ const deleteList = async (user, listId) => {
 				},
 			}
 		)
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return await res.json()
 	} catch (error) {
-		console.log('Error deleting list:', error)
-		return {error: `Error deleting list`}
+		return {error}
 	}
 }
 
