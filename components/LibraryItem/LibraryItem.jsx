@@ -1,4 +1,5 @@
-import {useEffect, useState, useParams} from 'react'
+import {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
@@ -10,12 +11,13 @@ function LibraryItem(props) {
 	useEffect(() => {
 		const fetchLibraryItem = async () => {
 			if (libraryItemId) {
-				const item = await libraryItemService.getLibraryItem(libraryItemId)
+				const item = await libraryItemService.getLibraryItemById(libraryItemId)
 				setLibraryItem(item)
 			}
 		}
 		fetchLibraryItem()
 	}, [libraryItemId])
+
 
 	return (
 		<div>
