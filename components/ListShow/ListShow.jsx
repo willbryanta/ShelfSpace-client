@@ -6,6 +6,7 @@ import * as libraryItemService from '../../services/libraryItemService'
 const ListShow = (props) => {
 	const {user} = props
 	const {listId} = useParams()
+
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
@@ -16,10 +17,6 @@ const ListShow = (props) => {
 		const fetchedList = await usersService.showList(user, listId)
 		setList(fetchedList)
 	}
-
-	useEffect(() => {
-		fetchList()
-	}, [])
 
 	const fetchMovies = async () => {
 		const movies = await libraryItemService.getLibraryItem()
@@ -33,25 +30,23 @@ const ListShow = (props) => {
 		setAvailableMovies(filteredMovies)
 	}
 
-	useEffect(() => {
-		fetchMovies()
-	}, [list])
+	const handleAddMovie = (event) => {
+		const movieToAdd = JSON.parse(event.target.value)
+		const updatedItems = [...list.items, movieToAdd]
+		setList({...list, items: updatedItems})
+		setUnsavedChanges(true)
+		setIsAdding(false)
+	}
 
-	const handleDeleteListItem = async (itemId) => {
-		setList({
-			...list,
-			items: list.items.filter((item) => item._id !== itemId),
-		})
+	const handleDeleteListItem = (itemId) => {
+		const updatedItems = list.items.filter((item) => item._id !== itemId)
+		setList({...list, items: updatedItems})
 		setUnsavedChanges(true)
 	}
 
 	const handleTextFieldChange = (event) => {
-		const inputName = event.target.name
-		const inputValue = event.target.value
-		setList({
-			...list,
-			[inputName]: inputValue,
-		})
+		const {name, value} = event.target
+		setList({...list, [name]: value})
 		setUnsavedChanges(true)
 	}
 
@@ -63,7 +58,6 @@ const ListShow = (props) => {
 			list._id,
 			packagedListData
 		)
-
 		setList(updatedListResponse)
 		setIsEditing(false)
 		setUnsavedChanges(false)
@@ -75,30 +69,32 @@ const ListShow = (props) => {
 		setUnsavedChanges(false)
 	}
 
-	const handleAddMovie = (event) => {
-		const updatedItems = [...list.items]
-		updatedItems.push(JSON.parse(event.target.value))
-		setList({...list, items: updatedItems})
-		setUnsavedChanges(true)
-		setIsAdding(false)
-	}
+	useEffect(() => {
+		fetchList()
+	}, [listId])
+
+	useEffect(() => {
+		fetchMovies()
+	}, [list])
 
 	return (
 		<div>
-			{isEditing ? (
-				<form onSubmit={(event) => event.preventDefault()}>
-					<input
-						type="text"
-						name="listName"
-						value={list.listName}
-						onChange={handleTextFieldChange}
-					/>
-				</form>
-			) : (
-				<h1>{list.listName}</h1>
-			)}
-
+			<h1>
+				{isEditing ? (
+					<form onSubmit={(event) => event.preventDefault()}>
+						<input
+							type="text"
+							name="listName"
+							value={list.listName}
+							onChange={handleTextFieldChange}
+						/>
+					</form>
+				) : (
+					list.listName
+				)}
+			</h1>
 			<button onClick={() => setIsEditing(true)}>Edit</button>
+
 			<ul>
 				{list.items.map((item) => (
 					<li key={item._id}>
@@ -109,45 +105,49 @@ const ListShow = (props) => {
 					</li>
 				))}
 			</ul>
+
 			<div>
 				{isAdding && availableMovies.length > 0 && (
-					<select defaultValue={{}} onChange={(event) => handleAddMovie(event)}>
-						<option key="default" value={{}} disabled>
+					<select defaultValue="" onChange={handleAddMovie}>
+						<option value="" disabled>
 							Select a movie
 						</option>
-						{availableMovies.map((movie) => {
-							return (
-								<option key={movie._id} value={JSON.stringify(movie)}>
-									{movie.name}
-								</option>
-							)
-						})}
+						{availableMovies.map((movie) => (
+							<option key={movie._id} value={JSON.stringify(movie)}>
+								{movie.name}
+							</option>
+						))}
 					</select>
 				)}
+
 				{!isAdding && availableMovies.length > 0 && (
 					<button
 						type="button"
-						disabled={isAdding}
 						onClick={() => setIsAdding(true)}
+						disabled={isAdding}
 					>
 						+
 					</button>
 				)}
 			</div>
-			<button
-				type="button"
-				onClick={handleSaveClick}
-				disabled={!unsavedChanges}
-			>
-				Save
-			</button>
-			<button
-				type="button"
-				onClick={handleCancelClick}
-				disabled={!isEditing && !unsavedChanges}
-			>
-				Cancel
-			</button>
+
+			<div>
+				<button
+					type="button"
+					onClick={handleSaveClick}
+					disabled={!unsavedChanges}
+				>
+					Save
+				</button>
+
+				<button
+					type="button"
+					onClick={handleCancelClick}
+					disabled={!isEditing && !unsavedChanges}
+				>
+					Cancel
+				</button>
+			</div>
 		</div>
 	)
 }
