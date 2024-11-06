@@ -116,7 +116,8 @@ const ListShow = (props) => {
 				{list.items.map((item) => (
 					<li key={item._id}>
 						<p>
-							{item.name} ({item.publicationDate})
+							{item.name} (
+						{format(new Date(item.publicationDate), 'dd MMMM yyyy')})
 						</p>
 						<button className="delete-button" onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
