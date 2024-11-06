@@ -64,10 +64,10 @@ const updateUser = async (input) => {
 			}),
 		})
 		const output = await res.json()
-		localStorage.setItem(TOKEN_KEY, output.token)
 		if (output.error) {
 			throw new Error(output.error)
 		}
+		localStorage.setItem(TOKEN_KEY, output.token)
 		return output
 	} catch (error) {
 		return {error}

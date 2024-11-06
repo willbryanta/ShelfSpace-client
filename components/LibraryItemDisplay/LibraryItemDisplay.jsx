@@ -6,7 +6,12 @@ import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 function LibraryItemDisplay(props) {
 	const {user, handleError} = props
 	const {libraryItemId} = useParams()
-	const [libraryItem, setLibraryItem] = useState(null)
+	const [libraryItem, setLibraryItem] = useState({
+		name: '',
+		description: '',
+		publicationDate: 0,
+		author: '',
+	})
 
 	useEffect(() => {
 		const fetchLibraryItem = async () => {

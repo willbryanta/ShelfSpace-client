@@ -7,11 +7,12 @@ const ErrorModal = (props) => {
 
 	return (
 		<Dialog onClose={() => setErrorModalOpen(false)} open={errorModalOpen}>
-			<DialogTitle>Uh oh!</DialogTitle>
+			<DialogTitle>{'Uh oh!'}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
-					Something went wrong. You can find the exact error message below: <br />
-					{message}
+					Something went wrong. You can find the exact error message below:
+					<br />
+					{`${message}`}
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
