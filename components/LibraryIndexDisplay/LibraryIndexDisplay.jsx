@@ -9,7 +9,9 @@ function LibraryIndexDisplay(props) {
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
 			const items = await libraryItemService.getLibraryItem()
-			// Error handling
+			if (items.error) {
+				return handleError(items.error)
+			}
 			setLibraryItems(items)
 		}
 		fetchLibraryItems()

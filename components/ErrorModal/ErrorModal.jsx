@@ -7,25 +7,26 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 const ErrorModal = (props) => {
-	const {errorModalOpen, setErrorModalOpen, message, error} = props
+	const {errorModalOpen, setErrorModalOpen, error} = props
+	const {message} = error
+	const errorString = JSON.stringify(error)
 
 	return (
-		<Dialog onClose={setErrorModalOpen(false)} open={errorModalOpen}>
+		<Dialog onClose={() => setErrorModalOpen(false)} open={errorModalOpen}>
 			<DialogTitle>Oh dip!</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
-					Something went wrong... {message} If you want the techy bits you can
+					Something went wrong... {message}. If you want the techy bits you can
 					have a look below:
 				</DialogContentText>
 				<Accordion>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />} />
-					Error:
-					<AccordionDetails>{error}</AccordionDetails>
+					<AccordionSummary expandIcon={<ExpandMoreIcon />}>Error:</AccordionSummary>
+					<AccordionDetails>{errorString}</AccordionDetails>
 				</Accordion>
-            </DialogContent>
-            <DialogActions>
-                <button onClick={setErrorModalOpen(false)}>Ok</button>
-            </DialogActions>
+			</DialogContent>
+			<DialogActions>
+				<button onClick={() => setErrorModalOpen(false)}>Ok</button>
+			</DialogActions>
 		</Dialog>
 	)
 }

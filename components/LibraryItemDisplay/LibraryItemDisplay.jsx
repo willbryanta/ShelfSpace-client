@@ -11,7 +11,9 @@ function LibraryItemDisplay(props) {
 		const fetchLibraryItem = async () => {
 			if (libraryItemId) {
 				const item = await libraryItemService.getLibraryItem(libraryItemId)
-				//Error handling
+				if (item.error) {
+					return handleError(item.error)
+				}
 				setLibraryItem(item)
 			}
 		}
@@ -31,10 +33,7 @@ function LibraryItemDisplay(props) {
 						<ul>
 							{libraryItem.reviews.map((review) => (
 								<li key={review._id}>
-									<ReviewDisplay
-										review={review}
-										user={user}
-									/>
+									<ReviewDisplay review={review} user={user} />
 								</li>
 							))}
 						</ul>

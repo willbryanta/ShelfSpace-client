@@ -28,15 +28,14 @@ const signIn = async (input) => {
 			body: JSON.stringify(input),
 		})
 		const output = await res.json()
-		if (output.err) {
-			throw new Error(output.err)
+		if (output.error) {
+			throw new Error(output.error)
 		}
 		localStorage.setItem(TOKEN_KEY, output.token)
 		const user = JSON.parse(atob(output.token.split('.')[1]))
 		return user
-	} catch (err) {
-		console.log(err)
-		throw err
+	} catch (error) {
+		return {error}
 	}
 }
 
