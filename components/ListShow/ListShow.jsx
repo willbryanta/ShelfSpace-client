@@ -89,7 +89,7 @@ const ListShow = (props) => {
 						/>
 					</form>
 				) : (
-					list.listName
+					<h1>list.listName</h1>
 				)}
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 
