@@ -16,7 +16,7 @@ const ListShow = (props) => {
 	const [isAdding, setIsAdding] = useState(false)
 
 	const fetchList = async () => {
-		if (listId !== 'new') {
+		if (!isNew) {
 			const fetchedList = await usersService.showList(user, listId)
 			setList(fetchedList)
 		}
@@ -104,9 +104,11 @@ const ListShow = (props) => {
 					/>
 				</form>
 			) : (
-				<h1>{listId === 'new' ? 'New List' : list.listName}</h1>
+				<>
+					<h1>{isNew ? 'New List' : list.listName}</h1>
+					<button onClick={() => setIsEditing(true)}>Edit</button>
+				</>
 			)}
-			<button onClick={() => setIsEditing(true)}>Edit</button>
 
 			<ul>
 				{list.items.map((item) => (
