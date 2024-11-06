@@ -79,18 +79,18 @@ const ListShow = (props) => {
 
 	return (
 		<div>
-				{isEditing ? (
-					<form onSubmit={(event) => event.preventDefault()}>
-						<input
-							type="text"
-							name="listName"
-							value={list.listName}
-							onChange={handleTextFieldChange}
-						/>
-					</form>
-				) : (
-					<h1>list.listName</h1>
-				)}
+			{isEditing ? (
+				<form onSubmit={(event) => event.preventDefault()}>
+					<input
+						type="text"
+						name="listName"
+						value={list.listName}
+						onChange={handleTextFieldChange}
+					/>
+				</form>
+			) : (
+				<h1>{list.listName}</h1>
+			)}
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 
 			<ul>
@@ -110,10 +110,12 @@ const ListShow = (props) => {
 						<option key="default" value={{}} disabled>
 							Select a movie
 						</option>
-						{availableMovies.map((movie) => return {
-							<option key={movie._id} value={JSON.stringify(movie)}>
-								{movie.name}
-							</option>
+						{availableMovies.map((movie) => {
+							return (
+								<option key={movie._id} value={JSON.stringify(movie)}>
+									{movie.name}
+								</option>
+							)
 						})}
 					</select>
 				)}
