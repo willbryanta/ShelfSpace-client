@@ -18,7 +18,6 @@ function LibraryItem(props) {
 		fetchLibraryItem()
 	}, [libraryItemId])
 
-	if (!libraryItem) return <div>Loading...</div>
 
 	return (
 		<div>
