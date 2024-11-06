@@ -91,7 +91,6 @@ const ListShow = (props) => {
 				) : (
 					list.listName
 				)}
-			</h1>
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 
 			<ul>
