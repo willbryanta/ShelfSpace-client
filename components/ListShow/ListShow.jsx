@@ -114,7 +114,7 @@ const ListShow = (props) => {
 							<option key={movie._id} value={JSON.stringify(movie)}>
 								{movie.name}
 							</option>
-						))}
+						})}
 					</select>
 				)}
 
