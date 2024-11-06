@@ -6,10 +6,11 @@ import * as libraryItemService from '../../services/libraryItemService'
 const ListShow = (props) => {
 	const {user} = props
 	const { listId } = useParams()
+	const isNew = listId === 'new'
 	const navigate = useNavigate()
 
 	const [list, setList] = useState({listName: '', items: []})
-	const [isEditing, setIsEditing] = useState(false)
+	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
 	const [isAdding, setIsAdding] = useState(false)
@@ -57,11 +58,18 @@ const ListShow = (props) => {
 		event.preventDefault()
 		if (listId === 'new') {
 			const newListData = { listName: list.listName, items: list.items }
+			 //! newListData is capturing correctly
+			
+	
+
 			const newListResponse = await usersService.createList(user, newListData)
+
+			console.log("🚀 ~ handleSaveClick ~ newListResponse:", newListResponse)
+			
 			setList(newListResponse)
 			setIsEditing(false)
 			setUnsavedChanges(false)
-			navigate(`/users/${user.id}/lists/${newListResponse._id}`)
+			// navigate(`/users/${user._id}/lists/${newListResponse.listId}`)
 		} else {
 			const packagedListData = {updatedList: list}
 			const updatedListResponse = await usersService.updateList(
