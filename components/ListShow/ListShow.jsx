@@ -79,7 +79,6 @@ const ListShow = (props) => {
 
 	return (
 		<div>
-			<h1>
 				{isEditing ? (
 					<form onSubmit={(event) => event.preventDefault()}>
 						<input
