@@ -8,7 +8,6 @@ function LibraryIndex() {
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
 			const items = await libraryItemService.getLibraryItem()
-			console.log(items)
 			setLibraryItems(items)
 		}
 		fetchLibraryItems()
