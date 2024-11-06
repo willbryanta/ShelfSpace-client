@@ -16,7 +16,7 @@ const getProfile = async (user) => {
 	}
 }
 
-const createList = async (user, ListFormData) => {
+const createList = async (user, listFormData) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists`, {
 			method: 'POST',
@@ -25,9 +25,11 @@ const createList = async (user, ListFormData) => {
 				'Content-Type': 'application/json',
 			},
 			user,
-			body: JSON.stringify({newList: ListFormData }),
+			body: JSON.stringify(listFormData),
 		})
+		console.log('Service Output:', await res.json)
 		return await res.json()
+		
 	} catch (error) {
 		console.log('Error creating list:', error)
 		return {error: 'Error creating list'}

@@ -5,7 +5,7 @@ import * as libraryItemService from '../../services/libraryItemService'
 
 const ListShow = (props) => {
 	const {user} = props
-	const { listId } = useParams()
+	const {listId} = useParams()
 	const isNew = listId === 'new'
 	const navigate = useNavigate()
 
@@ -56,20 +56,20 @@ const ListShow = (props) => {
 
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
-		if (listId === 'new') {
-			const newListData = { listName: list.listName, items: list.items }
-			 //! newListData is capturing correctly
-			
-	
+		if (isNew) {
+			const newListData = {
+				newList: {listName: list.listName, items: list.items},
+			}
+			//! newListData is capturing correctly
 
 			const newListResponse = await usersService.createList(user, newListData)
-
 			console.log("🚀 ~ handleSaveClick ~ newListResponse:", newListResponse)
-			
+			//! newListResponse working as intended
+
 			setList(newListResponse)
 			setIsEditing(false)
 			setUnsavedChanges(false)
-			// navigate(`/users/${user._id}/lists/${newListResponse.listId}`)
+			navigate(`/users/${user._id}/lists/${newListResponse._id}`)
 		} else {
 			const packagedListData = {updatedList: list}
 			const updatedListResponse = await usersService.updateList(
@@ -81,7 +81,6 @@ const ListShow = (props) => {
 			setIsEditing(false)
 			setUnsavedChanges(false)
 		}
-		
 	}
 
 	const handleCancelClick = () => {
@@ -110,7 +109,7 @@ const ListShow = (props) => {
 					/>
 				</form>
 			) : (
-				<h1>{listId === 'new' ? 'New List' :list.listName}</h1>
+				<h1>{listId === 'new' ? 'New List' : list.listName}</h1>
 			)}
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 
