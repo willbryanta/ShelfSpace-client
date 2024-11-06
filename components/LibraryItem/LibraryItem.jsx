@@ -1,4 +1,5 @@
-import {useEffect, useState, useParams} from 'react'
+import {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
@@ -19,14 +20,14 @@ function LibraryItem(props) {
 
 	return (
 		<div>
-			<ul>
-				<li>Name: {libraryItem.name}</li>
-				<li>Description: {libraryItem.description}</li>
-				<li>Publication Date: {libraryItem.publicationDate}</li>
-				<li>Author: {libraryItem.author}</li>
-				<li>
-					Reviews:
-					{
+			{libraryItem ? (
+				<ul>
+					<li>Name: {libraryItem.name}</li>
+					<li>Description: {libraryItem.description}</li>
+					<li>Publication Date: {libraryItem.publicationDate}</li>
+					<li>Author: {libraryItem.author}</li>
+					<li>
+						Reviews:
 						<ul>
 							{libraryItem.reviews.map((review) => (
 								<li key={review._id}>
@@ -34,9 +35,11 @@ function LibraryItem(props) {
 								</li>
 							))}
 						</ul>
-					}
-				</li>
-			</ul>
+					</li>
+				</ul>
+			) : (
+				<p>Loading...</p>
+			)}
 		</div>
 	)
 }

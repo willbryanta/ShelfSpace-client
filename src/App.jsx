@@ -7,6 +7,7 @@ import SignInForm from '../components/SignInForm/SignInForm'
 import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
 import ProfilePage from '../components/ProfilePage/ProfilePage'
 import ListShow from '../components/ListShow/ListShow'
+import LibraryItem from '../components/LibraryItem/LibraryItem'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
@@ -20,6 +21,7 @@ function App() {
 			/>
 			<Routes>
 				<Route path="/library" element={<LibraryIndex />} />
+				<Route path="/library/:libraryItemId" element={<LibraryItem />} />
 				<Route
 					path="/users/signup"
 					element={<SignUpForm handleSetUser={handleSetUser} />}
