@@ -6,8 +6,10 @@ import {format} from 'date-fns'
 import './ListShow.css'
 
 const formatDate = (date) => {
-	return format(new Date(date), 'dd MMMM yyyy')
+	return format(new Date(date), 'yyyy')
 }
+//* this is a helper function that helps to format the date 
+//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object 
 
 const ListShow = (props) => {
 	const {user} = props
