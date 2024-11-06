@@ -7,10 +7,19 @@ import SignInForm from '../components/SignInForm/SignInForm'
 import ProfilePage from '../components/ProfilePage/ProfilePage'
 import LibraryIndexDisplay from '../components/LibraryIndexDisplay/LibraryIndexDisplay'
 import ListDisplay from '../components/ListDisplay/ListDisplay'
+import ErrorModal from '../components/ErrorModal/ErrorModal'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
+	const [errorModalOpen, setErrorModalOpen] = useState(false)
+	const [errorDetails, setErrorDetails] = useState({})
+	const [errorMessage, setErrorMessage] = useState('')
 	const handleSetUser = (user) => setUser(user)
+	const handleError = (error) => {
+		setErrorDetails(error)
+		setErrorMessage(error.message)
+		setErrorModalOpen(true)
+	}
 	return (
 		<>
 			<Navbar
@@ -18,15 +27,31 @@ function App() {
 				authService={authService}
 				handleSetUser={handleSetUser}
 			/>
+			<ErrorModal
+				errorModalOpen={errorModalOpen}
+				setErrorModalOpen={setErrorModalOpen}
+				error={errorDetails}
+				message={errorMessage}
+			/>
 			<Routes>
 				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
 					path="/users/signup"
-					element={<SignUpForm handleSetUser={handleSetUser} />}
+					element={
+						<SignUpForm
+							handleSetUser={handleSetUser}
+							handleError={handleError}
+						/>
+					}
 				/>
 				<Route
 					path="/users/signin"
-					element={<SignInForm handleSetUser={handleSetUser} />}
+					element={
+						<SignInForm
+							handleSetUser={handleSetUser}
+							handleError={handleError}
+						/>
+					}
 				/>
 				<Route
 					path="/users/:userId"
@@ -35,12 +60,13 @@ function App() {
 							authService={authService}
 							handleSetUser={handleSetUser}
 							user={user}
+							handleError={handleError}
 						/>
 					}
 				/>
 				<Route
 					path="/users/:userId/lists/:listId"
-					element={<ListDisplay user={user} />}
+					element={<ListDisplay user={user} handleError={handleError} />}
 				/>
 			</Routes>
 		</>

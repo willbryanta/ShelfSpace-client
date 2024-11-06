@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 
 function ListIndexDisplay(props) {
-	const {user, list, deleteList, setLists} = props
+	const {user, list, deleteList, setLists, handleError} = props
 	const {listName, _id} = list
 	const handleDelete = async () => {
 		const updatedUser = await deleteList(user, _id)

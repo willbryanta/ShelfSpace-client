@@ -4,7 +4,7 @@ import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 
 const ListDisplay = (props) => {
-	const {user} = props
+	const {user, handleError} = props
 	const {listId} = useParams()
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)

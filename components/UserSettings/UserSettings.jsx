@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 function UserSettings(props) {
-	const {user, handleSetUser, authService} = props
+	const {user, handleSetUser, authService, handleError} = props
 	const {updateUser} = authService
 	const [formData, setFormData] = useState({
 		username: user.username,

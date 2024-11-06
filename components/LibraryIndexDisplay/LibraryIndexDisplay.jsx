@@ -2,7 +2,8 @@ import {Link} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 
-function LibraryIndexDisplay() {
+function LibraryIndexDisplay(props) {
+	const {handleError} = props
 	const [libraryItems, setLibraryItems] = useState([])
 
 	useEffect(() => {

@@ -3,7 +3,7 @@ import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
 function LibraryItemDisplay(props) {
-	const {user} = props
+	const {user, handleError} = props
 	const {libraryItemId} = useParams()
 	const [libraryItem, setLibraryItem] = useState(null)
 
@@ -31,7 +31,10 @@ function LibraryItemDisplay(props) {
 						<ul>
 							{libraryItem.reviews.map((review) => (
 								<li key={review._id}>
-									<ReviewDisplay review={review} user={user} />
+									<ReviewDisplay
+										review={review}
+										user={user}
+									/>
 								</li>
 							))}
 						</ul>
