@@ -21,9 +21,13 @@ function LibraryIndex() {
 	const allLibraryItems = libraryItems.map((libraryItem) => (
 		<ul key={libraryItem._id}>
 			<li>
-				<Link to={`library/${libraryItem._id}`}>Name: {libraryItem.name}</Link>
+				<Link to={`library/${libraryItem._id}`}>
+					<strong>Name:</strong> {libraryItem.name}
+				</Link>
 			</li>
-			<li>Description: {libraryItem.description}</li>
+			<li>
+				<strong>Description:</strong> {libraryItem.description}
+			</li>
 			<li>
 				<strong>Publication Date:</strong>{' '}
 				{formatDate(libraryItem.publicationDate)}

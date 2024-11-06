@@ -124,7 +124,7 @@ const ListShow = (props) => {
 					return (
 						<li key={item._id}>
 							<p>
-								{item.name} ({formattedDate})
+								<strong>{item.name}</strong>({formattedDate})
 							</p>
 							<button
 								className="delete-button"
