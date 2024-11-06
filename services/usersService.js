@@ -16,17 +16,18 @@ const getProfile = async (user) => {
 	}
 }
 
-const createList = async (user, ListFormData) => {
+const createList = async (user, listFormData) => {
 	try {
-		const res = await fetch(`${BACKEND_URL}/${user._id}/lists`, {
+		const res = await fetch(`${BACKEND_URL}/users/${user._id}/lists`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 				'Content-Type': 'application/json',
 			},
 			user,
-			body: JSON.stringify(ListFormData),
+			body: JSON.stringify(listFormData),
 		})
+
 		return await res.json()
 	} catch (error) {
 		console.log('Error creating list:', error)
