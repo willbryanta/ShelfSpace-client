@@ -2,6 +2,7 @@ import {useParams, useNavigate} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
+import './ListShow.css'
 
 const ListShow = (props) => {
 	const {user} = props
@@ -93,7 +94,7 @@ const ListShow = (props) => {
 	}, [list])
 
 	return (
-		<div>
+		<div className="list-show-container">
 			{isEditing ? (
 				<form onSubmit={(event) => event.preventDefault()}>
 					<input
@@ -116,12 +117,12 @@ const ListShow = (props) => {
 						<p>
 							{item.name} ({item.publicationDate})
 						</p>
-						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
+						<button className="delete-button" onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
 			</ul>
 
-			<div>
+			<div className="add-movie-container">
 				{isAdding && availableMovies.length > 0 && (
 					<select defaultValue={{}} onChange={handleAddMovie}>
 						<option key="default" value={{}} disabled>
@@ -139,6 +140,7 @@ const ListShow = (props) => {
 
 				{!isAdding && availableMovies.length > 0 && (
 					<button
+						className="add-movie-button"
 						type="button"
 						onClick={() => setIsAdding(true)}
 						disabled={isAdding}
