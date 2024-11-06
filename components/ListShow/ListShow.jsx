@@ -5,6 +5,10 @@ import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
 import './ListShow.css'
 
+const formatDate = (date) => {
+	return format(new Date(date), 'dd MMMM yyyy')
+}
+
 const ListShow = (props) => {
 	const {user} = props
 	const {listId} = useParams()
@@ -113,15 +117,22 @@ const ListShow = (props) => {
 			)}
 
 			<ul>
-				{list.items.map((item) => (
-					<li key={item._id}>
-						<p>
-							{item.name} (
-						{format(new Date(item.publicationDate), 'dd MMMM yyyy')})
-						</p>
-						<button className="delete-button" onClick={() => handleDeleteListItem(item._id)}>X</button>
-					</li>
-				))}
+				{list.items.map((item) => {
+					const formattedDate = formatDate(item.publicationDate)
+					return (
+						<li key={item._id}>
+							<p>
+								{item.name} ({formattedDate})
+							</p>
+							<button
+								className="delete-button"
+								onClick={() => handleDeleteListItem(item._id)}
+							>
+								X
+							</button>
+						</li>
+					)
+				})}
 			</ul>
 
 			<div className="add-movie-container">
