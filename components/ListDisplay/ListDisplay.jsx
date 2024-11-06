@@ -26,6 +26,9 @@ const ListDisplay = (props) => {
 		if (!isNew) {
 			try {
 				const fetchedList = await usersService.showList(user, listId)
+				if (fetchedList.error) {
+					throw new Error(fetchedList.error)
+				}
 				setList(fetchedList)
 			} catch (error) {
 				handleError(error.message)
@@ -36,6 +39,9 @@ const ListDisplay = (props) => {
 	const fetchMovies = async () => {
 		try {
 			const movies = await libraryItemService.getLibraryItem()
+			if (movies.error) {
+				throw new Error(movies.error)
+			}
 			filterMovies(movies)
 		} catch (error) {
 			handleError(error.message)
@@ -77,6 +83,9 @@ const ListDisplay = (props) => {
 					newList: {listName: list.listName, items: list.items},
 				}
 				const newListResponse = await usersService.createList(user, newListData)
+				if (newListResponse.error) {
+					throw new Error(newListResponse.error)
+				}
 				setList(newListResponse)
 				setIsEditing(false)
 				setUnsavedChanges(false)
@@ -92,6 +101,9 @@ const ListDisplay = (props) => {
 					list._id,
 					packagedListData
 				)
+				if (updatedListResponse.error) {
+					throw new Error(updatedListResponse.error)
+				}
 				setList(updatedListResponse)
 				setIsEditing(false)
 				setUnsavedChanges(false)

@@ -13,6 +13,9 @@ function ProfilePage(props) {
 	const generateProfile = async () => {
 		try {
 			const profileData = await getProfile(user)
+			if (profileData.error) {
+				throw new Error(profileData.error)
+			}
 			setLists(profileData.user.lists)
 			setReviews(profileData.reviews)
 		} catch (error) {

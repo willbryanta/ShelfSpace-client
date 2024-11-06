@@ -15,11 +15,13 @@ function LibraryIndexDisplay(props) {
 		const fetchLibraryItems = async () => {
 			try {
 				const items = await libraryItemService.getLibraryItem()
+				if (items.error) {
+					throw new Error(items.error)
+				}
 				setLibraryItems(items)
 			} catch (error) {
 				handleError(error.message)
 			}
-
 		}
 		fetchLibraryItems()
 	}, [])

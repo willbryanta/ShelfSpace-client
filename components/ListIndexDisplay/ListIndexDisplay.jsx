@@ -6,6 +6,9 @@ function ListIndexDisplay(props) {
 	const handleDelete = async () => {
 		try {
 			const updatedUser = await deleteList(user, _id)
+			if (updatedUser.error) {
+				throw new Error(updatedUser.error)
+			}
 			setLists(updatedUser.lists)
 		} catch (error) {
 			handleError(error.message)

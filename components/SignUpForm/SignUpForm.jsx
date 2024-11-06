@@ -33,6 +33,9 @@ const SignUpForm = (props) => {
 				username: formData.username,
 				password: formData.password,
 			})
+			if (responseData.error) {
+				throw new Error(responseData.error)
+			}
 			handleSetUser(responseData.user)
 			navigate('/')
 		} catch (error) {

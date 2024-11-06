@@ -36,6 +36,9 @@ const SignInForm = (props) => {
 						const {username, password} = formData
 						const userPayload = await authService.signIn({username, password})
 						if (userPayload.error) {
+							throw new Error(userPayload.error)
+						}
+						if (userPayload.error) {
 							return handleError(userPayload.error)
 						}
 						handleSetUser(userPayload)

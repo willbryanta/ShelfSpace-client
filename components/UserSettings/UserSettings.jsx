@@ -13,6 +13,9 @@ function UserSettings(props) {
 		event.preventDefault()
 		try {
 			const userPayload = await updateUser({user, formData})
+			if (userPayload.error) {
+				throw new Error(userPayload.error)
+			}
 			handleSetUser(userPayload.user)
 			setFormData({
 				username: userPayload.user.username,
