@@ -110,7 +110,7 @@ const ListShow = (props) => {
 						<option key="default" value={{}} disabled>
 							Select a movie
 						</option>
-						{availableMovies.map((movie) => (
+						{availableMovies.map((movie) => return {
 							<option key={movie._id} value={JSON.stringify(movie)}>
 								{movie.name}
 							</option>
