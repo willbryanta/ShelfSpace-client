@@ -2,6 +2,7 @@ import {useParams, useNavigate} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
+import '/ListShow.css'
 
 const ListShow = (props) => {
 	const {user} = props
