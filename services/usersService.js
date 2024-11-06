@@ -27,9 +27,8 @@ const createList = async (user, listFormData) => {
 			user,
 			body: JSON.stringify(listFormData),
 		})
-		console.log('Service Output:', await res.json)
+
 		return await res.json()
-		
 	} catch (error) {
 		console.log('Error creating list:', error)
 		return {error: 'Error creating list'}
