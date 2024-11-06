@@ -1,11 +1,12 @@
-import {useParams} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 
 const ListShow = (props) => {
 	const {user} = props
-	const {listId} = useParams()
+	const { listId } = useParams()
+	const navigate = useNavigate()
 
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(false)
@@ -14,8 +15,10 @@ const ListShow = (props) => {
 	const [isAdding, setIsAdding] = useState(false)
 
 	const fetchList = async () => {
-		const fetchedList = await usersService.showList(user, listId)
-		setList(fetchedList)
+		if (listId !== 'new') {
+			const fetchedList = await usersService.showList(user, listId)
+			setList(fetchedList)
+		}
 	}
 
 	const fetchMovies = async () => {
@@ -52,15 +55,25 @@ const ListShow = (props) => {
 
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
-		const packagedListData = {updatedList: list}
-		const updatedListResponse = await usersService.updateList(
-			user,
-			list._id,
-			packagedListData
-		)
-		setList(updatedListResponse)
-		setIsEditing(false)
-		setUnsavedChanges(false)
+		if (listId === 'new') {
+			const newListData = { listName: list.listName, items: list.items }
+			const newListResponse = await usersService.createList(user, newListData)
+			setList(newListResponse)
+			setIsEditing(false)
+			setUnsavedChanges(false)
+			navigate(`/users/${user.id}/lists/${newListResponse._id}`)
+		} else {
+			const packagedListData = {updatedList: list}
+			const updatedListResponse = await usersService.updateList(
+				user,
+				list._id,
+				packagedListData
+			)
+			setList(updatedListResponse)
+			setIsEditing(false)
+			setUnsavedChanges(false)
+		}
+		
 	}
 
 	const handleCancelClick = () => {
@@ -71,7 +84,7 @@ const ListShow = (props) => {
 
 	useEffect(() => {
 		fetchList()
-	}, [listId])
+	}, [])
 
 	useEffect(() => {
 		fetchMovies()
@@ -89,7 +102,7 @@ const ListShow = (props) => {
 					/>
 				</form>
 			) : (
-				<h1>{list.listName}</h1>
+				<h1>{listId === 'new' ? 'New List' :list.listName}</h1>
 			)}
 			<button onClick={() => setIsEditing(true)}>Edit</button>
 
