@@ -6,6 +6,7 @@ import SignUpForm from '../components/SignUpForm/SignUpForm'
 import SignInForm from '../components/SignInForm/SignInForm'
 import ProfilePage from '../components/ProfilePage/ProfilePage'
 import LibraryIndexDisplay from '../components/LibraryIndexDisplay/LibraryIndexDisplay'
+import LibraryItemDisplay from '../components/LibraryItemDisplay/LibraryItemDisplay'
 import ListDisplay from '../components/ListDisplay/ListDisplay'
 import ErrorModal from '../components/ErrorModal/ErrorModal'
 
@@ -31,8 +32,8 @@ function App() {
 				error={error}
 			/>
 			<Routes>
-				<Route path="/library/:libraryItemId" element={<LibraryItem />} />
-				<Route path="/library" element={<LibraryIndex />} />
+				<Route path="/library/:libraryItemId" element={<LibraryItemDisplay />} />
+				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
 					path="/users/signup"
 					element={
