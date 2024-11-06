@@ -117,7 +117,7 @@ const ListShow = (props) => {
 						<p>
 							{item.name} ({item.publicationDate})
 						</p>
-						<button onClick={() => handleDeleteListItem(item._id)}>X</button>
+						<button className="delete-button" onClick={() => handleDeleteListItem(item._id)}>X</button>
 					</li>
 				))}
 			</ul>
