@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
@@ -17,22 +17,23 @@ function LibraryItemDisplay(props) {
 		author: '',
 		reviews: [],
 	})
+	
+	const fetchLibraryItem = useCallback( async () => {
+		try {
+			const item = await libraryItemService.getLibraryItemById(libraryItemId)
+			if (item.error) {
+				throw new Error(item.error)
+			}
+			setLibraryItem(item)
+		} catch (error) {
+			handleError(error.message)
+		}
+	},[handleError, libraryItemId])
 
 	useEffect(() => {
-		const fetchLibraryItem = async () => {
-			try {
-				const item = await libraryItemService.getLibraryItemById(libraryItemId)
-				if (item.error) {
-					throw new Error(item.error)
-				}
-				setLibraryItem(item)
-			} catch (error) {
-				handleError(error.message)
-			}
-		}
 		fetchLibraryItem()
-	}, [])
-	useEffect(() => {}, [])
+	}, [fetchLibraryItem])
+	
 	return (
 		<div>
 			<ul>
@@ -59,6 +60,7 @@ function LibraryItemDisplay(props) {
 									user={user}
 									handleError={handleError}
 									libraryItem={libraryItem}
+									refreshParent={fetchLibraryItem}
 								/>
 							</li>
 						))}

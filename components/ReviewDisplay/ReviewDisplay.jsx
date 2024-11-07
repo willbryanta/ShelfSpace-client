@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import * as reviewService from '../../services/reviewService'
 
 function ReviewDisplay(props) {
-	const {review, user, libraryItem, handleError} = props
+	const {review, user, libraryItem, handleError, refreshParent} = props
 	const {title, description, author, rating} = review
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
@@ -20,11 +20,13 @@ function ReviewDisplay(props) {
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
 		try {
-			const updatedReview = await reviewService.updateReview(user, formData)
+			const updatedReview = await reviewService.updateReview(user, review._id, formData)
 			if (updatedReview.error) {
 				throw new Error(updatedReview.error)
 			}
-			
+			refreshParent()
+			setIsEditing(false)
+			setUnsavedChanges(false)
 		} catch (error) {
 			handleError(error)
 		}
@@ -41,7 +43,16 @@ function ReviewDisplay(props) {
 		setFormData(review)
 		setIsEditing(false)
 	}
-	const handleDeleteClick = () => {}
+	const handleDeleteClick = async () => {		try {
+			const updatedReview = await reviewService.deleteReview(user, review._id)
+			if (updatedReview.error) {
+				throw new Error(updatedReview.error)
+			}
+			refreshParent()
+		} catch (error) {
+			handleError(error)
+		}
+}
 
 	return (
 		<>
@@ -59,8 +70,8 @@ function ReviewDisplay(props) {
 					<textarea
 						value={formData.description}
 						onChange={handleInputChange}
-						id="Description"
-						name="Description"
+						id="description"
+						name="description"
 					/>
 					<label htmlFor="rating">Rating:</label>
 					<select
@@ -96,7 +107,7 @@ function ReviewDisplay(props) {
 					<button type="button" onClick={() => setIsEditing(true)}>
 						Edit
 					</button>
-					{user._id === author._id && (
+					{user?._id === author?._id && (
 						<button type="button" onClick={handleDeleteClick}>
 							Delete
 						</button>

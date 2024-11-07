@@ -41,7 +41,7 @@ const getReview = async (review) => {
 	}
 }
 
-const updateReview = async (reviewId, reviewFormData) => {
+const updateReview = async (user, reviewId, reviewFormData) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'PUT',
@@ -50,6 +50,7 @@ const updateReview = async (reviewId, reviewFormData) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(reviewFormData),
+			user
 		})
 		if (!res.ok) {
 			throw new Error(res.error)
@@ -61,18 +62,18 @@ const updateReview = async (reviewId, reviewFormData) => {
 	}
 }
 
-const deleteReview = async (reviewId) => {
+const deleteReview = async (user, reviewId) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
+			user
 		})
 		if (!res.ok) {
 			throw new Error(res.error)
 		}
-
 		return res.json()
 	} catch (error) {
 		return {error}
