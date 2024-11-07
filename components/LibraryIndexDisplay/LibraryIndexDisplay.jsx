@@ -7,7 +7,10 @@ function LibraryIndexDisplay(props) {
 	const allLibraryItems = libraryItems?.map((item) => (
 		<li key={libraryItems._id} className={styles.item}>
 			<Link to= {`/library/${item._id}`}>
-				<img src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`} className={styles.poster}></img>
+				{	(item.posterPath) ?
+					<img src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`} className={styles.poster}></img>
+					: <p className={styles.noPoster}>{item.name}</p>
+				}
 			</Link>
 			<p className={styles.title}>{item.name}</p>
 		</li>
