@@ -1,5 +1,4 @@
 import * as libraryItemService from '../../services/libraryItemService'
-import { useState } from 'react';
 import styles from './MovieCard.module.css';
 
 export default function MovieCard(props) {
