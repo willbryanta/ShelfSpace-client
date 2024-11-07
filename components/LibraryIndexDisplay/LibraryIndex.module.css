@@ -18,12 +18,3 @@
     width: 150px;
     height: 70px;
 }
-
-.noPoster {
-    width: 150px;
-    height: 220px;
-    font-size: 25px;
-    text-align: center;
-    box-sizing: border-box;
-    border: 10px solid #FFCA99;
-}
