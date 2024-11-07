@@ -4,7 +4,9 @@ import styles from './MovieCard.module.css';
 
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 
-function SearchMovies() {
+function SearchMovies(props) {
+
+    const { libraryItems } = props
 
     const [movies, setMovies] = useState([])
 
@@ -36,7 +38,7 @@ function SearchMovies() {
             <ul className={styles.movieResults}>
                 {movies.map(
                     (movie, index) => (
-                        <MovieCard movie={movie} key={index} />
+                        <MovieCard movie={movie} key={index} libraryItems={libraryItems} />
                     )
                 )}
             </ul>
