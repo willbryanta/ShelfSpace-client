@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import * as authService from '../services/authService'
 import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
@@ -11,16 +11,34 @@ import ListDisplay from '../components/ListDisplay/ListDisplay'
 import ErrorModal from '../components/ErrorModal/ErrorModal'
 import LandingPage from '../components/LandingPage/LandingPage'
 import SearchMovies from '../components/SearchMovies/SearchMovies'
+import * as libraryItemService from '../services/libraryItemService'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
 	const [message, setMessage] = useState({})
+	const [libraryItems, setLibraryItems] = useState([])
 	const handleSetUser = (user) => setUser(user)
 	const handleError = (message) => {
 		setMessage(message)
 		setErrorModalOpen(true)
 	}
+
+	useEffect(() => {
+		const fetchLibraryItems = async () => {
+			try {
+				const items = await libraryItemService.getLibraryItem()
+				if (items.error) {
+					throw new Error(items.error)
+				}
+				setLibraryItems(items)
+			} catch (error) {
+				handleError(error.message)
+			}
+		}
+		fetchLibraryItems()
+	}, [])
+
 	return (
 		<>
 			<Navbar
@@ -39,8 +57,11 @@ function App() {
 					path="/library/:libraryItemId"
 					element={<LibraryItemDisplay />}
 				/>
-				<Route path="/search-movies" element={<SearchMovies />} />
-				<Route path="/library" element={<LibraryIndexDisplay />} />
+				<Route path="/search-movies" element={<SearchMovies 
+					user={user}
+					handleError={handleError}
+					libraryItems={libraryItems} />} />
+				<Route path="/library" element={<LibraryIndexDisplay libraryItems={libraryItems} />} />
 				<Route
 					path="/users/signup"
 					element={
