@@ -59,6 +59,7 @@ function ProfilePage(props) {
 								review={review}
 								user={user}
 								libraryItem={review.libraryItem}
+								handleError={handleError}
 							/>
 							<p>
 								<em>

@@ -32,8 +32,7 @@ function LibraryItemDisplay(props) {
 		}
 		fetchLibraryItem()
 	}, [])
-	useEffect(() => {
-	}, [])
+	useEffect(() => {}, [])
 	return (
 		<div>
 			<ul>
@@ -52,13 +51,17 @@ function LibraryItemDisplay(props) {
 				</li>
 				<li>
 					<strong>Reviews:</strong>
-						<ul>
-							{libraryItem?.reviews?.map((review) => (
-								<li key={review._id}>
-									<ReviewDisplay review={review} user={user} />
-								</li>
-							)
-						)}
+					<ul>
+						{libraryItem?.reviews?.map((review) => (
+							<li key={review._id}>
+								<ReviewDisplay
+									review={review}
+									user={user}
+									handleError={handleError}
+									libraryItem={libraryItem}
+								/>
+							</li>
+						))}
 					</ul>
 				</li>
 			</ul>

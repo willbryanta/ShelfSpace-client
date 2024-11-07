@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
+import * as reviewService from '../../services/reviewService'
 
 function ReviewDisplay(props) {
-	const {review, user, libraryItem} = props
+	const {review, user, libraryItem, handleError} = props
 	const {title, description, author, rating} = review
 	const [isEditing, setIsEditing] = useState(false)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
@@ -13,17 +14,33 @@ function ReviewDisplay(props) {
 	}
 
 	useEffect(() => {
-	setFormData(review)
-}, [])
+		setFormData(review)
+	}, [review])
 
-	const handleSaveClick = () => {}
+	const handleSaveClick = async (event) => {
+		event.preventDefault()
+		try {
+			const updatedReview = await reviewService.updateReview(user, formData)
+			if (updatedReview.error) {
+				throw new Error(updatedReview.error)
+			}
+			
+		} catch (error) {
+			handleError(error)
+		}
+	}
+
 	const handleInputChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = event.target.value
-		setFormData({ ...formData, [inputName]: inputValue })
+		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
-	const handleCancelClick = () => {}
+
+	const handleCancelClick = () => {
+		setFormData(review)
+		setIsEditing(false)
+	}
 	const handleDeleteClick = () => {}
 
 	return (
