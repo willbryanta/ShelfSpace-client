@@ -55,7 +55,7 @@ function ProfilePage(props) {
 				{reviews.map((review) => {
 					return (
 						<li key={review._id}>
-							<ReviewDisplay review={review} />
+							<ReviewDisplay review={review} user={user} />
 							<p>
 								<em>
 									on{' '}

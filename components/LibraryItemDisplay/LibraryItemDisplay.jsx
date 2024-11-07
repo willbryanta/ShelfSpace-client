@@ -15,6 +15,7 @@ function LibraryItemDisplay(props) {
 		description: '',
 		publicationDate: 0,
 		author: '',
+		reviews: [],
 	})
 
 	useEffect(() => {
@@ -31,7 +32,8 @@ function LibraryItemDisplay(props) {
 		}
 		fetchLibraryItem()
 	}, [])
-
+	useEffect(() => {
+	}, [])
 	return (
 		<div>
 			<ul>
@@ -46,19 +48,18 @@ function LibraryItemDisplay(props) {
 					{formatDate(libraryItem.publicationDate)}
 				</li>
 				<li>
-					<strong>Author:</strong> {libraryItem.author}
+					<strong>Author:</strong> {libraryItem.author.username}
 				</li>
 				<li>
 					<strong>Reviews:</strong>
-					{
 						<ul>
 							{libraryItem?.reviews?.map((review) => (
 								<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
 								</li>
-							))}
-						</ul>
-					}
+							)
+						})}
+					</ul>
 				</li>
 			</ul>
 		</div>

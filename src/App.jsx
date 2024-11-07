@@ -9,6 +9,7 @@ import LibraryIndexDisplay from '../components/LibraryIndexDisplay/LibraryIndexD
 import LibraryItemDisplay from '../components/LibraryItemDisplay/LibraryItemDisplay'
 import ListDisplay from '../components/ListDisplay/ListDisplay'
 import ErrorModal from '../components/ErrorModal/ErrorModal'
+import LandingPage from '../components/LandingPage/LandingPage'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
@@ -32,7 +33,11 @@ function App() {
 				message={message}
 			/>
 			<Routes>
-				<Route path="/library/:libraryItemId" element={<LibraryItemDisplay />} />
+				<Route path="/" element={<LandingPage />} />
+				<Route
+					path="/library/:libraryItemId"
+					element={<LibraryItemDisplay />}
+				/>
 				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
 					path="/users/signup"
