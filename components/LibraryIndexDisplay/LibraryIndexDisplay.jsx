@@ -1,35 +1,22 @@
 import {Link} from 'react-router-dom'
-import {format} from 'date-fns'
-
-const formatDate = (date) => {
-	return format(new Date(date), 'yyyy')
-}
+import styles from './LibraryIndex.module.css';
 
 function LibraryIndexDisplay(props) {
 	const {libraryItems} = props
 
-
-	const allLibraryItems = libraryItems?.map((libraryItem) => (
-		<ul key={libraryItem._id}>
-			<li>
-				<Link to={`/library/${libraryItem._id}`}>
-					<strong>Name:</strong> {libraryItem.name}
-				</Link>
-			</li>
-			<li>
-				<strong>Description:</strong> {libraryItem.description}
-			</li>
-			<li>
-				<strong>Publication Date:</strong>{' '}
-				{formatDate(libraryItem.publicationDate)}
-			</li>
-		</ul>
+	const allLibraryItems = libraryItems?.map((item) => (
+		<li key={libraryItems._id} className={styles.item}>
+			<Link to= {`/library/${item._id}`}>
+				<img src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`} className={styles.poster}></img>
+			</Link>
+			<p className={styles.title}>{item.name}</p>
+		</li>
 	))
 
 	return (
-		<>
-			<div>{allLibraryItems}</div>
-		</>
+		<ul className={styles.results}>
+			{allLibraryItems}
+		</ul>
 	)
 }
 
