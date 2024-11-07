@@ -10,6 +10,7 @@ const formatDate = (date) => {
 function LibraryItemDisplay(props) {
 	const {user, handleError} = props
 	const {libraryItemId} = useParams()
+	const [isAdding, setIsAdding] = useState(false)
 	const [libraryItem, setLibraryItem] = useState({
 		name: '',
 		description: '',
@@ -27,7 +28,8 @@ function LibraryItemDisplay(props) {
 			libraryItem: libraryItem,
 			isNew: true
 		})
-		setLibraryItem({...libraryItem, reviews: reviewArray})
+		setLibraryItem({ ...libraryItem, reviews: reviewArray })
+		setIsAdding(true)
 	}
 
 	const fetchLibraryItem = useCallback( async () => {
@@ -37,6 +39,7 @@ function LibraryItemDisplay(props) {
 				throw new Error(item.error)
 			}
 			setLibraryItem(item)
+			setIsAdding(false)
 		} catch (error) {
 			handleError(error.message)
 		}
@@ -64,7 +67,7 @@ function LibraryItemDisplay(props) {
 				</li>
 				<li>
 					<strong>Reviews:</strong>
-					{user &&
+					{user && !isAdding &&
 						<button key="addReview" type="button" onClick={handleAddReview}>Add a review</button>
 					}
 					<ul>
