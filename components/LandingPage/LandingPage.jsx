@@ -4,7 +4,7 @@ const emoji = new EmojiConvertor()
 //* help to convert emoji shortcodes like :books: into their respective emoji characters
 
 emoji.init_env()
-//* helps to prepare the emoji instance to start converting shortcodes. basically to Initialize it
+//* helps to prepare the emoji instance to start converting shortcodes. This step is required to call first to initialize emoji 
 
 //* emoji.replace_colons(':books:')
 //*Looks for :books: and replaces it with the actual bookshelf emoji
