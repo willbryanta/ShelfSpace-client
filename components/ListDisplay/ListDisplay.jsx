@@ -1,5 +1,6 @@
 import {useParams, useNavigate} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
@@ -159,7 +160,10 @@ const ListDisplay = (props) => {
 					return (
 						<li key={item._id}>
 							<p>
-								<strong>{item.name}</strong>({formattedDate})
+								<strong>
+									<Link to={`/library/${item._id}`}>{item.name}</Link>
+								</strong>
+								({formattedDate})
 							</p>
 							<button
 								className="delete-button"
