@@ -68,12 +68,6 @@ function ProfilePage(props) {
 					)
 				})}
 			</ul>
-			<UserSettings
-				handleSetUser={handleSetUser}
-				user={user}
-				authService={authService}
-				handleError={handleError}
-			/>
 		</>
 	)
 }

@@ -34,6 +34,9 @@ function Navbar(props) {
 							<Link to={`/users/${user._id}`}> {user.username}</Link>
 					</li>
 					<li>
+						<Link to={`/users/${user._id}/settings`}>Settings</Link>
+					</li>
+					<li>
 						<a
 							href="/"
 							onClick={(e) => {

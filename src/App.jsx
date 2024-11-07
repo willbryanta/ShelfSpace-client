@@ -12,6 +12,7 @@ import ErrorModal from '../components/ErrorModal/ErrorModal'
 import LandingPage from '../components/LandingPage/LandingPage'
 import SearchMovies from '../components/SearchMovies/SearchMovies'
 import * as libraryItemService from '../services/libraryItemService'
+import UserSettings from '../components/UserSettings/UserSettings'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
@@ -94,6 +95,14 @@ function App() {
 				<Route
 					path="/users/:userId/lists/:listId"
 					element={<ListDisplay user={user} handleError={handleError} />}
+				/>
+				<Route 
+					path="/users/:userId/settings" 
+					element={<UserSettings 
+						handleSetUser={handleSetUser}
+						user={user}
+						authService={authService}
+						handleError={handleError} />}
 				/>
 			</Routes>
 		</>
