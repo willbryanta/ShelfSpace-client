@@ -160,7 +160,10 @@ const ListDisplay = (props) => {
 					return (
 						<li key={item._id}>
 							<p>
-								<strong>{item.name}</strong>({formattedDate})
+								<strong>
+									<Link to={`/library/${item._id}`}>{item.name}</Link>
+								</strong>
+								({formattedDate})
 							</p>
 							<button
 								className="delete-button"
