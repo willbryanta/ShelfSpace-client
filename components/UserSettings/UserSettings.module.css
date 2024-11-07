@@ -1,0 +1,17 @@
+.title {
+    margin: 50px;
+}
+
+.elements {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0 0 100px;
+}
+
+.input {
+    margin: 15px;
+}
+
+.button {
+    margin: 50px 0;
+}
