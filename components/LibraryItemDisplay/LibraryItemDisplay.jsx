@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
-import { format } from 'date-fns'
+import {format} from 'date-fns'
 
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
@@ -35,12 +35,21 @@ function LibraryItemDisplay(props) {
 	return (
 		<div>
 			<ul>
-				<li>Name: {libraryItem.name}</li>
-				<li>Description: {libraryItem.description}</li>
-				<li>Publication Date: {formatDate(libraryItem.publicationDate)}</li>
-				<li>Author: {libraryItem.author}</li>
 				<li>
-					Reviews:
+					<strong>Name:</strong> {libraryItem.name}
+				</li>
+				<li>
+					<strong>Description:</strong> {libraryItem.description}
+				</li>
+				<li>
+					<strong>Publication Date:</strong>{' '}
+					{formatDate(libraryItem.publicationDate)}
+				</li>
+				<li>
+					<strong>Author:</strong> {libraryItem.author}
+				</li>
+				<li>
+					<strong>Reviews:</strong>
 					{
 						<ul>
 							{libraryItem?.reviews?.map((review) => (
