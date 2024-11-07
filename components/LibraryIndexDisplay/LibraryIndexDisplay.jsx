@@ -9,7 +9,7 @@ function LibraryIndexDisplay(props) {
 			<Link to= {`/library/${item._id}`}>
 				{	(item.posterPath) ?
 					<img src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`} className={styles.poster}></img>
-					: <p className={styles.noPoster}>{item.name}</p>
+					: <img src="https://placeholder.pics/svg/300x300/391C0B/391C0B" className={styles.poster}></img>
 				}
 			</Link>
 			<p className={styles.title}>{item.name}</p>
