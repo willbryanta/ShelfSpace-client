@@ -29,7 +29,6 @@ function LibraryItemDisplay(props) {
 		fetchLibraryItem()
 	}, [])
 	useEffect(() => {
-		console.log(libraryItem)
 	}, [])
 	return (
 		<div>
