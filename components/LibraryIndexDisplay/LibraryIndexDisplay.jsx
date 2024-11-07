@@ -1,8 +1,7 @@
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
-
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
 }
@@ -10,6 +9,7 @@ const formatDate = (date) => {
 function LibraryIndexDisplay(props) {
 	const {handleError} = props
 	const [libraryItems, setLibraryItems] = useState([])
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
@@ -25,6 +25,10 @@ function LibraryIndexDisplay(props) {
 		}
 		fetchLibraryItems()
 	}, [])
+
+	const handleNewClick = () => {
+		navigate('/library/new')
+	}
 
 	const allLibraryItems = libraryItems?.map((libraryItem) => (
 		<ul key={libraryItem._id}>
@@ -46,6 +50,9 @@ function LibraryIndexDisplay(props) {
 	return (
 		<>
 			<div>{allLibraryItems}</div>
+			<button type="button" onClick={handleNewClick}>
+				Create Library Entry
+			</button>
 		</>
 	)
 }
