@@ -18,6 +18,18 @@ function LibraryItemDisplay(props) {
 		reviews: [],
 	})
 	
+	const handleAddReview = () => {
+		const reviewArray = [...libraryItem.reviews]
+		reviewArray.push({
+			title: '',
+			description: '',
+			author: user,
+			libraryItem: libraryItem,
+			isNew: true
+		})
+		setLibraryItem({...libraryItem, reviews: reviewArray})
+	}
+
 	const fetchLibraryItem = useCallback( async () => {
 		try {
 			const item = await libraryItemService.getLibraryItemById(libraryItemId)
@@ -52,6 +64,9 @@ function LibraryItemDisplay(props) {
 				</li>
 				<li>
 					<strong>Reviews:</strong>
+					{user &&
+						<button key="addReview" type="button" onClick={handleAddReview}>Add a review</button>
+					}
 					<ul>
 						{libraryItem?.reviews?.map((review) => (
 							<li key={review._id}>
