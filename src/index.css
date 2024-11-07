@@ -31,28 +31,11 @@ article img {
 	width: 80px;
 }
 
-h1,
-h3 {
-	margin: 7px 0px 14px 0px;
-}
-
 h1 {
+	margin: 7px 0px 14px 0px;
 	font-size: 28px;
 	font-weight: 600;
 	color: #391c0b;
-}
-
-h3 {
-	font-size: 20px;
-	font-weight: 500;
-	color: #6d3b07;
-}
-
-h4 {
-	font-size: 18px;
-	font-weight: 600;
-	margin-bottom: 2px;
-	color: #6d3b07;
 }
 
 p {
