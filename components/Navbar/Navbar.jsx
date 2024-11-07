@@ -34,7 +34,7 @@ function Navbar(props) {
 								e.preventDefault()
 								signOut()
 								handleSetUser(null)
-								navigate('/users/signup')
+								navigate('/')
 							}}
 						>
 							Sign Out
