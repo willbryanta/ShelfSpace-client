@@ -1,5 +1,3 @@
-
-
 body {
 	background-color: #ffca99;
 	font-family: Arial, sans-serif;
@@ -12,7 +10,6 @@ body {
 	border-radius: 8px;
 	max-width: 600px;
 	margin: 20px auto;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
@@ -26,7 +23,7 @@ body {
 	border-radius: 4px;
 }
 
-.item-detail strong {
+.item-detail {
 	color: #6d3b07;
 	margin-bottom: 5px;
 }
