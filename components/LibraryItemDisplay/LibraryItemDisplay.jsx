@@ -35,24 +35,14 @@ function LibraryItemDisplay(props) {
 	useEffect(() => {
 	}, [])
 	return (
-		<div>
-			<ul>
-				<li>
-					<strong>Name:</strong> {libraryItem.name}
-				</li>
-				<li>
-					<strong>Description:</strong> {libraryItem.description}
-				</li>
-				<li>
-					<strong>Publication Date:</strong>{' '}
-					{formatDate(libraryItem.publicationDate)}
-				</li>
-				<li>
-					<strong>Author:</strong> {libraryItem.author.username}
-				</li>
-				<li>
-					<strong>Reviews:</strong>
-						<ul>
+
+		<>
+		<h1>{libraryItem.name}</h1>
+		<img src={`https://image.tmdb.org/t/p/w200/${libraryItem.posterPath}`}></img>
+		<p><strong>Overview:</strong> {libraryItem.description}</p>
+		<p><strong>Release Year:</strong> {formatDate(libraryItem.publicationDate)}</p>
+		<p><strong>Reviews:</strong></p>
+		<ul>
 							{libraryItem?.reviews?.map((review) => (
 								<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
@@ -60,9 +50,8 @@ function LibraryItemDisplay(props) {
 							)
 						)}
 					</ul>
-				</li>
-			</ul>
-		</div>
+		</>
+		
 	)
 }
 
