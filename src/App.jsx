@@ -10,6 +10,7 @@ import LibraryItemDisplay from '../components/LibraryItemDisplay/LibraryItemDisp
 import ListDisplay from '../components/ListDisplay/ListDisplay'
 import ErrorModal from '../components/ErrorModal/ErrorModal'
 import LandingPage from '../components/LandingPage/LandingPage'
+import SearchMovies from '../components/SearchMovies/SearchMovies'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
@@ -38,6 +39,7 @@ function App() {
 					path="/library/:libraryItemId"
 					element={<LibraryItemDisplay />}
 				/>
+				<Route path="/search-movies" element={<SearchMovies />} />
 				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
 					path="/users/signup"
