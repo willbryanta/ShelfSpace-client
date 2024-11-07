@@ -7,18 +7,26 @@ const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
 }
 
-function LibraryIndex() {
+function LibraryIndexDisplay(props) {
+	const {handleError} = props
 	const [libraryItems, setLibraryItems] = useState([])
 
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
-			const items = await libraryItemService.getLibraryItem()
-			setLibraryItems(items)
+			try {
+				const items = await libraryItemService.getLibraryItem()
+				if (items.error) {
+					throw new Error(items.error)
+				}
+				setLibraryItems(items)
+			} catch (error) {
+				handleError(error.message)
+			}
 		}
 		fetchLibraryItems()
 	}, [])
 
-	const allLibraryItems = libraryItems.map((libraryItem) => (
+	const allLibraryItems = libraryItems?.map((libraryItem) => (
 		<ul key={libraryItem._id}>
 			<li>
 				<Link to={`/library/${libraryItem._id}`}>
@@ -42,4 +50,4 @@ function LibraryIndex() {
 	)
 }
 
-export default LibraryIndex
+export default LibraryIndexDisplay

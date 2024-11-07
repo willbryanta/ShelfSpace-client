@@ -3,21 +3,30 @@ import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 
-function LibraryItem(props) {
-	const {user} = props
+function LibraryItemDisplay(props) {
+	const {user, handleError} = props
 	const {libraryItemId} = useParams()
-	const [libraryItem, setLibraryItem] = useState(null)
+	const [libraryItem, setLibraryItem] = useState({
+		name: '',
+		description: '',
+		publicationDate: 0,
+		author: '',
+	})
 
 	useEffect(() => {
 		const fetchLibraryItem = async () => {
-			if (libraryItemId) {
+			try {
 				const item = await libraryItemService.getLibraryItemById(libraryItemId)
+				if (item.error) {
+					throw new Error(item.error)
+				}
 				setLibraryItem(item)
+			} catch (error) {
+				handleError(error.message)
 			}
 		}
 		fetchLibraryItem()
-	}, [libraryItemId])
-
+	}, [])
 
 	return (
 		<div>
@@ -30,7 +39,7 @@ function LibraryItem(props) {
 					Reviews:
 					{
 						<ul>
-							{libraryItem.reviews.map((review) => (
+							{libraryItem?.reviews?.map((review) => (
 								<li key={review._id}>
 									<ReviewDisplay review={review} user={user} />
 								</li>
@@ -43,4 +52,4 @@ function LibraryItem(props) {
 	)
 }
 
-export default LibraryItem
+export default LibraryItemDisplay

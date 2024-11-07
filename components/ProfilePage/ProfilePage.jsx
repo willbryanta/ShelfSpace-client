@@ -5,15 +5,22 @@ import ListIndexDisplay from '../ListIndexDisplay/ListIndexDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import UserSettings from '../UserSettings/UserSettings'
 function ProfilePage(props) {
-	const {user, handleSetUser, authService} = props
+	const {user, handleSetUser, authService, handleError} = props
 	const navigate = useNavigate()
 	const {getProfile, deleteList} = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
 	const generateProfile = async () => {
-		const profileData = await getProfile(user)
-		setLists(profileData.user.lists)
-		setReviews(profileData.reviews)
+		try {
+			const profileData = await getProfile(user)
+			if (profileData.error) {
+				throw new Error(profileData.error)
+			}
+			setLists(profileData.user.lists)
+			setReviews(profileData.reviews)
+		} catch (error) {
+			handleError(error.message)
+		}
 	}
 	useEffect(() => {
 		generateProfile()
@@ -31,6 +38,7 @@ function ProfilePage(props) {
 								user={user}
 								deleteList={deleteList}
 								setLists={setLists}
+								handleError={handleError}
 							/>
 						</li>
 					)
@@ -64,6 +72,7 @@ function ProfilePage(props) {
 				handleSetUser={handleSetUser}
 				user={user}
 				authService={authService}
+				handleError={handleError}
 			/>
 		</>
 	)

@@ -12,13 +12,12 @@ const createReview = async (review) => {
 			body: JSON.stringify(review),
 		})
 		const data = await res.json()
-		if (data.err) {
-			throw new Error(data.err)
+		if (data.error) {
+			throw new Error(data.error)
 		}
 		return data
 	} catch (error) {
-		console.log(error)
-		throw error
+		return {error}
 	}
 }
 
@@ -33,13 +32,12 @@ const getReview = async (review) => {
 			body: JSON.stringify(review),
 		})
 		const data = await res.json()
-		if (data.err) {
-			throw new Error(data.err)
+		if (data.error) {
+			throw new Error(data.error)
 		}
 		return data
 	} catch (error) {
-		console.log(error)
-		throw error
+		return {error}
 	}
 }
 
@@ -53,9 +51,13 @@ const updateReview = async (reviewId, reviewFormData) => {
 			},
 			body: JSON.stringify(reviewFormData),
 		})
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
+
 		return res.json()
 	} catch (error) {
-		console.log(error)
+		return {error}
 	}
 }
 
@@ -67,9 +69,13 @@ const deleteReview = async (reviewId) => {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
+
 		return res.json()
 	} catch (error) {
-		console.log(error)
+		return {error}
 	}
 }
 

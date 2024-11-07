@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 function UserSettings(props) {
-	const {user, handleSetUser, authService} = props
+	const {user, handleSetUser, authService, handleError} = props
 	const {updateUser} = authService
 	const [formData, setFormData] = useState({
 		username: user.username,
@@ -11,14 +11,21 @@ function UserSettings(props) {
 	})
 	const handleSubmit = async (event) => {
 		event.preventDefault()
-		const userPayload = await updateUser({user, formData})
-		handleSetUser(userPayload.user)
-		setFormData({
-			username: userPayload.user.username,
-			currentPassword: '',
-			password: '',
-			confirmPassword: '',
-		})
+		try {
+			const userPayload = await updateUser({user, formData})
+			if (userPayload.error) {
+				throw new Error(userPayload.error)
+			}
+			handleSetUser(userPayload.user)
+			setFormData({
+				username: userPayload.user.username,
+				currentPassword: '',
+				password: '',
+				confirmPassword: '',
+			})
+		} catch (error) {
+			handleError(error.message)
+		}
 	}
 	const isFormInvalid = () => {
 		const {username, password, confirmPassword, currentPassword} = formData

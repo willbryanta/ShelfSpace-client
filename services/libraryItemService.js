@@ -12,13 +12,12 @@ const createLibraryItem = async (libraryItem) => {
 			body: JSON.stringify(libraryItem),
 		})
 		const data = await res.json()
-		if (data.err) {
-			throw new Error(data.err)
+		if (data.error) {
+			throw new Error(data.error)
 		}
 		return data
 	} catch (error) {
-		console.log(error)
-		throw error
+		return {error}
 	}
 }
 
@@ -37,8 +36,7 @@ const getLibraryItem = async () => {
 		const data = await res.json()
 		return data
 	} catch (error) {
-		console.error(error)
-		throw error
+		return {error}
 	}
 }
 
@@ -52,13 +50,12 @@ const getLibraryItemById = async (libraryItemId) => {
 		})
 		if (!res.ok) {
 			const errorData = await res.json()
-			throw new Error(errorData.err)
+			throw new Error(errorData.error)
 		}
 		const data = await res.json()
 		return data
 	} catch (error) {
-		console.error(error)
-		throw error
+		return {error}
 	}
 }
 
@@ -72,9 +69,12 @@ const updateLibraryItem = async (libraryItemId, libraryItemFormData) => {
 			},
 			body: JSON.stringify(libraryItemFormData),
 		})
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return res.json()
 	} catch (error) {
-		console.log(error)
+		return {error}
 	}
 }
 
@@ -86,9 +86,12 @@ const deleteLibraryItem = async (libraryItemId) => {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
 		})
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
 		return res.json()
 	} catch (error) {
-		console.log(error)
+		return {error}
 	}
 }
 

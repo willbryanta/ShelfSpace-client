@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
 
 const SignInForm = (props) => {
-	const {handleSetUser} = props
+	const {handleSetUser, handleError} = props
 	const navigate = useNavigate()
 
 	const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ const SignInForm = (props) => {
 
 	const isFormInvalid = () => {
 		const {username, password} = formData
-		return !(username && password )
+		return !(username && password)
 	}
 
 	return (
@@ -32,11 +32,20 @@ const SignInForm = (props) => {
 			<form
 				onSubmit={async (event) => {
 					event.preventDefault()
-
-					const {username, password} = formData
-					const userPayload = await authService.signIn({username, password})
-					handleSetUser(userPayload)
-					navigate('/')
+					try {
+						const {username, password} = formData
+						const userPayload = await authService.signIn({username, password})
+						if (userPayload.error) {
+							throw new Error(userPayload.error)
+						}
+						if (userPayload.error) {
+							return handleError(userPayload.error)
+						}
+						handleSetUser(userPayload)
+						navigate('/')
+					} catch (error) {
+						handleError(error.message)
+					}
 				}}
 			>
 				<div>

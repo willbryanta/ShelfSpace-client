@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
 
 const SignUpForm = (props) => {
-	const {handleSetUser} = props
+	const {handleSetUser, handleError} = props
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		username: '',
@@ -33,11 +33,13 @@ const SignUpForm = (props) => {
 				username: formData.username,
 				password: formData.password,
 			})
-
+			if (responseData.error) {
+				throw new Error(responseData.error)
+			}
 			handleSetUser(responseData.user)
 			navigate('/')
 		} catch (error) {
-			console.log(error)
+			handleError(error.message)
 		}
 	}
 

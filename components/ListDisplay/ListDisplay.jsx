@@ -5,34 +5,47 @@ import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
 import './ListShow.css'
 
-const formatDate = (date) => {
-	return format(new Date(date), 'yyyy')
-}
-//* this is a helper function that helps to format the date 
-//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object 
-
-const ListShow = (props) => {
-	const {user} = props
+const ListDisplay = (props) => {
+	const {user, handleError} = props
 	const {listId} = useParams()
 	const isNew = listId === 'new'
 	const navigate = useNavigate()
-
 	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
 	const [isAdding, setIsAdding] = useState(false)
 
+	const formatDate = (date) => {
+		return format(new Date(date), 'yyyy')
+	}
+	//* this is a helper function that helps to format the date
+	//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object
+
 	const fetchList = async () => {
 		if (!isNew) {
-			const fetchedList = await usersService.showList(user, listId)
-			setList(fetchedList)
+			try {
+				const fetchedList = await usersService.showList(user, listId)
+				if (fetchedList.error) {
+					throw new Error(fetchedList.error)
+				}
+				setList(fetchedList)
+			} catch (error) {
+				handleError(error.message)
+			}
 		}
 	}
 
 	const fetchMovies = async () => {
-		const movies = await libraryItemService.getLibraryItem()
-		filterMovies(movies)
+		try {
+			const movies = await libraryItemService.getLibraryItem()
+			if (movies.error) {
+				throw new Error(movies.error)
+			}
+			filterMovies(movies)
+		} catch (error) {
+			handleError(error.message)
+		}
 	}
 
 	const filterMovies = (movies) => {
@@ -65,24 +78,38 @@ const ListShow = (props) => {
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
 		if (isNew) {
-			const newListData = {
-				newList: {listName: list.listName, items: list.items},
+			try {
+				const newListData = {
+					newList: {listName: list.listName, items: list.items},
+				}
+				const newListResponse = await usersService.createList(user, newListData)
+				if (newListResponse.error) {
+					throw new Error(newListResponse.error)
+				}
+				setList(newListResponse)
+				setIsEditing(false)
+				setUnsavedChanges(false)
+				navigate(`/users/${user._id}/lists/${newListResponse._id}`)
+			} catch (error) {
+				handleError(error.message)
 			}
-			const newListResponse = await usersService.createList(user, newListData)
-			setList(newListResponse)
-			setIsEditing(false)
-			setUnsavedChanges(false)
-			navigate(`/users/${user._id}/lists/${newListResponse._id}`)
 		} else {
-			const packagedListData = {updatedList: list}
-			const updatedListResponse = await usersService.updateList(
-				user,
-				list._id,
-				packagedListData
-			)
-			setList(updatedListResponse)
-			setIsEditing(false)
-			setUnsavedChanges(false)
+			try {
+				const packagedListData = {updatedList: list}
+				const updatedListResponse = await usersService.updateList(
+					user,
+					list._id,
+					packagedListData
+				)
+				if (updatedListResponse.error) {
+					throw new Error(updatedListResponse.error)
+				}
+				setList(updatedListResponse)
+				setIsEditing(false)
+				setUnsavedChanges(false)
+			} catch (error) {
+				handleError(error.message)
+			}
 		}
 	}
 
@@ -186,4 +213,4 @@ const ListShow = (props) => {
 	)
 }
 
-export default ListShow
+export default ListDisplay

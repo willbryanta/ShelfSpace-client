@@ -4,14 +4,21 @@ import * as authService from '../services/authService'
 import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
 import SignInForm from '../components/SignInForm/SignInForm'
-import LibraryIndex from '../components/LibraryIndex/LibraryIndex'
 import ProfilePage from '../components/ProfilePage/ProfilePage'
-import ListShow from '../components/ListShow/ListShow'
-import LibraryItem from '../components/LibraryItem/LibraryItem'
+import LibraryIndexDisplay from '../components/LibraryIndexDisplay/LibraryIndexDisplay'
+import LibraryItemDisplay from '../components/LibraryItemDisplay/LibraryItemDisplay'
+import ListDisplay from '../components/ListDisplay/ListDisplay'
+import ErrorModal from '../components/ErrorModal/ErrorModal'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
+	const [errorModalOpen, setErrorModalOpen] = useState(false)
+	const [message, setMessage] = useState({})
 	const handleSetUser = (user) => setUser(user)
+	const handleError = (message) => {
+		setMessage(message)
+		setErrorModalOpen(true)
+	}
 	return (
 		<>
 			<Navbar
@@ -19,16 +26,31 @@ function App() {
 				authService={authService}
 				handleSetUser={handleSetUser}
 			/>
+			<ErrorModal
+				errorModalOpen={errorModalOpen}
+				setErrorModalOpen={setErrorModalOpen}
+				message={message}
+			/>
 			<Routes>
-				<Route path="/library/:libraryItemId" element={<LibraryItem />} />
-				<Route path="/library" element={<LibraryIndex />} />
+				<Route path="/library/:libraryItemId" element={<LibraryItemDisplay />} />
+				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
 					path="/users/signup"
-					element={<SignUpForm handleSetUser={handleSetUser} />}
+					element={
+						<SignUpForm
+							handleSetUser={handleSetUser}
+							handleError={handleError}
+						/>
+					}
 				/>
 				<Route
 					path="/users/signin"
-					element={<SignInForm handleSetUser={handleSetUser} />}
+					element={
+						<SignInForm
+							handleSetUser={handleSetUser}
+							handleError={handleError}
+						/>
+					}
 				/>
 				<Route
 					path="/users/:userId"
@@ -37,12 +59,13 @@ function App() {
 							authService={authService}
 							handleSetUser={handleSetUser}
 							user={user}
+							handleError={handleError}
 						/>
 					}
 				/>
 				<Route
 					path="/users/:userId/lists/:listId"
-					element={<ListShow user={user} />}
+					element={<ListDisplay user={user} handleError={handleError} />}
 				/>
 			</Routes>
 		</>
