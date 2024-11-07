@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
-import './ListShow.css'
+// import './ListShow.css'
 
 const ListDisplay = (props) => {
 	const {user, handleError} = props
@@ -114,9 +114,13 @@ const ListDisplay = (props) => {
 	}
 
 	const handleCancelClick = () => {
-		fetchList()
-		setIsEditing(false)
-		setUnsavedChanges(false)
+		if (isNew) {
+			navigate(`/users/${user._id}`)
+		} else {
+			fetchList()
+			setIsEditing(false)
+			setUnsavedChanges(false)
+		}
 	}
 
 	useEffect(() => {
@@ -131,7 +135,11 @@ const ListDisplay = (props) => {
 		<div className="list-show-container">
 			{isEditing ? (
 				<form onSubmit={(event) => event.preventDefault()}>
+					<label htmlFor="listTitle">
+						<strong>List Title:</strong>
+					</label>
 					<input
+						id="listTitle"
 						type="text"
 						name="listName"
 						value={list.listName}
