@@ -4,6 +4,9 @@ import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import { format } from 'date-fns'
 
+const formatDate = (date) => {
+	return format(new Date(date), 'yyyy')
+}
 function LibraryItemDisplay(props) {
 	const {user, handleError} = props
 	const {libraryItemId} = useParams()
@@ -34,7 +37,7 @@ function LibraryItemDisplay(props) {
 			<ul>
 				<li>Name: {libraryItem.name}</li>
 				<li>Description: {libraryItem.description}</li>
-				<li>Publication Date: {libraryItem.publicationDate}</li>
+				<li>Publication Date: {formatDate(libraryItem.publicationDate)}</li>
 				<li>Author: {libraryItem.author}</li>
 				<li>
 					Reviews:
