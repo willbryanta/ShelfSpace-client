@@ -24,7 +24,7 @@ function LibraryIndexDisplay(props) {
 			}
 		}
 		fetchLibraryItems()
-	}, [])
+	}, [handleError])
 
 	const handleNewClick = () => {
 		navigate('/library/new')

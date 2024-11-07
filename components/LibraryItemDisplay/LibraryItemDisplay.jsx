@@ -31,7 +31,7 @@ function LibraryItemDisplay(props) {
 			}
 		}
 		fetchLibraryItem()
-	}, [])
+	}, [handleError, libraryItemId])
 	useEffect(() => {
 	}, [])
 	return (

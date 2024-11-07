@@ -10,21 +10,21 @@ function ProfilePage(props) {
 	const {getProfile, deleteList} = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
-	const generateProfile = async () => {
-		try {
-			const profileData = await getProfile(user)
-			if (profileData.error) {
-				throw new Error(profileData.error)
-			}
-			setLists(profileData.user.lists)
-			setReviews(profileData.reviews)
-		} catch (error) {
-			handleError(error.message)
-		}
-	}
 	useEffect(() => {
+		const generateProfile = async () => {
+			try {
+				const profileData = await getProfile(user)
+				if (profileData.error) {
+					throw new Error(profileData.error)
+				}
+				setLists(profileData.user.lists)
+				setReviews(profileData.reviews)
+			} catch (error) {
+				handleError(error.message)
+			}
+		}
 		generateProfile()
-	}, [])
+	}, [getProfile, handleError, user])
 	return (
 		<>
 			<h3>Your Lists</h3>
