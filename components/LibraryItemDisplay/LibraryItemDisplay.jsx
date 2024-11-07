@@ -19,11 +19,11 @@ function LibraryItemDisplay(props) {
 	})
 	
 	const handleAddReview = () => {
-		const reviewArray = [...libraryItem.reviews]
+		const reviewArray = structuredClone(libraryItem.reviews)
 		reviewArray.push({
 			title: '',
 			description: '',
-			author: user,
+			author: user._id,
 			libraryItem: libraryItem,
 			isNew: true
 		})
@@ -60,7 +60,7 @@ function LibraryItemDisplay(props) {
 					{formatDate(libraryItem.publicationDate)}
 				</li>
 				<li>
-					<strong>Author:</strong> {libraryItem.author.username}
+					<strong>Author:</strong> {libraryItem.author?.username}
 				</li>
 				<li>
 					<strong>Reviews:</strong>
@@ -68,14 +68,15 @@ function LibraryItemDisplay(props) {
 						<button key="addReview" type="button" onClick={handleAddReview}>Add a review</button>
 					}
 					<ul>
-						{libraryItem?.reviews?.map((review) => (
-							<li key={review._id}>
+						{libraryItem?.reviews?.map((review, i) => (
+							<li key={review._id ? review._id : `${i}`}>
 								<ReviewDisplay
 									review={review}
 									user={user}
 									handleError={handleError}
 									libraryItem={libraryItem}
 									refreshParent={fetchLibraryItem}
+									isNew={review.isNew ? true : false}
 								/>
 							</li>
 						))}

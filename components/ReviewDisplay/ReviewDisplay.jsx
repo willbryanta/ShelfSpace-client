@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react'
 import * as reviewService from '../../services/reviewService'
 
 function ReviewDisplay(props) {
-	const {review, user, libraryItem, handleError, refreshParent} = props
+	const {review, user, handleError, refreshParent, isNew} = props
 	const {title, description, author, rating} = review
-	const [isEditing, setIsEditing] = useState(false)
+	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [formData, setFormData] = useState({})
 	const renderRating = (rating) => {
@@ -20,15 +20,26 @@ function ReviewDisplay(props) {
 	const handleSaveClick = async (event) => {
 		event.preventDefault()
 		try {
-			const updatedReview = await reviewService.updateReview(user, review._id, formData)
-			if (updatedReview.error) {
-				throw new Error(updatedReview.error)
+			if (isNew) {
+				const createdReview = await reviewService.createReview(user, formData)
+				if (createdReview.error) {
+					throw new Error(createdReview.error)
+				}
+			} else {
+				const updatedReview = await reviewService.updateReview(
+					user,
+					review._id,
+					formData
+				)
+				if (updatedReview.error) {
+					throw new Error(updatedReview.error)
+				}
 			}
 			refreshParent()
 			setIsEditing(false)
 			setUnsavedChanges(false)
 		} catch (error) {
-			handleError(error)
+			handleError(error.message)
 		}
 	}
 
@@ -37,22 +48,27 @@ function ReviewDisplay(props) {
 		const inputValue = event.target.value
 		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
+		console.log(formData)
 	}
 
 	const handleCancelClick = () => {
+		if (isNew) {
+			refreshParent()
+		}
 		setFormData(review)
 		setIsEditing(false)
 	}
-	const handleDeleteClick = async () => {		try {
+	const handleDeleteClick = async () => {
+		try {
 			const updatedReview = await reviewService.deleteReview(user, review._id)
 			if (updatedReview.error) {
 				throw new Error(updatedReview.error)
 			}
 			refreshParent()
 		} catch (error) {
-			handleError(error)
+			handleError(error.message)
 		}
-}
+	}
 
 	return (
 		<>
@@ -107,7 +123,7 @@ function ReviewDisplay(props) {
 					<button type="button" onClick={() => setIsEditing(true)}>
 						Edit
 					</button>
-					{user?._id === author?._id && (
+					{user?._id === author?._id && !isEditing && (
 						<button type="button" onClick={handleDeleteClick}>
 							Delete
 						</button>

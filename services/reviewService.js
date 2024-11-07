@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
-const createReview = async (review) => {
+const createReview = async (user, review) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/reviews`, {
 			method: 'POST',
@@ -10,6 +10,7 @@ const createReview = async (review) => {
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(review),
+			user
 		})
 		const data = await res.json()
 		if (data.error) {
