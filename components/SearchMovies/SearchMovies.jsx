@@ -14,7 +14,7 @@ function SearchMovies() {
 
         fetch(url)
             .then(res => res.json())
-            .then(data => setMovies(data))
+            .then(data => setMovies(data.filter(movie => movie.poster_path)))
             .catch(err => console.error(err));
     }
 
