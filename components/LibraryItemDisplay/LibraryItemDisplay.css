@@ -8,8 +8,8 @@ body {
 	background-color: #d69456;
 	padding: 20px;
 	border-radius: 8px;
-	max-width: 600px;
-	margin: 20px auto;
+	width: 900px;
+	margin: 20px auto -5px;
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
@@ -36,4 +36,9 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+h1 {
+	text-align: center;
+	margin: -25px 0 0 0;
 }

@@ -1,6 +1,8 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
+import styles from './SignUp.module.css'
+
 
 const SignUpForm = (props) => {
 	const {handleSetUser, handleError} = props
@@ -45,15 +47,16 @@ const SignUpForm = (props) => {
 
 	return (
 		<main>
-			<h1>Sign up Page</h1>
+			<h1 className={styles.title}>Sign Up Page</h1>
 			<form onSubmit={onFormSubmit}>
-				<div>
+				<div className={styles.elements}>
 					<label htmlFor="username">Username</label>
 					<input
 						id="username"
 						name="username"
 						value={formData.username}
 						onChange={onFormInputChange}
+						className={styles.input}
 					/>
 				</div>
 				<div>
@@ -64,6 +67,7 @@ const SignUpForm = (props) => {
 						name="password"
 						value={formData.password}
 						onChange={onFormInputChange}
+						className={styles.input}
 					/>
 				</div>
 				<div>
@@ -74,9 +78,10 @@ const SignUpForm = (props) => {
 						name="confirmPassword"
 						value={formData.confirmPassword}
 						onChange={onFormInputChange}
+						className={styles.input}
 					/>
 				</div>
-				<button type="submit" disabled={isFormInvalid()}>
+				<button type="submit" disabled={isFormInvalid()} className={styles.button}>
 					Sign Up
 				</button>
 			</form>

@@ -176,9 +176,8 @@ function LibraryItemDisplay(props) {
 				</form>
 			) : (
 				<div>
-					<ul className="library-item">
-						<li className="item-detail">
-							{libraryItem.posterPath ? (
+					<h1>{libraryItem.name}</h1>
+					{libraryItem.posterPath ? (
 								<img
 									src={`https://image.tmdb.org/t/p/w200/${libraryItem.posterPath}`}
 									className={styles.poster}
@@ -189,10 +188,7 @@ function LibraryItemDisplay(props) {
 									className={styles.poster}
 								></img>
 							)}
-						</li>
-						<li className="item-detail">
-							<strong>Title:</strong> {libraryItem.name}
-						</li>
+					<ul className="library-item">
 						<li className="item-detail">
 							<strong>Overview:</strong> {libraryItem.description}
 						</li>
@@ -222,17 +218,17 @@ function LibraryItemDisplay(props) {
 						</li>
 					</ul>
 					{user && !isAdding && (
-						<button key="addReview" type="button" onClick={handleAddReview}>
+						<button key="addReview" type="button" onClick={handleAddReview} className={styles.button}>
 							Add a review
 						</button>
 					)}
 					{user && (
-						<button type="button" onClick={() => setIsEditing(true)}>
+						<button type="button" onClick={() => setIsEditing(true)} className={styles.button}>
 							Edit
 						</button>
 					)}
 					{user && libraryItem.author && user._id === libraryItem.author._id && (
-						<button type="button" onClick={handleDeleteClick}>
+						<button type="button" onClick={handleDeleteClick} className={styles.button}>
 							Delete
 						</button>
 					)}
