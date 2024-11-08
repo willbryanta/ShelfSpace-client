@@ -4,9 +4,13 @@
 
 ![ShelfSpace Home](src/assets/ShelfSpace_home.png)
 
+Ever wanted to create a list of movies you plan on watching soon? Ever unsure whether certain movies are worth your time?
+
+ShelfSpace is an all in one platform for keeping track of content you want to consume. ShelfSpace allows any authenticated users to add content to the centralised database and review different items of content.
+
 ## Table of Contents
 
-- [Screenshot/Logo](#Home-Page)
+- [Home Page](#Home-Page)
 - [Getting Started](#getting-started)
   - [Deployed Application](#deployed-application)
   - [Planning Materials](#planning-materials)
@@ -35,7 +39,9 @@ The server repository can be located here: [Server](https://github.com/willbryan
 
 ## Attributions
 
-- [Resource 1](https://link-to-resource1.com): TBD
+- [MUI](https://mui.com/): Error standardisation and logging
+- [Date-fns](https://date-fns.org/): Date formatting
+- [Emoji-js](https://www.npmjs.com/package/emoji-js?ref=blog.zingsoft.com): Emojis
 
 ## Technologies Used
 
@@ -61,16 +67,6 @@ Planned enhancements for future development (Stretch Goals):
 
 ## Features
 
-- User authentication using JWT,
-- CRUD functionality for content
-- Keep adding onto this....
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch
-3. Commit your changes
-4. Push the branch
-5. Open a Pull Request.
+- User authentication
+- CRUD functionality for users, reviews, library items and lists
+- Supports SPA routing
