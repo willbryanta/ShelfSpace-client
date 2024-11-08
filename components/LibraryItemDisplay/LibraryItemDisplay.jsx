@@ -74,7 +74,7 @@ function LibraryItemDisplay(props) {
 
 	useEffect(() => {
 		fetchLibraryItem()
-	}, [fetchLibraryItem])
+	}, [])
 
 	const handleCancelClick = () => {
 		if (isNew) {
