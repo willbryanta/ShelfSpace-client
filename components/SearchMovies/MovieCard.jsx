@@ -25,7 +25,7 @@ export default function MovieCard(props) {
     
     const addToLibrary = async () => {
 
-        await libraryItemService.createLibraryItem(newMovie)
+        await libraryItemService.createLibraryItem(user, newMovie)
         setMovieAdded(true)
     }
 

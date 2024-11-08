@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
 import './LibraryIndexDisplay.css'
+import styles from './LibraryIndex.module.css'
 
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
