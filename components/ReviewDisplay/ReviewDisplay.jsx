@@ -131,9 +131,11 @@ function ReviewDisplay(props) {
 					{renderRating(rating)}
 					<p>{description}</p>
 					<p>Author: {author?.username}</p>
-					<button type="button" onClick={() => setIsEditing(true)}>
-						Edit
-					</button>
+					{user?._id === author?._id && (
+						<button type="button" onClick={() => setIsEditing(true)}>
+							Edit
+						</button>
+					)}
 					{user?._id === author?._id && !isEditing && (
 						<button type="button" onClick={handleDeleteClick}>
 							Delete
