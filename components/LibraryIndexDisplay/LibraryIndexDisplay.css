@@ -1,0 +1,25 @@
+body {
+	background-color: #ffca99;
+	font-family: Arial, sans-serif;
+	color: #391c0b;
+}
+
+div {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #d69456;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 20px 0;
+	padding-bottom: 10px;
+}
+
+li {
+	padding: 8px 0;
+}
