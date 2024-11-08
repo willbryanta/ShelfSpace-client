@@ -5,7 +5,7 @@ import * as usersService from '../../services/usersService'
 import styles from './MovieCard.module.css';
 
 export default function MovieCard(props) {
-    const { movie, user, libraryItems, list, setList, setUpdated } = props
+    const { movie, user, libraryItems, setUpdated } = props
 
     const [movieAdded, setMovieAdded] = useState(false)
 
@@ -30,24 +30,24 @@ export default function MovieCard(props) {
         setUpdated(true)
     }
 
-    const createDefaultList = async () => {
-        const defaultList = {
-            newList: {listName: 'To Watch', items: []},
-        }
-        const newListResponse = await usersService.createList(user, defaultList)
-        console.log(newListResponse)
-        setList(newListResponse)
-    }
+    // const createDefaultList = async () => {
+    //     const defaultList = {
+    //         newList: {listName: 'To Watch', items: []},
+    //     }
+    //     const newListResponse = await usersService.createList(user, defaultList)
+    //     // console.log(newListResponse) // Foad
+    //     // setList(newListResponse) // Foad
+    // }
 
-    const updateDefaultList = async (newListResponse) => {
-            const updatedList = {...newListResponse,  
-            items: [newListResponse.items, newMovie]  
-        };
+    // const updateDefaultList = async (newListResponse) => {
+    //         const updatedList = {...newListResponse,  
+    //         items: [newListResponse.items, newMovie]  
+    //     };
 
-        const updatedListResponse = await usersService.updateList(user, newListResponse._id, { updatedList });
-        console.log(updatedListResponse)
-        setList(updatedListResponse);
-    }
+    //     const updatedListResponse = await usersService.updateList(user, newListResponse._id, { updatedList });
+    //     console.log(updatedListResponse)
+    //     setList(updatedListResponse);
+    // }
 
 
     return (
@@ -58,7 +58,7 @@ export default function MovieCard(props) {
             {movieAdded ? (<button className={styles.addToLib}>✔️</button>)
                 :
                 (<button onClick={addToLibrary} className={styles.addToLib}>Add to Library</button>)}
-            <button onClick={createDefaultList} className={styles.addToLib}>Create a 'To Watch' list</button>
+            {/* <button onClick={createDefaultList} className={styles.addToLib}>Create a 'To Watch' list</button> */}
             </div>
         </li>
     )
