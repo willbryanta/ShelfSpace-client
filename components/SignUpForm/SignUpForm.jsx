@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
 
+
 const SignUpForm = (props) => {
 	const {handleSetUser, handleError} = props
 	const navigate = useNavigate()
@@ -45,7 +46,7 @@ const SignUpForm = (props) => {
 
 	return (
 		<main>
-			<h1>Sign up Page</h1>
+			<h1 className={styles.title}>Sign up Page</h1>
 			<form onSubmit={onFormSubmit}>
 				<div>
 					<label htmlFor="username">Username</label>
