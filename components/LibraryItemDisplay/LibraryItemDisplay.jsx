@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import {useEffect, useState, useCallback} from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
-import { format } from 'date-fns'
+import {format} from 'date-fns'
 import './LibraryItemDisplay.css'
 import styles from './LibraryItem.module.css'
 
@@ -11,8 +11,8 @@ const formatDate = (date) => {
 }
 
 function LibraryItemDisplay(props) {
-	const { user, handleError } = props
-	const { libraryItemId } = useParams()
+	const {user, handleError} = props
+	const {libraryItemId} = useParams()
 	const [isAdding, setIsAdding] = useState(false)
 	const isNew = libraryItemId === 'new'
 	const [isEditing, setIsEditing] = useState(isNew)
@@ -43,7 +43,7 @@ function LibraryItemDisplay(props) {
 			libraryItem: libraryItem,
 			isNew: true,
 		})
-		setLibraryItem({ ...libraryItem, reviews: reviewArray })
+		setLibraryItem({...libraryItem, reviews: reviewArray})
 		setIsAdding(true)
 	}
 
@@ -113,14 +113,14 @@ function LibraryItemDisplay(props) {
 	const handleTextInputChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = event.target.value
-		setFormData({ ...formData, [inputName]: inputValue })
+		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
 
 	const handleDateInputChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = transformDateForDB(event.target.value)
-		setFormData({ ...formData, [inputName]: inputValue })
+		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
 
@@ -178,10 +178,17 @@ function LibraryItemDisplay(props) {
 				<div>
 					<ul className="library-item">
 						<li className="item-detail">
-							{(libraryItem.posterPath) ?
-								<img src={`https://image.tmdb.org/t/p/w200/${libraryItem.posterPath}`} className={styles.poster}></img>
-								: <img src="https://placeholder.pics/svg/300x300/391C0B/391C0B" className={styles.poster}></img>
-							}
+							{libraryItem.posterPath ? (
+								<img
+									src={`https://image.tmdb.org/t/p/w200/${libraryItem.posterPath}`}
+									className={styles.poster}
+								></img>
+							) : (
+								<img
+									src="https://placeholder.pics/svg/300x300/391C0B/391C0B"
+									className={styles.poster}
+								></img>
+							)}
 						</li>
 						<li className="item-detail">
 							<strong>Title:</strong> {libraryItem.name}
@@ -220,14 +227,14 @@ function LibraryItemDisplay(props) {
 						</button>
 					)}
 					{user && (
-						<>
-							<button type="button" onClick={() => setIsEditing(true)}>
-								Edit
-							</button>
-							<button type="button" onClick={handleDeleteClick}>
-								Delete
-							</button>
-						</>
+						<button type="button" onClick={() => setIsEditing(true)}>
+							Edit
+						</button>
+					)}
+					{user._id === libraryItem.author._id && (
+						<button type="button" onClick={handleDeleteClick}>
+							Delete
+						</button>
 					)}
 				</div>
 			)}
