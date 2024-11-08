@@ -6,7 +6,11 @@ function ReviewDisplay(props) {
 	const {title, description, author, rating} = review
 	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
-	const [formData, setFormData] = useState({})
+	const [formData, setFormData] = useState({
+		title: '',
+		description: '',
+		rating: 0
+	})
 	const renderRating = (rating) => {
 		for (let i = rating; i > 0; i--) {
 			return <span>&#11088;</span>
@@ -48,7 +52,6 @@ function ReviewDisplay(props) {
 		const inputValue = event.target.value
 		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
-		console.log(formData)
 	}
 
 	const handleCancelClick = () => {
@@ -82,7 +85,7 @@ function ReviewDisplay(props) {
 						id="title"
 						name="title"
 					/>
-					<label htmlFor="title">Description:</label>
+					<label htmlFor="description">Description:</label>
 					<textarea
 						value={formData.description}
 						onChange={handleInputChange}
