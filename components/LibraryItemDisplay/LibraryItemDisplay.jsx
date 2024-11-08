@@ -33,7 +33,6 @@ function LibraryItemDisplay(props) {
 		}
 		fetchLibraryItem()
 	}, [handleError, libraryItemId])
-	useEffect(() => {}, [])
 	return (
 		<div>
 			<ul className="library-item">
