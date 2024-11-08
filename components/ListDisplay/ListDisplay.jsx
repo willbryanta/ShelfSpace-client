@@ -1,5 +1,5 @@
 import {useParams, useNavigate} from 'react-router-dom'
-import { useState, useEffect, useCallback } from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import {Link} from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
@@ -114,6 +114,16 @@ const ListDisplay = (props) => {
 		}
 	}
 
+	const handleDeleteList = async () => {
+		try {
+			const updatedUser = await usersService.deleteList(user, list._id)
+			setList(updatedUser.lists)
+			navigate('/users/${user._id}')
+		} catch (error) {
+			handleError(error.message)
+		}
+	}
+
 	useEffect(() => {
 		fetchList()
 	}, [fetchList])
@@ -214,12 +224,10 @@ const ListDisplay = (props) => {
 					Save
 				</button>
 
-				<button
-					type="button"
-					onClick={handleCancelClick}
-				>
+				<button type="button" onClick={handleCancelClick}>
 					Cancel
 				</button>
+				
 			</div>
 		</div>
 	)
