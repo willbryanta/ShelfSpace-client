@@ -6,7 +6,7 @@ import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
 
 const ListDisplay = (props) => {
-	const {user, handleError, list, setList} = props
+	const {user, handleError} = props
 	const {listId} = useParams()
 	const isNew = listId === 'new'
 	const navigate = useNavigate()
@@ -14,6 +14,7 @@ const ListDisplay = (props) => {
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
 	const [isAdding, setIsAdding] = useState(false)
+	const [list, setList] = useState({listName: '', items: []})
 
 	const formatDate = (date) => {
 		return format(new Date(date), 'yyyy')
@@ -33,7 +34,7 @@ const ListDisplay = (props) => {
 				handleError(error.message)
 			}
 		}
-	}, [handleError, isNew, listId, user])
+	}, [handleError, isNew, listId, user, setList])
 
 	const filterMovies = useCallback(
 		(movies) => {

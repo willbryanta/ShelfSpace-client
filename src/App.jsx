@@ -18,28 +18,13 @@ function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
 	const [message, setMessage] = useState({})
-	const [libraryItems, setLibraryItems] = useState([])
-	const [list, setList] = useState({listName: '', items: []})
+
+	const [updated, setUpdated] = useState(false)
 	const handleSetUser = (user) => setUser(user)
 	const handleError = (message) => {
 		setMessage(message)
 		setErrorModalOpen(true)
 	}
-
-	useEffect(() => {
-		const fetchLibraryItems = async () => {
-			try {
-				const items = await libraryItemService.getLibraryItem()
-				if (items.error) {
-					throw new Error(items.error)
-				}
-				setLibraryItems(items)
-			} catch (error) {
-				handleError(error.message)
-			}
-		}
-		fetchLibraryItems()
-	}, [libraryItems])
 
 
 	return (
@@ -63,12 +48,10 @@ function App() {
 				<Route path="/search-movies" element={<SearchMovies 
 					user={user}
 					handleError={handleError}
-					libraryItems={libraryItems}
-					list={list}
-					setList={setList} />} />
+					setUpdated={setUpdated} />} />
 				<Route
 					path="/library"
-					element={<LibraryIndexDisplay libraryItems={libraryItems} handleError={handleError} />}
+					element={<LibraryIndexDisplay handleError={handleError} />}
 				/>
 				<Route
 					path="/users/signup"
@@ -101,7 +84,7 @@ function App() {
 				/>
 				<Route
 					path="/users/:userId/lists/:listId"
-					element={<ListDisplay user={user} handleError={handleError} list={list} setList={setList} />}
+					element={<ListDisplay user={user} handleError={handleError}  />}
 				/>
 				<Route 
 					path="/users/:userId/settings" 
