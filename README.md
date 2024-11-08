@@ -1,13 +1,12 @@
 # ShelfSpace
 
-## Screenshot/Logo
+## Home Page
 
-![App Screenshot](link-to-screenshot.png)
+![ShelfSpace Home](src/assets/ShelfSpace_home.png)
 
 ## Table of Contents
 
-- [Screenshot/Logo](#screenshotlogo)
-- [Your App’s Name](#your-apps-name)
+- [Screenshot/Logo](#Home-Page)
 - [Getting Started](#getting-started)
   - [Deployed Application](#deployed-application)
   - [Planning Materials](#planning-materials)
@@ -16,16 +15,13 @@
 - [Technologies Used](#technologies-used)
 - [Next Steps](#next-steps)
 - [Features](#features)
-- [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Getting Started
 
 ### Deployed Application
 
-The deployed application is here: [ShelfSpace](https://shelfspace-client.netlify.app/)
+The deployed application can be found here: [ShelfSpace](https://shelfspace-client.netlify.app/)
 
 ### Planning Materials
 
@@ -78,11 +74,3 @@ Contributions are welcome! Please follow these steps:
 3. Commit your changes
 4. Push the branch
 5. Open a Pull Request.
-
-## License
-
-Maybe chuck a licence here?
-
-## Contact
-
-Add some contact details here
