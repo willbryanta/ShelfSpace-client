@@ -19,6 +19,7 @@ function App() {
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
 	const [message, setMessage] = useState({})
 	const [libraryItems, setLibraryItems] = useState([])
+	const [list, setList] = useState({listName: '', items: []})
 	const handleSetUser = (user) => setUser(user)
 	const handleError = (message) => {
 		setMessage(message)
@@ -95,7 +96,7 @@ function App() {
 				/>
 				<Route
 					path="/users/:userId/lists/:listId"
-					element={<ListDisplay user={user} handleError={handleError} />}
+					element={<ListDisplay user={user} handleError={handleError} list={list} setList={setList} />}
 				/>
 				<Route 
 					path="/users/:userId/settings" 

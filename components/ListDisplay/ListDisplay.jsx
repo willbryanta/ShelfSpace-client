@@ -6,11 +6,10 @@ import {format} from 'date-fns'
 // import './ListShow.css'
 
 const ListDisplay = (props) => {
-	const {user, handleError} = props
+	const {user, handleError, list, setList} = props
 	const {listId} = useParams()
 	const isNew = listId === 'new'
 	const navigate = useNavigate()
-	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
