@@ -35,12 +35,12 @@ function LibraryIndexDisplay(props) {
 				{item.posterPath ? (
 					<img
 						src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`}
-						className={styles.poster}
+						className={styles.poster} alt={item.name}
 					></img>
 				) : (
 					<img
 						src="https://placeholder.pics/svg/300x300/391C0B/391C0B"
-						className={styles.poster}
+						className={styles.poster} alt={`A placeholder for items without a poster`}
 					></img>
 				)}
 			</Link>
