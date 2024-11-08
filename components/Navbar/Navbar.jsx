@@ -10,6 +10,9 @@ function Navbar(props) {
 			{!user ? (
 				<ul className="navbar-list">
 					<li>
+						<Link to="/search-movies">Search</Link>
+					</li>
+					<li>
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
@@ -22,10 +25,16 @@ function Navbar(props) {
 			) : (
 				<ul className="navbar-list">
 					<li>
+						<Link to="/search-movies">Search</Link>
+					</li>
+					<li>
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
 						<Link to={`/users/${user._id}`}> {user.username}</Link>
+					</li>
+					<li>
+						<Link to={`/users/${user._id}/settings`}>Settings</Link>
 					</li>
 					<li>
 						<a

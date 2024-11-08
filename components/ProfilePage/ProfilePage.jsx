@@ -3,9 +3,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import ListIndexDisplay from '../ListIndexDisplay/ListIndexDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
-import UserSettings from '../UserSettings/UserSettings'
 function ProfilePage(props) {
-	const {user, handleSetUser, authService, handleError} = props
+	const {user, handleError} = props
 	const navigate = useNavigate()
 	const {getProfile, deleteList} = usersService
 	const [lists, setLists] = useState([])
@@ -75,12 +74,6 @@ function ProfilePage(props) {
 					)
 				})}
 			</ul>
-			<UserSettings
-				handleSetUser={handleSetUser}
-				user={user}
-				authService={authService}
-				handleError={handleError}
-			/>
 		</>
 	)
 }

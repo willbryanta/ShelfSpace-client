@@ -3,6 +3,8 @@ import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
 import './LibraryIndexDisplay.css'
+import styles from './LibraryIndex.module.css'
+
 
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
@@ -11,7 +13,6 @@ const formatDate = (date) => {
 function LibraryIndexDisplay(props) {
 	const {handleError} = props
 	const [libraryItems, setLibraryItems] = useState([])
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		const fetchLibraryItems = async () => {
@@ -26,37 +27,28 @@ function LibraryIndexDisplay(props) {
 			}
 		}
 		fetchLibraryItems()
-	}, [handleError])
+	}, [])
 
-	const handleNewClick = () => {
-		navigate('/library/new')
-	}
-
-	const allLibraryItems = libraryItems?.map((libraryItem) => (
-		<ul key={libraryItem._id}>
-			<li>
-				<Link to={`/library/${libraryItem._id}`}>
-					<strong>Name:</strong> {libraryItem.name}
-				</Link>
-			</li>
-			<li>
-				<strong>Description:</strong> {libraryItem.description}
-			</li>
-			<li>
-				<strong>Publication Date:</strong>{' '}
-				{formatDate(libraryItem.publicationDate)}
-			</li>
-		</ul>
+	const allLibraryItems = libraryItems?.map((item) => (
+		<li key={libraryItems._id} className={styles.item}>
+			<Link to={`/library/${item._id}`}>
+				{item.posterPath ? (
+					<img
+						src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`}
+						className={styles.poster}
+					></img>
+				) : (
+					<img
+						src="https://placeholder.pics/svg/300x300/391C0B/391C0B"
+						className={styles.poster}
+					></img>
+				)}
+			</Link>
+			<p className={styles.title}>{item.name}</p>
+		</li>
 	))
 
-	return (
-		<>
-			<div>{allLibraryItems}</div>
-			<button type="button" onClick={handleNewClick}>
-				Create Library Entry
-			</button>
-		</>
-	)
+	return <ul className={styles.results}>{allLibraryItems}</ul>
 }
 
 export default LibraryIndexDisplay

@@ -10,11 +10,11 @@ const ListDisplay = (props) => {
 	const {listId} = useParams()
 	const isNew = listId === 'new'
 	const navigate = useNavigate()
-	const [list, setList] = useState({listName: '', items: []})
 	const [isEditing, setIsEditing] = useState(isNew)
 	const [unsavedChanges, setUnsavedChanges] = useState(false)
 	const [availableMovies, setAvailableMovies] = useState([])
 	const [isAdding, setIsAdding] = useState(false)
+	const [list, setList] = useState({listName: '', items: []})
 
 	const formatDate = (date) => {
 		return format(new Date(date), 'yyyy')
@@ -34,7 +34,7 @@ const ListDisplay = (props) => {
 				handleError(error.message)
 			}
 		}
-	}, [handleError, isNew, listId, user])
+	}, [handleError, isNew, listId, user, setList])
 
 	const filterMovies = useCallback(
 		(movies) => {

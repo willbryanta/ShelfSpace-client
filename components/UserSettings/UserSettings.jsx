@@ -1,8 +1,9 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import styles from './UserSettings.module.css';
 
 function UserSettings(props) {
-	const {user, handleSetUser, authService, handleError} = props
-	const {updateUser} = authService
+	const { user, handleSetUser, authService, handleError } = props
+	const { updateUser } = authService
 	const [formData, setFormData] = useState({
 		username: user.username,
 		currentPassword: '',
@@ -12,7 +13,7 @@ function UserSettings(props) {
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 		try {
-			const userPayload = await updateUser({user, formData})
+			const userPayload = await updateUser({ user, formData })
 			if (userPayload.error) {
 				throw new Error(userPayload.error)
 			}
@@ -28,7 +29,7 @@ function UserSettings(props) {
 		}
 	}
 	const isFormInvalid = () => {
-		const {username, password, confirmPassword, currentPassword} = formData
+		const { username, password, confirmPassword, currentPassword } = formData
 		return !(username && currentPassword && password === confirmPassword)
 	}
 	const handleInputChange = (event) => {
@@ -41,16 +42,17 @@ function UserSettings(props) {
 	}
 	return (
 		<>
-			<h3>User Settings</h3>
-			<div className="update-user">
-				<form onSubmit={handleSubmit}>
-					<h4>Update Username and Password:</h4>
+			<h1 className={styles.title}>Account Settings</h1>
+			<form onSubmit={handleSubmit}>
+				<div className={styles.elements}>
+					<h2>Update Username and/or Password</h2>
 					<label>
 						Username:
 						<input
 							name="username"
 							value={formData.username}
 							onChange={handleInputChange}
+							className={styles.input}
 						/>
 					</label>
 					<label>
@@ -60,6 +62,7 @@ function UserSettings(props) {
 							name="currentPassword"
 							value={formData.currentPassword}
 							onChange={handleInputChange}
+							className={styles.input}
 						/>
 					</label>
 					<label>
@@ -69,6 +72,7 @@ function UserSettings(props) {
 							name="password"
 							value={formData.password}
 							onChange={handleInputChange}
+							className={styles.input}
 						/>
 					</label>
 					<label>
@@ -78,13 +82,14 @@ function UserSettings(props) {
 							name="confirmPassword"
 							value={formData.confirmPassword}
 							onChange={handleInputChange}
+							className={styles.input}
 						/>
 					</label>
-					<button type="submit" disabled={isFormInvalid()}>
+					<button type="submit" disabled={isFormInvalid()} className={styles.button}>
 						Submit
 					</button>
-				</form>
-			</div>
+				</div>
+			</form>
 		</>
 	)
 }

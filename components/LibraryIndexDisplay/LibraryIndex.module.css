@@ -1,0 +1,24 @@
+
+.results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    list-style: none;
+    margin: 5px;
+}
+
+.poster {
+    width: 150px;
+    height: 220px;
+}
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    height: 25px;
+    margin: 0 0 10px 0;
+}
