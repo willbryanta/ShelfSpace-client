@@ -19,6 +19,7 @@ function App() {
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
 	const [message, setMessage] = useState({})
 	const [libraryItems, setLibraryItems] = useState([])
+	const [updated, setUpdated] = useState(false)
 	const [list, setList] = useState({listName: '', items: []})
 	const handleSetUser = (user) => setUser(user)
 	const handleError = (message) => {
@@ -34,12 +35,13 @@ function App() {
 					throw new Error(items.error)
 				}
 				setLibraryItems(items)
+				setUpdated(false)
 			} catch (error) {
 				handleError(error.message)
 			}
 		}
 		fetchLibraryItems()
-	}, [])
+	}, [updated])
 
 
 	return (
@@ -65,7 +67,8 @@ function App() {
 					handleError={handleError}
 					libraryItems={libraryItems}
 					list={list}
-					setList={setList} />} />
+					setList={setList}
+					setUpdated={setUpdated} />} />
 				<Route
 					path="/library"
 					element={<LibraryIndexDisplay libraryItems={libraryItems} handleError={handleError} />}

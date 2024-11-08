@@ -1,12 +1,13 @@
 import { useState } from "react";
 import MovieCard from "./MovieCard";
 import styles from './MovieCard.module.css';
+import { SecurityUpdateOutlined } from "@mui/icons-material";
 
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 
 function SearchMovies(props) {
 
-    const { libraryItems, list, setList, user } = props
+    const { libraryItems, list, setList, user, setUpdated } = props
 
     const [movies, setMovies] = useState([])
 
@@ -38,7 +39,15 @@ function SearchMovies(props) {
             <ul className={styles.movieResults}>
                 {movies.map(
                     (movie, index) => (
-                        <MovieCard movie={movie} key={index} libraryItems={libraryItems} list={list} setList={setList} user={user} />
+                        <MovieCard
+                            movie={movie} 
+                            key={index}
+                            libraryItems={libraryItems} 
+                            list={list} 
+                            setList={setList} 
+                            user={user} 
+                            setUpdated={setUpdated} 
+                        />
                     )
                 )}
             </ul>
