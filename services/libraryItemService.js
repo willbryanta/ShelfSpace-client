@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
-const createLibraryItem = async (libraryItem) => {
+const createLibraryItem = async (user, libraryItem) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library`, {
 			method: 'POST',
@@ -10,6 +10,7 @@ const createLibraryItem = async (libraryItem) => {
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(libraryItem),
+			user
 		})
 		const data = await res.json()
 		if (data.error) {
@@ -78,13 +79,14 @@ const updateLibraryItem = async (libraryItemId, libraryItemFormData) => {
 	}
 }
 
-const deleteLibraryItem = async (libraryItemId) => {
+const deleteLibraryItem = async (user, libraryItemId) => {
 	try {
 		const res = await fetch(`${BACKEND_URL}/library/${libraryItemId}`, {
 			method: 'DELETE',
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 			},
+			user
 		})
 		if (!res.ok) {
 			throw new Error(res.error)

@@ -9,12 +9,20 @@ function ReviewDisplay(props) {
 	const [formData, setFormData] = useState({
 		title: '',
 		description: '',
-		rating: 0
+		rating: 0,
 	})
 	const renderRating = (rating) => {
-		for (let i = rating; i > 0; i--) {
-			return <span>&#11088;</span>
+		const starsArray = []
+		let gold = rating
+		for (let i = 5; i > 0; i--) {
+			if (gold > 0) {
+				starsArray.push(<span>&#11088;</span>)
+				gold--
+			} else {
+				starsArray.push(<span>&#9734;</span>)
+			}
 		}
+		return starsArray
 	}
 
 	useEffect(() => {

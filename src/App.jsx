@@ -38,7 +38,10 @@ function App() {
 					path="/library/:libraryItemId"
 					element={<LibraryItemDisplay handleError={handleError} user={user} />}
 				/>
-				<Route path="/library" element={<LibraryIndexDisplay />} />
+				<Route
+					path="/library"
+					element={<LibraryIndexDisplay handleError={handleError} />}
+				/>
 				<Route
 					path="/users/signup"
 					element={
