@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import * as authService from '../../services/authService'
+import './SignInForm.css'
 
 const SignInForm = (props) => {
 	const {handleSetUser, handleError} = props
@@ -47,9 +48,12 @@ const SignInForm = (props) => {
 						handleError(error.message)
 					}
 				}}
+				className="signin-form"
 			>
-				<div>
-					<label htmlFor="username">Username</label>
+				<div className="signin-username-field">
+					<label className="username-label" htmlFor="username">
+						Username
+					</label>
 					<input
 						id="username"
 						name="username"
@@ -57,8 +61,10 @@ const SignInForm = (props) => {
 						onChange={onFormInputChange}
 					/>
 				</div>
-				<div>
-					<label htmlFor="password">Password</label>
+				<div className="signin-password-field">
+					<label className="password-label" htmlFor="password">
+						Password
+					</label>
 					<input
 						type="password"
 						id="password"
