@@ -44,7 +44,7 @@ function UserSettings(props) {
 		<>
 			<h1 className={styles.title}>Account Settings</h1>
 			<form onSubmit={handleSubmit}>
-				<div className={styles.elements}>
+			<div className={styles.elements}>
 					<h2>Update Username and/or Password</h2>
 					<label>
 						Username:

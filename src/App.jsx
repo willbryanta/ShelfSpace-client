@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import * as authService from '../services/authService'
 import Navbar from '../components/Navbar/Navbar'
 import SignUpForm from '../components/SignUpForm/SignUpForm'
@@ -11,15 +11,12 @@ import ListDisplay from '../components/ListDisplay/ListDisplay'
 import ErrorModal from '../components/ErrorModal/ErrorModal'
 import LandingPage from '../components/LandingPage/LandingPage'
 import SearchMovies from '../components/SearchMovies/SearchMovies'
-import * as libraryItemService from '../services/libraryItemService'
 import UserSettings from '../components/UserSettings/UserSettings'
 
 function App() {
 	const [user, setUser] = useState(authService.getUser())
 	const [errorModalOpen, setErrorModalOpen] = useState(false)
 	const [message, setMessage] = useState({})
-
-	const [updated, setUpdated] = useState(false)
 	const handleSetUser = (user) => setUser(user)
 	const handleError = (message) => {
 		setMessage(message)
@@ -47,8 +44,7 @@ function App() {
 				/>
 				<Route path="/search-movies" element={<SearchMovies 
 					user={user}
-					handleError={handleError}
-					setUpdated={setUpdated} />} />
+					handleError={handleError} />} />
 				<Route
 					path="/library"
 					element={<LibraryIndexDisplay handleError={handleError} />}
