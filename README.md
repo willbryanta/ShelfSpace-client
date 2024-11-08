@@ -19,7 +19,6 @@ ShelfSpace is an all in one platform for keeping track of content you want to co
 - [Technologies Used](#technologies-used)
 - [Next Steps](#next-steps)
 - [Features](#features)
-- [Contributing](#contributing)
 
 ## Getting Started
 
