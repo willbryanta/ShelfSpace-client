@@ -46,7 +46,7 @@ function SearchMovies(props) {
 		<>
 			<h1>Search Movies</h1>
 			<form onSubmit={handleSubmit}>
-				<input type="text" name="search" placeholder="Search for a movie" />
+				<input type="text" name="search" placeholder="Title" />
 				<button type="submit">Search</button>
 			</form>
 			<ul className={styles.movieResults}>
