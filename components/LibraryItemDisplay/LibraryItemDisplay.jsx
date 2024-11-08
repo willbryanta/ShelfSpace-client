@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import * as libraryItemService from '../../services/libraryItemService'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
 import {format} from 'date-fns'
+import './LibraryItemDisplay.css'
 
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
@@ -31,34 +32,32 @@ function LibraryItemDisplay(props) {
 			}
 		}
 		fetchLibraryItem()
-	}, [])
-	useEffect(() => {
-	}, [])
+	}, [handleError, libraryItemId])
+	useEffect(() => {}, [])
 	return (
 		<div>
-			<ul>
-				<li>
+			<ul className="library-item">
+				<li className="item-detail">
 					<strong>Name:</strong> {libraryItem.name}
 				</li>
-				<li>
+				<li className="item-detail">
 					<strong>Description:</strong> {libraryItem.description}
 				</li>
-				<li>
+				<li className="item-detail">
 					<strong>Publication Date:</strong>{' '}
 					{formatDate(libraryItem.publicationDate)}
 				</li>
-				<li>
+				<li className="item-detail">
 					<strong>Author:</strong> {libraryItem.author.username}
 				</li>
-				<li>
+				<li className="item-detail">
 					<strong>Reviews:</strong>
-						<ul>
-							{libraryItem?.reviews?.map((review) => (
-								<li key={review._id}>
-									<ReviewDisplay review={review} user={user} />
-								</li>
-							)
-						)}
+					<ul>
+						{libraryItem?.reviews?.map((review) => (
+							<li key={review._id}>
+								<ReviewDisplay review={review} user={user} />
+							</li>
+						))}
 					</ul>
 				</li>
 			</ul>
