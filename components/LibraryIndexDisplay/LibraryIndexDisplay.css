@@ -1,0 +1,39 @@
+/* LibraryIndexDisplay.css */
+
+/* Background and font settings for the body */
+body {
+	background-color: #FFCA99; /* Light peach background */
+	font-family: Arial, sans-serif;
+	color: #391C0B; /* Dark brown text for readability */
+}
+
+/* Container for library items */
+div {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #D69456; /* Warm light brown background for content */
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the list of library items */
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 20px 0;
+	border-bottom: 1px solid #6D3B07; /* Darker brown border between items */
+	padding-bottom: 10px;
+}
+
+/* Remove the bottom border for the last item */
+ul:last-child {
+	border-bottom: none;
+}
+
+/* Styling for individual list items */
+li {
+	padding: 8px 0;
+}
+
+/* Bold labels (e
