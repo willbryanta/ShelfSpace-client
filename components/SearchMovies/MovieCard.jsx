@@ -5,7 +5,7 @@ import * as usersService from '../../services/usersService'
 import styles from './MovieCard.module.css'
 
 export default function MovieCard(props) {
-	const {movie, user, libraryItems, setUpdated} = props
+	const {movie, user, libraryItems, handleError} = props
 
 	const [movieAdded, setMovieAdded] = useState(false)
 
@@ -25,9 +25,16 @@ export default function MovieCard(props) {
 	}
 
 	const addToLibrary = async () => {
-		await libraryItemService.createLibraryItem(user, newMovie)
+		try {
+			const addedFilm = await libraryItemService.createLibraryItem(
+				user,
+				newMovie
+			)
+			const returnedList = await usersService.addToDefaultList(user, addedFilm)
+		} catch (error) {
+			handleError(error.message)
+		}
 		setMovieAdded(true)
-		setUpdated(true)
 	}
 
 	return (
@@ -38,13 +45,12 @@ export default function MovieCard(props) {
 				className={styles.moviePoster}
 			></img>
 			<p className={styles.movieTitle}>{movie.title}</p>
-				{movieAdded ? (
-					<button className={styles.addToLib}>✔️</button>
-				) : (
-					<button onClick={addToLibrary} className={styles.addToLib}>
-						Add to Library
-					</button>
-				)}
+			{user && movieAdded && <button className={styles.addToLib}>✔️</button>}
+			{user && !movieAdded && (
+				<button onClick={addToLibrary} className={styles.addToLib}>
+					Add to Library
+				</button>
+			)}
 		</li>
 	)
 }
