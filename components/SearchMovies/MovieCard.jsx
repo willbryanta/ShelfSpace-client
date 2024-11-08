@@ -38,7 +38,6 @@ export default function MovieCard(props) {
 				className={styles.moviePoster}
 			></img>
 			<p className={styles.movieTitle}>{movie.title}</p>
-			<div>
 				{movieAdded ? (
 					<button className={styles.addToLib}>✔️</button>
 				) : (
@@ -46,7 +45,6 @@ export default function MovieCard(props) {
 						Add to Library
 					</button>
 				)}
-			</div>
 		</li>
 	)
 }
