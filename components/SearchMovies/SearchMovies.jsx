@@ -6,7 +6,7 @@ import * as libraryItemService from '../../services/libraryItemService'
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 
 function SearchMovies(props) {
-	const {list, setList, user, setUpdated, handleError} = props
+	const {list, setList, user, handleError} = props
 	const [libraryItems, setLibraryItems] = useState([])
 	const [movies, setMovies] = useState([])
 
@@ -36,7 +36,6 @@ function SearchMovies(props) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-
 		const formData = new FormData(event.target)
 		const search = formData.get('search')
 		fetchMovies(search)
@@ -59,7 +58,7 @@ function SearchMovies(props) {
 						list={list}
 						setList={setList}
 						user={user}
-						setUpdated={setUpdated}
+						handleError={handleError}
 					/>
 				))}
 			</ul>

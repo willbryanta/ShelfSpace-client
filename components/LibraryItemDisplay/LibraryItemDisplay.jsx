@@ -227,7 +227,7 @@ function LibraryItemDisplay(props) {
 							Edit
 						</button>
 					)}
-					{user._id === libraryItem.author?._id && (
+					{user && libraryItem.author && user._id === libraryItem.author._id && (
 						<button type="button" onClick={handleDeleteClick} className={styles.button}>
 							Delete
 						</button>
