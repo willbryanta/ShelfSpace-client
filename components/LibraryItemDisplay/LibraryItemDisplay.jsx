@@ -11,6 +11,7 @@ import {format} from 'date-fns'
 const formatDate = (date) => {
 	return format(new Date(date), 'yyyy')
 }
+
 function LibraryItemDisplay(props) {
 	const {user, handleError} = props
 	const {libraryItemId} = useParams()
@@ -20,16 +21,27 @@ function LibraryItemDisplay(props) {
 	const [libraryItem, setLibraryItem] = useState({
 		name: '',
 		description: '',
-		publicationDate: 2024,
+		publicationDate: '2024-01-01',
 		author: '',
 		reviews: [],
 	})
 	const [formData, setFormData] = useState({
 		name: '',
 		description: '',
-		publicationDate: 2024,
+		publicationDate: '2024-01-01',
 	})
 	const navigate = useNavigate()
+
+	const transformDateForUI = (date) => {
+		if (typeof date === date) {
+			return date.toISOString().slice(0, 16)
+		}
+		return date.slice(0, 16)
+	}
+
+	const transformDateForDB = (date) => {
+		return new Date(date)
+	}
 
 	const fetchLibraryItem = useCallback(async () => {
 		try {
@@ -48,6 +60,7 @@ function LibraryItemDisplay(props) {
 
 	useEffect(() => {
 		fetchLibraryItem()
+		console.log('DB TO UI', transformDateForUI(libraryItem.publicationDate))
 	}, [fetchLibraryItem])
 
 	const handleCancelClick = () => {
@@ -82,19 +95,24 @@ function LibraryItemDisplay(props) {
 		}
 	}
 
-	const handleInputChange = (event) => {
+	const handleTextInputChange = (event) => {
 		const inputName = event.target.name
 		const inputValue = event.target.value
 		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
 
+	const handleDateInputChange = (event) => {
+		const inputName = event.input.name
+		const inputValue = transformDateForDB(event.input.value)
+		console.log('UI to DB', inputValue)
+		setFormData({...formData, [inputName]: inputValue})
+		setUnsavedChanges(true)
+	}
+
 	const handleDeleteClick = async () => {
 		try {
-			await libraryItemService.deleteLibraryItem(
-				user,
-				libraryItemId
-			)
+			await libraryItemService.deleteLibraryItem(user, libraryItemId)
 			navigate('/library')
 		} catch (error) {
 			handleError(error)
@@ -113,7 +131,7 @@ function LibraryItemDisplay(props) {
 						id="name"
 						name="name"
 						value={formData.name}
-						onChange={handleInputChange}
+						onChange={handleTextInputChange}
 					/>
 					<label htmlFor="description">
 						<strong>Description:</strong>
@@ -123,30 +141,17 @@ function LibraryItemDisplay(props) {
 						id="description"
 						name="description"
 						value={formData.description}
-						onChange={handleInputChange}
+						onChange={handleTextInputChange}
 					/>
 					<label htmlFor="publicationDate">
 						<strong>Release Year:</strong>
 					</label>
-					{/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DatePicker
-							label="Release Year"
-							maxDate={currentYear}
-							openTo="year"
-							views={['year']}
-							yearsOrder="desc"
-							sx={{ minWidth: 250 }}
-							value={formData.publicationDate}
-							onChange={handleTextInputChange}
-							name="publicationDate"
-						/>
-					</LocalizationProvider>{' '} */}
 					<input
-						type="number"
+						type="datetime-local"
 						id="publicationDate"
 						name="publicationDate"
-						value={formData.publicationDate}
-						onChange={handleInputChange}
+						value={() => transformDateForUI(formData.publicationDate)}
+						onChange={handleDateInputChange}
 					/>
 					<button type="submit" disabled={!unsavedChanges}>
 						Save
@@ -169,7 +174,7 @@ function LibraryItemDisplay(props) {
 							{formatDate(libraryItem.publicationDate)}
 						</li>
 						<li>
-							<strong>Author:</strong> {libraryItem.author.username}
+							<strong>Author:</strong> {libraryItem?.author?.username}
 						</li>
 						<li>
 							<strong>Reviews:</strong>
