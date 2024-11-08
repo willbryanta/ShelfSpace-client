@@ -16,10 +16,10 @@ function ReviewDisplay(props) {
 		let gold = rating
 		for (let i = 5; i > 0; i--) {
 			if (gold > 0) {
-				starsArray.push(<span>&#11088;</span>)
+				starsArray.push(<span key={i}>&#11088;</span>)
 				gold--
 			} else {
-				starsArray.push(<span>&#9734;</span>)
+				starsArray.push(<span key={i}>&#9734;</span>)
 			}
 		}
 		return starsArray
@@ -130,7 +130,7 @@ function ReviewDisplay(props) {
 					<h4>{title}</h4>
 					{renderRating(rating)}
 					<p>{description}</p>
-					<p>Author: {author.username}</p>
+					<p>Author: {author?.username}</p>
 					<button type="button" onClick={() => setIsEditing(true)}>
 						Edit
 					</button>
