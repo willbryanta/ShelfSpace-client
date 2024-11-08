@@ -6,7 +6,7 @@ const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 
 function SearchMovies(props) {
 
-    const { libraryItems } = props
+    const { libraryItems, list, setList, user } = props
 
     const [movies, setMovies] = useState([])
 
@@ -38,7 +38,7 @@ function SearchMovies(props) {
             <ul className={styles.movieResults}>
                 {movies.map(
                     (movie, index) => (
-                        <MovieCard movie={movie} key={index} libraryItems={libraryItems} />
+                        <MovieCard movie={movie} key={index} libraryItems={libraryItems} list={list} setList={setList} user={user} />
                     )
                 )}
             </ul>
