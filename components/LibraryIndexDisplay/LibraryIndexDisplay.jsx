@@ -30,7 +30,7 @@ function LibraryIndexDisplay(props) {
 	}, [])
 
 	const allLibraryItems = libraryItems?.map((item) => (
-		<li key={libraryItems._id} className={styles.item}>
+		<li key={item._id} className={styles.item}>
 			<Link to={`/library/${item._id}`}>
 				{item.posterPath ? (
 					<img
