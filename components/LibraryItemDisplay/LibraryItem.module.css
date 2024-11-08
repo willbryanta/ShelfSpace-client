@@ -1,12 +1,14 @@
 
 .poster {
+    display: block;
     width: 150px;
     height: 220px;
-    margin: 18px auto 0;
+    margin: 18px auto;
 }
 
 .button {
-    margin: 7px auto;
+    display: block;
+    margin: 15px auto;
     padding: 10px;
     width: 250px;
 }
