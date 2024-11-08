@@ -2,6 +2,7 @@
 .movieResults {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .movie {
@@ -28,3 +29,27 @@
     height: 30px;
     font-size: 12px;
 }
+
+.pageTitle {
+    text-align: center;
+    margin: 20px 0 -6px 0;
+}
+
+.pageTitle2 {
+    text-align: center;
+    margin: 20px 0 -6px 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 250px;
+    height: 30px;
+    font-weight: 600;
+    margin: 20px;
+}
+
