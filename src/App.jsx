@@ -39,7 +39,7 @@ function App() {
 			}
 		}
 		fetchLibraryItems()
-	}, [libraryItems])
+	}, [])
 
 
 	return (
