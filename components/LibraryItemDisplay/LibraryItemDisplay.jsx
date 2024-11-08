@@ -23,21 +23,21 @@ function LibraryItemDisplay(props) {
 		author: '',
 		reviews: [],
 	})
-	
+
 	const handleAddReview = () => {
-		const reviewArray = structuredClone(libraryItem.reviews)
+		const reviewArray = [...libraryItem.reviews]
 		reviewArray.push({
 			title: '',
 			description: '',
 			author: user._id,
 			libraryItem: libraryItem,
-			isNew: true
+			isNew: true,
 		})
-		setLibraryItem({ ...libraryItem, reviews: reviewArray })
+		setLibraryItem({...libraryItem, reviews: reviewArray})
 		setIsAdding(true)
 	}
 
-	const fetchLibraryItem = useCallback( async () => {
+	const fetchLibraryItem = useCallback(async () => {
 		try {
 			const item = await libraryItemService.getLibraryItemById(libraryItemId)
 			if (item.error) {
@@ -45,17 +45,20 @@ function LibraryItemDisplay(props) {
 			}
 			setLibraryItem(item)
 			setIsAdding(false)
+			setFormData(item)
 		} catch (error) {
 			handleError(error.message)
 		}
-	},[handleError, libraryItemId])
+	}, [handleError, libraryItemId])
 
-	useEffect(() => {
-	const [formData, setFormData] = useState({
-		name: '',
-		description: '',
-		publicationDate: '2024-01-01',
-	})
+	const [formData, setFormData] = useState(
+		{
+			name: '',
+			description: '',
+			publicationDate: '2024-01-01',
+		},
+		[]
+	)
 	const navigate = useNavigate()
 
 	const transformDateForUI = (date) => {
@@ -69,24 +72,8 @@ function LibraryItemDisplay(props) {
 		return new Date(date)
 	}
 
-	const fetchLibraryItem = useCallback(async () => {
-		try {
-			if (!isNew) {
-				const item = await libraryItemService.getLibraryItemById(libraryItemId)
-				if (item.error) {
-					throw new Error(item.error)
-				}
-				setLibraryItem(item)
-				setFormData(item)
-			}
-		} catch (error) {
-			handleError(error.message)
-		}
-	}, [handleError, isNew, libraryItemId])
-
 	useEffect(() => {
 		fetchLibraryItem()
-		console.log('DB TO UI', transformDateForUI(libraryItem.publicationDate))
 	}, [fetchLibraryItem])
 
 	const handleCancelClick = () => {
@@ -94,8 +81,6 @@ function LibraryItemDisplay(props) {
 			navigate('/library')
 		}
 		fetchLibraryItem()
-	}, [fetchLibraryItem])
-	
 		setIsEditing(false)
 		setUnsavedChanges(false)
 	}
@@ -133,7 +118,6 @@ function LibraryItemDisplay(props) {
 	const handleDateInputChange = (event) => {
 		const inputName = event.input.name
 		const inputValue = transformDateForDB(event.input.value)
-		console.log('UI to DB', inputValue)
 		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
@@ -190,31 +174,43 @@ function LibraryItemDisplay(props) {
 				</form>
 			) : (
 				<div>
-					<ul>
-						<li>
+					<ul className="library-item">
+						<li className="item-detail">
 							<strong>Name:</strong> {libraryItem.name}
 						</li>
-						<li>
+						<li className="item-detail">
 							<strong>Description:</strong> {libraryItem.description}
 						</li>
-						<li>
+						<li className="item-detail">
 							<strong>Publication Date:</strong>{' '}
 							{formatDate(libraryItem.publicationDate)}
 						</li>
-						<li>
-							<strong>Author:</strong> {libraryItem?.author?.username}
+						<li className="item-detail">
+							<strong>Author:</strong> {libraryItem?.author.username}
 						</li>
-						<li>
+						<li className="item-detail">
 							<strong>Reviews:</strong>
 							<ul>
-								{libraryItem?.reviews?.map((review) => (
-									<li key={review._id}>
-										<ReviewDisplay review={review} user={user} />
+								{libraryItem?.reviews?.map((review, i) => (
+									<li key={review._id ? review._id : `${i}`}>
+										<ReviewDisplay
+											review={review}
+											user={user}
+											handleError={handleError}
+											libraryItem={libraryItem}
+											refreshParent={fetchLibraryItem}
+											isNew={review.isNew ? true : false}
+										/>
 									</li>
 								))}
 							</ul>
 						</li>
 					</ul>
+					{user && !isAdding && (
+						<button key="addReview" type="button" onClick={handleAddReview}>
+							Add a review
+						</button>
+					)}
 					<button type="button" onClick={() => setIsEditing(true)}>
 						Edit
 					</button>
@@ -224,43 +220,6 @@ function LibraryItemDisplay(props) {
 				</div>
 			)}
 		</>
-		<div>
-			<ul className="library-item">
-				<li className="item-detail">
-					<strong>Name:</strong> {libraryItem.name}
-				</li>
-				<li className="item-detail">
-					<strong>Description:</strong> {libraryItem.description}
-				</li>
-				<li className="item-detail">
-					<strong>Publication Date:</strong>{' '}
-					{formatDate(libraryItem.publicationDate)}
-				</li>
-				<li className="item-detail">
-					<strong>Author:</strong> {libraryItem?.author.username}
-				</li>
-				<li className="item-detail">
-					<strong>Reviews:</strong>
-					{user && !isAdding &&
-						<button key="addReview" type="button" onClick={handleAddReview}>Add a review</button>
-					}
-					<ul>
-						{libraryItem?.reviews?.map((review, i) => (
-							<li key={review._id ? review._id : `${i}`}>
-								<ReviewDisplay
-									review={review}
-									user={user}
-									handleError={handleError}
-									libraryItem={libraryItem}
-									refreshParent={fetchLibraryItem}
-									isNew={review.isNew ? true : false}
-								/>
-							</li>
-						))}
-					</ul>
-				</li>
-			</ul>
-		</div>
 	)
 }
 
