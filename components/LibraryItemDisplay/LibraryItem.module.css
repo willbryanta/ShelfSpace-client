@@ -2,6 +2,11 @@
 .poster {
     width: 150px;
     height: 220px;
+    margin: 18px auto 0;
 }
 
-
+.button {
+    margin: 7px auto;
+    padding: 10px;
+    width: 250px;
+}
