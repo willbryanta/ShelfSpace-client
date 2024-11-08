@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
-// import './ListShow.css'
 
 const ListDisplay = (props) => {
 	const {user, handleError} = props
@@ -106,7 +105,7 @@ const ListDisplay = (props) => {
 	}
 
 	const handleCancelClick = () => {
-		if (isNew) {
+		if (isNew || !unsavedChanges) {
 			navigate(`/users/${user._id}`)
 		} else {
 			fetchList()
@@ -218,7 +217,6 @@ const ListDisplay = (props) => {
 				<button
 					type="button"
 					onClick={handleCancelClick}
-					disabled={!isEditing && !unsavedChanges}
 				>
 					Cancel
 				</button>

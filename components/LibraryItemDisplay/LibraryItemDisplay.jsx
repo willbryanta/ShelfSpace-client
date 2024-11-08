@@ -39,13 +39,15 @@ function LibraryItemDisplay(props) {
 
 	const fetchLibraryItem = useCallback(async () => {
 		try {
-			const item = await libraryItemService.getLibraryItemById(libraryItemId)
-			if (item.error) {
-				throw new Error(item.error)
+			if (!isNew) {
+				const item = await libraryItemService.getLibraryItemById(libraryItemId)
+				if (item.error) {
+					throw new Error(item.error)
+				}
+				setLibraryItem(item)
+				setIsAdding(false)
+				setFormData(item)
 			}
-			setLibraryItem(item)
-			setIsAdding(false)
-			setFormData(item)
 		} catch (error) {
 			handleError(error.message)
 		}
@@ -61,11 +63,9 @@ function LibraryItemDisplay(props) {
 	)
 	const navigate = useNavigate()
 
-	const transformDateForUI = (date) => {
-		if (typeof date === date) {
-			return date.toISOString().slice(0, 16)
-		}
-		return date.slice(0, 16)
+	const transformDateForUI = (input) => {
+		const date = new Date(input)
+		return date.toISOString().slice(0, 10)
 	}
 
 	const transformDateForDB = (date) => {
@@ -99,10 +99,10 @@ function LibraryItemDisplay(props) {
 					libraryItemId,
 					formData
 				)
-				setLibraryItem(updatedLibraryItem)
-				setIsEditing(false)
-				setUnsavedChanges(false)
+				fetchLibraryItem()
 			}
+			setIsEditing(false)
+			setUnsavedChanges(false)
 		} catch (error) {
 			handleError(error)
 		}
@@ -116,8 +116,8 @@ function LibraryItemDisplay(props) {
 	}
 
 	const handleDateInputChange = (event) => {
-		const inputName = event.input.name
-		const inputValue = transformDateForDB(event.input.value)
+		const inputName = event.target.name
+		const inputValue = transformDateForDB(event.target.value)
 		setFormData({...formData, [inputName]: inputValue})
 		setUnsavedChanges(true)
 	}
@@ -159,10 +159,10 @@ function LibraryItemDisplay(props) {
 						<strong>Release Year:</strong>
 					</label>
 					<input
-						type="datetime-local"
+						type="date"
 						id="publicationDate"
 						name="publicationDate"
-						value={() => transformDateForUI(formData.publicationDate)}
+						value={transformDateForUI(formData.publicationDate)}
 						onChange={handleDateInputChange}
 					/>
 					<button type="submit" disabled={!unsavedChanges}>
