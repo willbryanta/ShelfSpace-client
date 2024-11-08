@@ -1,5 +1,12 @@
-import {Link} from 'react-router-dom'
-import styles from './LibraryIndex.module.css';
+import {Link, useNavigate} from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import * as libraryItemService from '../../services/libraryItemService'
+import {format} from 'date-fns'
+import './LibraryIndexDisplay.css'
+
+const formatDate = (date) => {
+	return format(new Date(date), 'yyyy')
+}
 
 function LibraryIndexDisplay(props) {
 	const {libraryItems} = props

@@ -8,7 +8,7 @@ function Navbar(props) {
 	return (
 		<nav>
 			{!user ? (
-				<ul>
+				<ul className="navbar-list">
 					<li>
 						<Link to="/search-movies">Search</Link>
 					</li>
@@ -23,7 +23,7 @@ function Navbar(props) {
 					</li>
 				</ul>
 			) : (
-				<ul>
+				<ul className="navbar-list">
 					<li>
 						<Link to="/search-movies">Search</Link>
 					</li>
@@ -31,7 +31,7 @@ function Navbar(props) {
 						<Link to="/library">Library</Link>
 					</li>
 					<li>
-							<Link to={`/users/${user._id}`}> {user.username}</Link>
+						<Link to={`/users/${user._id}`}> {user.username}</Link>
 					</li>
 					<li>
 						<Link to={`/users/${user._id}/settings`}>Settings</Link>

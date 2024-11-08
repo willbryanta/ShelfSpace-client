@@ -58,7 +58,7 @@ function App() {
 				<Route path="/" element={<LandingPage />} />
 				<Route
 					path="/library/:libraryItemId"
-					element={<LibraryItemDisplay />}
+					element={<LibraryItemDisplay handleError={handleError} user={user} />}
 				/>
 				<Route path="/search-movies" element={<SearchMovies 
 					user={user}
@@ -66,7 +66,10 @@ function App() {
 					libraryItems={libraryItems}
 					list={list}
 					setList={setList} />} />
-				<Route path="/library" element={<LibraryIndexDisplay libraryItems={libraryItems} />} />
+				<Route
+					path="/library"
+					element={<LibraryIndexDisplay libraryItems={libraryItems} handleError={handleError} />}
+				/>
 				<Route
 					path="/users/signup"
 					element={

@@ -1,9 +1,9 @@
 import {useParams, useNavigate} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import {Link} from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import * as libraryItemService from '../../services/libraryItemService'
 import {format} from 'date-fns'
-// import './ListShow.css'
 
 const ListDisplay = (props) => {
 	const {user, handleError, list, setList} = props
@@ -21,7 +21,7 @@ const ListDisplay = (props) => {
 	//* this is a helper function that helps to format the date
 	//* new Date() is used to convert the input date into valid JS Date object. This makes sure even if the input is a string, number, or an already existing Date object that it will be transformed into a proper date object
 
-	const fetchList = async () => {
+	const fetchList = useCallback(async () => {
 		if (!isNew) {
 			try {
 				const fetchedList = await usersService.showList(user, listId)
@@ -33,26 +33,17 @@ const ListDisplay = (props) => {
 				handleError(error.message)
 			}
 		}
-	}
+	}, [handleError, isNew, listId, user])
 
-	const fetchMovies = async () => {
-		try {
-			const movies = await libraryItemService.getLibraryItem()
-			if (movies.error) {
-				throw new Error(movies.error)
-			}
-			filterMovies(movies)
-		} catch (error) {
-			handleError(error.message)
-		}
-	}
-
-	const filterMovies = (movies) => {
-		const filteredMovies = movies.filter(
-			(movie) => !list.items.some((item) => item._id === movie._id)
-		)
-		setAvailableMovies(filteredMovies)
-	}
+	const filterMovies = useCallback(
+		(movies) => {
+			const filteredMovies = movies.filter(
+				(movie) => !list.items.some((item) => item._id === movie._id)
+			)
+			setAvailableMovies(filteredMovies)
+		},
+		[list.items]
+	)
 
 	const handleAddMovie = (event) => {
 		const movieToAdd = JSON.parse(event.target.value)
@@ -113,7 +104,7 @@ const ListDisplay = (props) => {
 	}
 
 	const handleCancelClick = () => {
-		if (isNew) {
+		if (isNew || !unsavedChanges) {
 			navigate(`/users/${user._id}`)
 		} else {
 			fetchList()
@@ -124,11 +115,22 @@ const ListDisplay = (props) => {
 
 	useEffect(() => {
 		fetchList()
-	}, [])
+	}, [fetchList])
 
 	useEffect(() => {
+		const fetchMovies = async () => {
+			try {
+				const movies = await libraryItemService.getLibraryItem()
+				if (movies.error) {
+					throw new Error(movies.error)
+				}
+				filterMovies(movies)
+			} catch (error) {
+				handleError(error.message)
+			}
+		}
 		fetchMovies()
-	}, [list])
+	}, [filterMovies, handleError, fetchList])
 
 	return (
 		<div className="list-show-container">
@@ -158,7 +160,10 @@ const ListDisplay = (props) => {
 					return (
 						<li key={item._id}>
 							<p>
-								<strong>{item.name}</strong>({formattedDate})
+								<strong>
+									<Link to={`/library/${item._id}`}>{item.name}</Link>
+								</strong>
+								({formattedDate})
 							</p>
 							<button
 								className="delete-button"
@@ -211,7 +216,6 @@ const ListDisplay = (props) => {
 				<button
 					type="button"
 					onClick={handleCancelClick}
-					disabled={!isEditing && !unsavedChanges}
 				>
 					Cancel
 				</button>
