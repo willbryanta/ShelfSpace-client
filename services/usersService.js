@@ -58,7 +58,7 @@ const showList = async (user, listId) => {
 	}
 }
 
-const updateList = async (user, listId, ListFormData) => {
+const updateList = async (user, listId, listFormData) => {
 	try {
 		const res = await fetch(
 			`${BACKEND_URL}/users/${user._id}/lists/${listId}`,
@@ -68,7 +68,7 @@ const updateList = async (user, listId, ListFormData) => {
 					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(ListFormData),
+				body: JSON.stringify(listFormData),
 				user,
 			}
 		)
@@ -76,6 +76,30 @@ const updateList = async (user, listId, ListFormData) => {
 			throw new Error(res.error)
 		}
 		return await res.json()
+	} catch (error) {
+		return {error}
+	}
+}
+
+const addToDefaultList = async (user, addedFilm) => {
+	try {
+		const res = await fetch(
+			`${BACKEND_URL}/users/${user._id}/lists/default`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+					'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({addedFilm}),
+			user,
+			}
+		)
+		if (!res.ok) {
+			throw new Error(res.error)
+		}
+		const data = await res.json()
+		return data
 	} catch (error) {
 		return {error}
 	}
@@ -102,4 +126,11 @@ const deleteList = async (user, listId) => {
 	}
 }
 
-export {getProfile, createList, showList, updateList, deleteList}
+export {
+	getProfile,
+	createList,
+	showList,
+	updateList,
+	deleteList,
+	addToDefaultList,
+}
