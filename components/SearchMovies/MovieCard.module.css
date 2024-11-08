@@ -6,7 +6,7 @@
 
 .movie {
     list-style: none;
-    margin: 20px -20px;
+    margin: 20px -20px 0 -20px;
 }
 
 .moviePoster {
@@ -15,6 +15,16 @@
 }
 
 .movieTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     width: 150px;
-    height: 70px;
+    height: 25px;
+    margin: 0 0 10px 0;
+}
+
+.addToLib {
+    width: 150px;
+    height: 30px;
+    font-size: 12px;
 }

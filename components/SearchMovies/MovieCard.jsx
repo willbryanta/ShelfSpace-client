@@ -24,9 +24,9 @@ export default function MovieCard(props) {
         <li className={styles.movie}>
             <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} className={styles.moviePoster}></img>
             <p className={styles.movieTitle}>{movie.title}</p>
-            {isMovieAdded ? (<button>✔️</button>)
+            {isMovieAdded ? (<button className={styles.addToLib}>✔️</button>)
                 :
-                (<button onClick={addToLibrary}>+</button>)}
+                (<button onClick={addToLibrary} className={styles.addToLib}>Add to Library</button>)}
         </li>
     )
 }
