@@ -36,7 +36,7 @@ function App() {
 				<Route path="/" element={<LandingPage />} />
 				<Route
 					path="/library/:libraryItemId"
-					element={<LibraryItemDisplay />}
+					element={<LibraryItemDisplay handleError={handleError} user={user} />}
 				/>
 				<Route path="/library" element={<LibraryIndexDisplay />} />
 				<Route
