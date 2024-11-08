@@ -63,7 +63,9 @@ function App() {
 				<Route path="/search-movies" element={<SearchMovies 
 					user={user}
 					handleError={handleError}
-					libraryItems={libraryItems} />} />
+					libraryItems={libraryItems}
+					list={list}
+					setList={setList} />} />
 				<Route path="/library" element={<LibraryIndexDisplay libraryItems={libraryItems} />} />
 				<Route
 					path="/users/signup"
