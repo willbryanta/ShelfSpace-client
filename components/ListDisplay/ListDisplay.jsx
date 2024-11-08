@@ -227,7 +227,15 @@ const ListDisplay = (props) => {
 				<button type="button" onClick={handleCancelClick}>
 					Cancel
 				</button>
-				
+				{!isNew && (
+					<button
+						className="delete-list-button"
+						type="button"
+						onClick={handleDeleteList}
+					>
+						Delete List
+					</button>
+				)}
 			</div>
 		</div>
 	)
