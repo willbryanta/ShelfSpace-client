@@ -17,11 +17,11 @@ function ListIndexDisplay(props) {
 	return (
 		<>
 			<Link to={`/users/${user._id}/lists/${_id}`}>{listName}</Link>
-			{listName !== 'To Watch' && (
-				<button type="button" onClick={() => handleDelete()}>
-					Delete
-				</button>
-			)}
+				{listName !== 'To Watch' && (
+					<button type="button" onClick={() => handleDelete()}>
+						Delete
+					</button>
+				)}
 		</>
 	)
 }
