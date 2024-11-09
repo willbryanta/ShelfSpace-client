@@ -1,15 +1,20 @@
-import {useCallback, useEffect, useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import * as usersService from '../../services/usersService'
 import ListIndexDisplay from '../ListIndexDisplay/ListIndexDisplay'
 import ReviewDisplay from '../ReviewDisplay/ReviewDisplay'
+import styles from './ProfilePage.module.css'
+
 function ProfilePage(props) {
-	const {user, handleError} = props
+	const { user, handleError } = props
 	const navigate = useNavigate()
-	const {getProfile, deleteList} = usersService
+	const { getProfile, deleteList } = usersService
 	const [lists, setLists] = useState([])
 	const [reviews, setReviews] = useState([])
-	const generateProfile = useCallback( async () => {
+
+	console.log(lists)
+
+	const generateProfile = useCallback(async () => {
 		try {
 			const profileData = await getProfile(user)
 			if (profileData.error) {
@@ -40,6 +45,26 @@ function ProfilePage(props) {
 								setLists={setLists}
 								handleError={handleError}
 							/>
+							<ul className={styles.movie}>
+									{list.items && list.items.length > 0 ? (
+										list.items.map((item) => (
+											<li key={item._id} className={styles.movie}>
+												<Link to={`/library/${item._id}`}>
+												<img
+													src={item.posterPath
+														? `https://image.tmdb.org/t/p/w200/${item.posterPath}`
+														: "https://placeholder.pics/svg/300x300/391C0B/391C0B"}
+														className={styles.poster}
+														alt={item.name || 'A placeholder for items without a poster'}
+														/>
+												</Link>
+											</li>
+										))
+									) : (
+										<li>No items available</li>
+									)}
+
+							</ul>
 						</li>
 					)
 				})}

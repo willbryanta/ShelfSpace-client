@@ -1,0 +1,14 @@
+.poster {
+    width: 150px;
+    height: 220px;
+}
+
+.movie {
+    list-style: none;
+    margin: 20px -15px 0 -15px;
+    display: flex;
+}
+
+.items {
+    margin: auto;
+}
