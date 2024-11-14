@@ -1,6 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL
 const TOKEN_KEY = import.meta.env.VITE_JWT_KEY
 
+// Love this service to abstract the API request! However, it seems it wasn't used by any of the other services?
 const api = {
 	get: (endpoint) => request(endpoint),
 	post: (endpoint, data) => request(endpoint, 'POST', data),

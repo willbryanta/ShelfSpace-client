@@ -16,6 +16,7 @@ const ListDisplay = (props) => {
 	const [isAdding, setIsAdding] = useState(false)
 	const [list, setList] = useState({listName: '', items: []})
 
+	// opportunity: below function could be transformed into a common utility function as it was used numerous times throughout the application. Turning it into a util function will contain maintenance of this code in 1 place.
 	const formatDate = (date) => {
 		return format(new Date(date), 'yyyy')
 	}

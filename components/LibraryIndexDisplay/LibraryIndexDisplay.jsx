@@ -1,14 +1,9 @@
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import * as libraryItemService from '../../services/libraryItemService'
-import {format} from 'date-fns'
 import './LibraryIndexDisplay.css'
 import styles from './LibraryIndex.module.css'
 
-
-const formatDate = (date) => {
-	return format(new Date(date), 'yyyy')
-}
 
 function LibraryIndexDisplay(props) {
 	const {handleError} = props
@@ -27,11 +22,13 @@ function LibraryIndexDisplay(props) {
 			}
 		}
 		fetchLibraryItems()
-	}, [])
+		// added per the warning from VSCode
+	}, [handleError])
 
 	const allLibraryItems = libraryItems?.map((item) => (
 		<li key={item._id} className={styles.item}>
 			<Link to={`/library/${item._id}`}>
+				{/* opportunity for creating poster <img> as re-usable component */}
 				{item.posterPath ? (
 					<img
 						src={`https://image.tmdb.org/t/p/w200/${item.posterPath}`}

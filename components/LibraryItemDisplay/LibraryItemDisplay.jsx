@@ -70,6 +70,9 @@ function LibraryItemDisplay(props) {
 		return date.toISOString().slice(0, 10)
 	}
 
+	// The relationship between the client and server is bridged by the "service". The client technically has no clue about the server, let alone the DB.
+	// The only contract the client should be aware of is what is required by the service.
+	// nitpick: consider transformDateForLibraryItemService
 	const transformDateForDB = (date) => {
 		return new Date(date)
 	}
@@ -97,7 +100,8 @@ function LibraryItemDisplay(props) {
 				)
 				navigate(`/library/${createdLibraryItem._id}`)
 			} else {
-				const updatedLibraryItem = await libraryItemService.updateLibraryItem(
+				// as updatedLibraryItem is not used, feel free to not assert the expression without assignging it to a variable
+				await libraryItemService.updateLibraryItem(
 					libraryItemId,
 					formData
 				)
@@ -177,6 +181,8 @@ function LibraryItemDisplay(props) {
 			) : (
 				<div>
 					<h1>{libraryItem.name}</h1>
+					{/* improvement opportunity: the <img> across the LibraryItemIndex, LibraryItemDisplay, and search experience were fairly consistent - there was a missed opportunity to create a re-usable component for image itself */}
+					{/* one of the requirement that was not reached 100% is due to the lack of alt text in img below. If a re-usable img component was used for poster and applied consistently throughout the app, you could ensure the img component was built correctly to spec (with alt text) and re-use throughout the whole application to reap the reward. */}
 					{libraryItem.posterPath ? (
 								<img
 									src={`https://image.tmdb.org/t/p/w200/${libraryItem.posterPath}`}
@@ -204,6 +210,7 @@ function LibraryItemDisplay(props) {
 							<ul>
 								{libraryItem?.reviews?.map((review, i) => (
 									<li key={review._id ? review._id : `${i}`}>
+										{/* well done on getting a review element on 'edit' mode in your SPA :) */}
 										<ReviewDisplay
 											review={review}
 											user={user}
