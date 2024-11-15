@@ -23,6 +23,8 @@ const SignUpForm = (props) => {
 		})
 	}
 
+	// improvement opportunity / challenge: should the form be invalid when password / confirmPassword don't match?
+	// it might be confusing to the user why the form is in a disabled state when they thought they have filled in all the fields. What might elevate this experience is to provide an error message why the button is disabled e.g. "your password does not match"
 	const isFormInvalid = () => {
 		const {username, password, confirmPassword} = formData
 		return !(username && password && password === confirmPassword)

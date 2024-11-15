@@ -50,6 +50,7 @@ function ProfilePage(props) {
 										list.items.map((item) => (
 											<li key={item._id} className={styles.movie}>
 												<Link to={`/library/${item._id}`}>
+												{/* opportunity for re-usable img component */}
 												<img
 													src={item.posterPath
 														? `https://image.tmdb.org/t/p/w200/${item.posterPath}`

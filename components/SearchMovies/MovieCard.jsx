@@ -30,7 +30,8 @@ export default function MovieCard(props) {
 				user,
 				newMovie
 			)
-			const returnedList = await usersService.addToDefaultList(user, addedFilm)
+			// feel free to not assign it to a variable given there is no consumer of this variable
+			await usersService.addToDefaultList(user, addedFilm)
 		} catch (error) {
 			handleError(error.message)
 		}

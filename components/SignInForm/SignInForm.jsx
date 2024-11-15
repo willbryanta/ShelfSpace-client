@@ -39,9 +39,6 @@ const SignInForm = (props) => {
 						if (userPayload.error) {
 							throw new Error(userPayload.error)
 						}
-						if (userPayload.error) {
-							return handleError(userPayload.error)
-						}
 						handleSetUser(userPayload)
 						navigate('/')
 					} catch (error) {

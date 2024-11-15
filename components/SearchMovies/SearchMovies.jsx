@@ -51,6 +51,9 @@ function SearchMovies(props) {
 			</form>
 			<ul className={styles.movieResults}>
 				{movies.map((movie, index) => (
+					// opportunity: MovieCard in the most optimal state, should simply be a react component containing the UI elements as well as functions required to compose a MovieCard. The detail of the function can be lifted up to the parent component (in this case, SearchMovies).
+					// the benefit for doing this is so that MovieCard becomes extremely generic without being tightly coupled with the LibraryItem service.
+					// This gives you the flexibility to re-use MovieCard and integrate with other service and not constraint only to LibraryItem Service
 					<MovieCard
 						movie={movie}
 						key={index}
