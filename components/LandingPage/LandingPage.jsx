@@ -4,6 +4,9 @@ import styles from './LandingPage.module.css'
 const emoji = new EmojiConvertor()
 //* help to convert emoji shortcodes like :books: into their respective emoji characters
 
+emoji.use_sheet = false;
+//* Disable image-based emojis to use Unicode emojis instead
+
 emoji.init_env()
 //* helps to prepare the emoji instance to start converting shortcodes. This step is required to call first to initialize emoji 
 
